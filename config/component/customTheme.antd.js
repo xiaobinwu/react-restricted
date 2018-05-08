@@ -1,8 +1,8 @@
 /* 自定义antd样式 */
 const { existsSync } = require('fs');
-const { join, resolve } = require('path');
+const paths = require('./paths');
 
-const pkgPath = join('../../', 'package.json');
+const pkgPath = paths.appPackageJson;
 const pkg = existsSync(pkgPath) ? require(pkgPath) : {};
 
 let theme = {};
@@ -10,9 +10,8 @@ if (pkg.theme && typeof (pkg.theme) === 'string') {
     let cfgPath = pkg.theme;
     // relative path
     if (cfgPath.charAt(0) === '.') {
-        cfgPath = resolve('./', cfgPath);
+        cfgPath = paths.resolveApp(cfgPath);
     }
-    console.log(cfgPath)
     const getThemeConfig = require(cfgPath);
     theme = getThemeConfig();
 } else if (pkg.theme && typeof (pkg.theme) === 'object') {

@@ -46,6 +46,8 @@ module.exports = (env) => {
                                         importLoaders: 1,
                                         minimize: true,
                                         sourceMap: shouldUseSourceMap,
+                                        modules: true,
+                                        localIdentName: '[name]__[local]___[hash:base64:5]'                                        
                                     },
                                 },
                                 {
@@ -99,6 +101,9 @@ module.exports = (env) => {
                         loader: require.resolve('css-loader'),
                         options: {
                             importLoaders: 1,
+                            modules: true,
+                            localIdentName: '[name]__[local]___[hash:base64:5]',
+                            root: ''
                         },
                     },
                     {
@@ -143,7 +148,6 @@ module.exports = (env) => {
                     options: {
                         formatter: eslintFormatter,
                         eslintPath: require.resolve('eslint'),
-
                     },
                     loader: require.resolve('eslint-loader'),
                 }, ],

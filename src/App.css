@@ -21,13 +21,17 @@
 
 .App {
   text-align: center;
-  .App-img {
-    margin: auto;
-    margin-top: 80px;
-    width: width('img/test.jpg');
-    height: height('img/test.jpg');
-    background: resolve('img/test.jpg');
-  }
+}
+
+.App-img {
+  margin: auto;
+  margin-top: 80px;
+  /* width: width('img/test.jpg');
+  height: height('img/test.jpg');
+  background: resolve('img/test.jpg'); */
+  width: 645px;
+  height: 340px;
+  background: url(common/img/test.jpg);
 }
 
 .App-logo {

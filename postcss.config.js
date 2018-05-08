@@ -3,10 +3,10 @@ module.exports = {
         require('postcss-import')({
             path: ['src/']
         }),
-        require('postcss-assets')({
-            loadPaths: ['src/common/'],
-            relative: true
-        }),
+        // require('postcss-assets')({
+        //     loadPaths: ['/src/common/'],
+        //     relative: true
+        // }),
         require('postcss-nested'),
         require('postcss-mixins'),
         require('postcss-extend'),
