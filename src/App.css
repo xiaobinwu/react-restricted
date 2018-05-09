@@ -26,12 +26,14 @@
 .App-img {
   margin: auto;
   margin-top: 80px;
-  /* width: width('img/test.jpg');
-  height: height('img/test.jpg');
-  background: resolve('img/test.jpg'); */
+
+  /* width: width('img/test.png');
+  height: height('img/test.png');
+  background: resolve('img/test.png'); */
+
   width: 645px;
   height: 340px;
-  background: url(common/img/test.jpg);
+  background: url(../src/common/img/test.png);
 }
 
 .App-logo {

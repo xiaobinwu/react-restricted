@@ -16,7 +16,7 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <Button type="primary">Button</Button>
-        <div styleName="App-img"></div> 
+        <div styleName="App-img"></div>
       </div>
     );
   }
