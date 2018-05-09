@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CSSModules from 'react-css-modules';
 import { Button } from 'antd';
+import Dynamic from './Dynamic';
 import logo from './logo.svg';
 import styles from './App.css';
 
@@ -17,6 +18,7 @@ class App extends Component {
         </p>
         <Button type="primary">Button</Button>
         <div styleName="App-img"></div>
+        <Dynamic/>
       </div>
     );
   }
