@@ -27,12 +27,9 @@
 .App-img {
     margin: auto;
     margin-top: 80px;
-    /* width: width('img/test.png');
-  height: height('img/test.png');
-  background: resolve('img/test.png'); */
-    width: 645px;
-    height: 340px;
-    background: url(../src/common/img/test.png);
+    width: width('img/test.png');
+    height: height('img/test.png');
+    background: resolve('img/test.png');
 }
 
 .App-logo {
