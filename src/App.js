@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CSSModules from 'react-css-modules';
 import { Button } from 'antd';
-import Dynamic from './Dynamic';
+import Dynamic from './charts/Dynamic';
 import logo from './logo.svg';
 import styles from './App.css';
 

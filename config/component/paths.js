@@ -53,9 +53,4 @@ module.exports = {
     publicUrl: getPublicUrl(resolveApp('package.json')),
     servedPath: getServedPath(resolveApp('package.json')),
     resolveApp,
-    // alias
-    common: resolveApp('src/common'),
-    css: resolveApp('src/common/css'),
-    img: resolveApp('src/common/img'),
-    component: resolveApp('src/common/component'),
 };
