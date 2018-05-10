@@ -29,15 +29,17 @@ const {
 const openBrowser = require('react-dev-utils/openBrowser');
 const paths = require('../config/component/paths');
 const config = require('../config/webpack.config.dev');
+
 const createDevServerConfig = require('../config/component/webpackDevServer.config');
 
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
 
 // Warn and crash if required files are missing
-if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
-    process.exit(1);
-}
+// if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
+//     // console.log(config);
+//     process.exit(1);
+// }
 
 // Tools like Cloud9 rely on this.
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;

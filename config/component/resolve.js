@@ -18,10 +18,13 @@ module.exports = {
     // for React Native Web.
     extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
     alias: {
+        src: paths.appSrc,
         common: paths.resolveApp('src/common'),
-        css: paths.resolveApp('src/css'),
-        img: paths.resolveApp('src/img'),
-        component: paths.resolveApp('src/component')
+        css: paths.resolveApp('src/common/css'),
+        img: paths.resolveApp('src/common/img'),
+        js: paths.resolveApp('src/common/js'),
+        component: paths.resolveApp('src/component'),
+        charts: paths.resolveApp('src/charts')
     },
     plugins: [
         // Prevents users from importing files from outside of src/ (or node_modules/).
