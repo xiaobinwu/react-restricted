@@ -3,9 +3,9 @@ import CSSModules from 'react-css-modules';
 import { Button } from 'antd';
 import Dynamic from 'charts/Dynamic';
 import logo from 'src/logo.svg';
-import styles from './App.css';
+import styles from './test1.css';
 
-class App extends Component {
+class Test1 extends Component {
   render() {
     return (
       <div styleName="App">
@@ -24,4 +24,4 @@ class App extends Component {
   }
 }
 
-export default CSSModules(App, styles);
+export default CSSModules(Test1, styles);

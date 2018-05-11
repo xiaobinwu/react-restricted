@@ -1,7 +1,7 @@
 const glob = require('glob');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const paths = require('./paths');
-const srcPage = paths.resolveApp('src/page');
+const srcPage = paths.resolveApp('src/site');
 const entries = glob.sync(`${srcPage}/*/*.js`);
 const entryJsList = {};
 const entryHtmlList = [];
@@ -11,7 +11,7 @@ for (const path of entries) {
     entryJsList[chunkName] = [
         // We ship a few polyfills by default:
         require.resolve('./polyfills'),
-        paths.resolveApp(`src/page/${chunkName}/${chunkName}.js`),
+        paths.resolveApp(`src/site/${chunkName}/index.js`),
         // We include the app code last so that if there is a runtime error during
         // initialization, it doesn't blow up the WebpackDevServer client, and
         // changing JS code would still trigger a refresh.
