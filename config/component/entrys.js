@@ -11,7 +11,7 @@ for (const path of entries) {
     entryJsList[chunkName] = [
         // We ship a few polyfills by default:
         require.resolve('./polyfills'),
-        paths.resolveApp(`src/site/${chunkName}/index.js`),
+        paths.resolveApp(`src/site/${chunkName}/${chunkName}.js`),
         // We include the app code last so that if there is a runtime error during
         // initialization, it doesn't blow up the WebpackDevServer client, and
         // changing JS code would still trigger a refresh.

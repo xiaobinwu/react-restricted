@@ -1,9 +1,6 @@
-/* 网关诊断系统 */
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import Test1 from './pages/test1/test1';
-// import registerServiceWorker from 'src/registerServiceWorker';
+import './baseLayout.css';
+import App from '../../component/App';
 
 import { Layout, Menu, Icon, Breadcrumb } from 'antd';
 const { Header, Sider, Content, Footer } = Layout;
@@ -62,7 +59,7 @@ class BaseLayout extends Component {
                                 <Breadcrumb.Item>App</Breadcrumb.Item>
                             </Breadcrumb>
                             <div style={{ padding: 24, background: '#fff', minHeight: 280 }}>
-                                <Test1/>
+                                <App/>
                             </div>
                         </Content>
                         <Footer style={{ textAlign: 'center' }}>
@@ -75,7 +72,4 @@ class BaseLayout extends Component {
     }
 }
 
-
-
-ReactDOM.render(<BaseLayout />, document.getElementById('root'));
-// registerServiceWorker();
+export default BaseLayout

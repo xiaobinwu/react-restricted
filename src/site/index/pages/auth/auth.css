@@ -1,0 +1,59 @@
+@import 'common/css/variable.css';
+.particles-js {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background-color: #f5f5f5;
+    overflow: hidden;
+}
+.login-form-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    width: 350px;
+    height: auto;
+}
+.login-input {
+    input {
+        background-color: transparent;
+        border: 1px var(--mainC) solid;
+        padding-left: 40px!important;
+    }
+}
+.login-form-button {
+    width: 100%;
+}
+.login-form-forgot {
+    float: right;
+}
+.login-icon {
+    color: rgba(0,0,0,.25);
+    font-size: 18px;
+}
+.login-form-logo {
+    text-align: center;
+}
+.login-form-logo-img {
+    height: 44px;
+    vertical-align: top;
+    margin-right: 16px;
+}
+.login-form-logo-text {
+    font-size: 33px;
+    color: rgba(0,0,0,.85);
+    font-family: "Myriad Pro","Helvetica Neue",Arial,Helvetica,sans-serif;
+    font-weight: 600;
+    position: relative;
+    top: 2px;
+}
+.login-form-dec {
+    font-size: 14px;
+    color: rgba(0,0,0,.45);
+    margin-top: 12px;
+    margin-bottom: 40px;
+    text-align: center;
+}
