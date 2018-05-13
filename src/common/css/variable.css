@@ -1,5 +1,6 @@
 :root {
-    --mainC: #1890ff;
-    --hoverC: #096dd9;
+    --deepColor: #2945cb;
+    --lightColor: #2b83f9;
+    --lighterColor: #3a9dff;
     --errorC: #f5222d;
 }

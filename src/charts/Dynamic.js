@@ -168,8 +168,6 @@ export default class Dynamic extends Component {
     });
 
     render() {
-        let code = "<ReactEcharts ref='echartsInstance' \n" +
-            "  option={this.state.option} />\n";
         return (
         <div className='examples' style={{marginTop: 40}}>
             <div className='parent'>
@@ -177,10 +175,6 @@ export default class Dynamic extends Component {
             <ReactEcharts ref='echarts_react'
                 option={this.state.option}
                 style={{height: 400, width: 1000, margin: 'auto', marginTop: 20}} />
-            <label> code below: use state of react to render dynamic chart</label>
-            <pre>
-                <code>{code}</code>
-            </pre>
             </div>
         </div>
         );

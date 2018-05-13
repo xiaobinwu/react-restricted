@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
-import './baseLayout.css';
+// import CSSModules from 'react-css-modules';
+import { BrowserRouter } from 'react-router-dom';
+import styles from './baseLayout.css';
 import App from '../../component/App';
+import logo from 'src/logo.svg';
 
 import { Layout, Menu, Icon, Breadcrumb } from 'antd';
 const { Header, Sider, Content, Footer } = Layout;
-
+const { SubMenu } = Menu;
 
 class BaseLayout extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            collapsed: false,
+            collapsed: false
         }
     }
     toggle = () => {
@@ -20,37 +23,44 @@ class BaseLayout extends Component {
     }
     render() {
         return (
-            <div>
+            <BrowserRouter>
                 <Layout>
                     <Sider
                         trigger={null}
                         collapsible
                         collapsed={this.state.collapsed}
-                        style={{background: '#fff'}}
+                        width="256"
                     >
-                        <div className="logo" style={{ height: 32, background: '#d8e6df', margin: 16}}/>
-                        <Menu mode="inline" defaultSelectedKeys={['1']} style={{ height: '100%' }}>
+                        <div className={styles.logo}>
+                            <img src={logo} alt="logo" />
+                            <h1>Service governance</h1>
+                        </div>
+                        <Menu mode="inline" defaultSelectedKeys={['2']} defaultOpenKeys={['sub1']} style={{ height: '100%' }}>
                             <Menu.Item key="1">
-                                <Icon type="user"></Icon>
-                                <span>Nav 1</span>
-                            </Menu.Item>
-                            <Menu.Item key="2">
-                                <Icon type="video-camera"></Icon>
-                                <span>Nav 2</span>
-                            </Menu.Item>   
-                            <Menu.Item key="3">
-                                <Icon type="upload"></Icon>
-                                <span>Nav 3</span>
-                            </Menu.Item>                 
+                                <Icon type="dot-chart" />
+                                <span>链路跟踪</span>
+                            </Menu.Item>       
+                            <SubMenu key="sub1" title={<span><Icon type="pie-chart" /><span>仪表盘</span></span>}>
+                                <Menu.Item key="2">实时性能监控</Menu.Item>
+                                <Menu.Item key="3">实时业务监控</Menu.Item>
+                            </SubMenu>
                         </Menu>
                     </Sider>
                     <Layout>
-                        <Header style={{ background: '#fff', padding: '0 25px' }}>
+                        <Header className={styles.header}>
                             <Icon 
-                                className="trigger"
+                                className={styles.trigger}
                                 type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
                                 onClick={this.toggle}
                             />
+                            <Menu
+                                mode="horizontal"
+                                defaultSelectedKeys={['5']}
+                                className={styles.nav}
+                            >
+                                <Menu.Item key="5">链路跟踪系统</Menu.Item>
+                                <Menu.Item key="6">网关诊断系统</Menu.Item>
+                            </Menu>
                         </Header>
                         <Content style={{ padding: '0 25px' }}>
                             <Breadcrumb style={{ margin: '16px 0' }}>
@@ -67,9 +77,9 @@ class BaseLayout extends Component {
                         </Footer>
                     </Layout>
                 </Layout>
-            </div>
+            </BrowserRouter>
         );
     }
 }
 
-export default BaseLayout
+export default BaseLayout;
