@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 // import CSSModules from 'react-css-modules';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { login } from 'service/auth';
 import particles from './particles';
 import styles from'./auth.css';
 
-console.log(styles);
+// console.log(styles);
 
 const FormItem = Form.Item;
 
@@ -14,6 +15,7 @@ class Auth extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
+                login();
                 console.log('Received values of form: ', values);
             }
         });
