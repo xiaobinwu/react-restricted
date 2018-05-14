@@ -45,6 +45,7 @@
     background-color: transparent;
     line-height: 64px;
     color: #fff;
+    font-size: 16px;
     li {
         opacity: .69;
         transition: opacity .3s;
@@ -70,6 +71,22 @@
         color: #fff!important;
         opacity: 1;
     } 
+}
+
+.aidNav {
+    line-height: 64px;
+    display: inline-block;
+    float: right;
+    :global .anticon {
+        font-size: 18px;
+        margin: 0 16px;
+        color: #fff;
+        opacity: 1;
+        
+        &:hover {
+            opacity: .69;
+        }
+    }
 }
 
 .content {

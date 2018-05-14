@@ -35,7 +35,7 @@ class BaseLayout extends Component {
                             <img src={logo} alt="logo" />
                             <h1>Service governance</h1>
                         </div>
-                        <Menu mode="inline" defaultSelectedKeys={['2']} defaultOpenKeys={['sub1']} style={{ height: '100%' }}>
+                        <Menu mode="inline" defaultSelectedKeys={['2']} defaultOpenKeys={['sub1']} style={{ height: '100%', fontSize: '12px' }}>
                             <Menu.Item key="1">
                                 <Icon type="dot-chart" />
                                 <span>链路跟踪</span>
@@ -58,9 +58,20 @@ class BaseLayout extends Component {
                                 defaultSelectedKeys={['5']}
                                 className={styles.nav}
                             >
-                                <Menu.Item key="5">链路跟踪系统</Menu.Item>
-                                <Menu.Item key="6">网关诊断系统</Menu.Item>
+                                <Menu.Item key="5">
+                                    <Icon type="area-chart" />
+                                    链路跟踪系统
+                                </Menu.Item>
+                                <Menu.Item key="6">
+                                    <Icon type="bar-chart" />
+                                    网关服务系统
+                                </Menu.Item>
                             </Menu>
+                            <div className={styles.aidNav}>
+                                <Icon type="message" />
+                                <Icon type="usergroup-add" />
+                                <Icon type="user" />
+                            </div>
                         </Header>
                         <Content style={{ padding: '0 25px' }}>
                             <Breadcrumb style={{ margin: '16px 0' }}>

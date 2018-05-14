@@ -74,9 +74,7 @@ export default class Dynamic extends Component {
             show: false,
             min: 0,
             max: 1000,
-            color: ['#BE002F', '#F20C00', '#F00056', '#FF2D51', '#FF2121', '#FF4C00', '#FF7500',
-                '#FF8936', '#FFA400', '#F0C239', '#FFF143', '#FAFF72', '#C9DD22', '#AFDD22',
-                '#9ED900', '#00E500', '#0EB83A', '#0AA344', '#0C8918', '#057748', '#177CB0']
+            color: ['#2945cb', '#2b83f9', '#a1ecc7', '#3a9dff']
         },
         xAxis: [
             {
@@ -171,10 +169,9 @@ export default class Dynamic extends Component {
         return (
         <div className='examples' style={{marginTop: 40}}>
             <div className='parent'>
-            <label> use React state to render dynamic chart</label>
             <ReactEcharts ref='echarts_react'
                 option={this.state.option}
-                style={{height: 400, width: 1000, margin: 'auto', marginTop: 20}} />
+                style={{height: 400, width: 1540}} />
             </div>
         </div>
         );

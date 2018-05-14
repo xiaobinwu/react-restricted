@@ -3,4 +3,25 @@
     --lightColor: #2b83f9;
     --lighterColor: #3a9dff;
     --errorC: #f5222d;
+    --sucessC: #5fbb5d;
+}
+
+%full {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+%nowrap {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+%cover {
+    position: absolute !important;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }
