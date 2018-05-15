@@ -2,7 +2,6 @@ import store from 'rRedux/store';
 
 /* redux状态修改 */
 export const getLoggedUser = () => {
-    console.log(11111);
     setTimeout(() => {
         store.dispatch({
             type: 'GET_LOGGED_USER'
@@ -12,11 +11,11 @@ export const getLoggedUser = () => {
 export const login = () => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            console.log('success')
             store.dispatch({
                 type: 'SET_LOGGED_USER',
                 logged: true
             });
+            resolve();
         }, 3000);
     });
 }
@@ -27,6 +26,7 @@ export const logout = () => {
                 type: 'SET_LOGGED_USER',
                 logged: false
             });
+            resolve();
         }, 3000);
     });
 }

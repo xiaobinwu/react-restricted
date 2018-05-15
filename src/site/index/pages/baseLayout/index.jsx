@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 // import CSSModules from 'react-css-modules';
 import { BrowserRouter } from 'react-router-dom';
-import styles from './baseLayout.css';
-import App from '../../component/App';
+import styles from './index.css';
+import App from '../routeCompoent/linkTracking/overview';
 import logo from 'src/logo.svg';
+import { Layout, Icon, Breadcrumb } from 'antd';
 
-import { Layout, Menu, Icon, Breadcrumb } from 'antd';
+import routes from '../../../../route';  // 后面由服务端下发
+import SiderMenu from "../../component/siderMenu";
+import HeaderMenu from "../../component/headerMenu";
+
 const { Header, Sider, Content, Footer } = Layout;
-const { SubMenu } = Menu;
+
 
 class BaseLayout extends Component {
     constructor(props) {
@@ -22,6 +26,7 @@ class BaseLayout extends Component {
         });
     }
     render() {
+        const { location } = this.props;
         return (
             <BrowserRouter>
                 <Layout>
@@ -35,16 +40,9 @@ class BaseLayout extends Component {
                             <img src={logo} alt="logo" />
                             <h1>Service governance</h1>
                         </div>
-                        <Menu mode="inline" defaultSelectedKeys={['2']} defaultOpenKeys={['sub1']} style={{ height: '100%', fontSize: '12px' }}>
-                            <Menu.Item key="1">
-                                <Icon type="dot-chart" />
-                                <span>链路跟踪</span>
-                            </Menu.Item>       
-                            <SubMenu key="sub1" title={<span><Icon type="pie-chart" /><span>仪表盘</span></span>}>
-                                <Menu.Item key="2">实时性能监控</Menu.Item>
-                                <Menu.Item key="3">实时业务监控</Menu.Item>
-                            </SubMenu>
-                        </Menu>
+
+                        <SiderMenu location={location} navData={routes} />
+                        
                     </Sider>
                     <Layout>
                         <Header className={styles.header}>
@@ -53,20 +51,9 @@ class BaseLayout extends Component {
                                 type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
                                 onClick={this.toggle}
                             />
-                            <Menu
-                                mode="horizontal"
-                                defaultSelectedKeys={['5']}
-                                className={styles.nav}
-                            >
-                                <Menu.Item key="5">
-                                    <Icon type="area-chart" />
-                                    链路跟踪系统
-                                </Menu.Item>
-                                <Menu.Item key="6">
-                                    <Icon type="bar-chart" />
-                                    网关服务系统
-                                </Menu.Item>
-                            </Menu>
+
+                            <HeaderMenu location={location} navData={routes} />
+
                             <div className={styles.aidNav}>
                                 <Icon type="message" />
                                 <Icon type="usergroup-add" />

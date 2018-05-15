@@ -11,7 +11,6 @@ class AuthorizedRoute extends Component {
         getLoggedUser();
     }
     render() {
-        console.log(this.props.logged);
         const { component: Component, pending, logged, ...rest } = this.props;
         return (
             <Route {...rest} render={(props) => {

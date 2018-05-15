@@ -40,38 +40,7 @@
         width: 32px;
     }
 }
-.nav {
-    display: inline-block;
-    background-color: transparent;
-    line-height: 64px;
-    color: #fff;
-    font-size: 16px;
-    li {
-        opacity: .69;
-        transition: opacity .3s;
-        cursor: pointer;
-        margin-top: 0!important;
-        border-bottom-width: 0px!important;
-    }
-    :global .ant-menu-item-selected {
-        color: #fff;
-        opacity: 1;
-        position: relative;
-        &:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background-color: #4fe3c1;
-        }
-    }
-    :global .ant-menu-item-active {
-        color: #fff!important;
-        opacity: 1;
-    } 
-}
+
 
 .aidNav {
     line-height: 64px;

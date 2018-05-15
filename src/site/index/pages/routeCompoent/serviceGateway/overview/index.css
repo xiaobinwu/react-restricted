@@ -1,0 +1,152 @@
+@import 'common/css/header.css';
+@import 'common/css/variable.css';
+:root {
+    --bgColor: #222;
+    --whiteColor: #fff;
+}
+
+/* css绘制三角形 */
+
+@define-mixin triangle $width {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: transparent;
+    border-width: $(width);
+}
+
+%nowrap {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.App {
+    color: #657180;
+}
+
+.App-img {
+    margin: auto;
+    margin-top: 80px;
+    width: width('img/test.png');
+    height: height('img/test.png');
+    background: resolve('img/test.png');
+}
+
+.App-logo {
+    animation: App-logo-spin infinite 20s linear;
+    height: 80px;
+}
+
+.App-header {
+    background-color: var(--bgColor);
+    height: 150px;
+    padding: 20px;
+    color: var(--whiteColor);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    &:after {
+        content: '';
+        position: absolute;
+        bottom: -16px;
+        left: 50%;
+        @mixin triangle 8px;
+        border-top-color: var(--bgColor);
+    }
+}
+
+.App-title {
+    width: 200px;
+    font-size: 1.5em;
+    line-height: 100%;
+    color: var(--whiteColor);
+    @extend %nowrap;
+}
+
+.App-intro {
+    font-size: large;
+    margin-top: 50px;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.title {
+    font-size: 18px;
+    color: #464c5b;
+    line-height: 24px;
+    padding-bottom: 15px;
+    margin-bottom: 0;
+    font-weight: 400; 
+}
+.chart-title {
+    font-size: 16px;
+    color: #464c5b;
+    height: 40px;
+    line-height: 40px;
+    font-weight: 600;
+    border-bottom: 1px dotted  #e3e8ee; 
+}
+
+/*概览*/
+.overview {
+    margin-bottom: 40px;
+    .overview-container {
+        height: 64px;
+        .overview-box {
+            height: 100%;
+            display: inline-block;
+            font-size: 0;
+            padding-right: 48px;
+            .overview-box-data {
+                overflow: hidden;
+                .overview-box-num {
+                    display: inline-block;
+                    margin-bottom: 0;
+                    font-size: 32px;
+                    color: #464c5b;
+                    line-height: 48px;
+                    padding-right: 12px;
+                }
+                .overview-equipment {
+                    display: inline-block;
+                    font-size: 12px;
+                    color: #495060;
+                    .overview-equ {
+                        font-size: 12px;
+                        vertical-align: text-bottom;
+                    }
+                    .overview-sucess-icon {
+                        color: var(--sucessC);
+                        font-size: 18px;
+                    }
+                    .overview-error-icon {
+                        color: var(--errorC);
+                        font-size: 18px;
+                    }
+
+                }
+            }
+            .overview-box-title {
+                font-size: 12px;
+                color: #657180;
+                line-height: 16px;
+            }
+        }
+    }
+}
+.table {
+    margin: 20px 0;
+    :global .ant-btn {
+        margin-right: 10px;
+    }
+}

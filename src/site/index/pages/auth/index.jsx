@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 // import CSSModules from 'react-css-modules';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
 import { login } from 'service/auth';
 import particles from './particles';
-import styles from'./auth.css';
+import styles from'./index.css';
 
 // console.log(styles);
 
@@ -15,7 +15,12 @@ class Auth extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                login();
+                if (values.userName !== 'admin' && values.password !== 'admin') {
+                    return message.error('用户名：admin；密码：admin', 1.5);
+                }
+                login().then(() => {
+                    this.props.history.push('/site');
+                });
                 console.log('Received values of form: ', values);
             }
         });

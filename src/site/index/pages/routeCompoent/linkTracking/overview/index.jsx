@@ -4,7 +4,7 @@ import { Icon, Row, Col, Button, Table  } from 'antd';
 import Dynamic from 'charts/Dynamic';
 import Nesting from 'charts/Nesting';
 import Radar from 'charts/Radar';
-import styles from './App.css';
+import styles from './index.css';
 
 const data = [{
     key: '1',

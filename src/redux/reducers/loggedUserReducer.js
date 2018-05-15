@@ -1,6 +1,6 @@
 const initialState = {
     pending: true,
-    logged: false
+    logged: true
 };
 
 const loggedUserReducer = (state = initialState, action) => {
@@ -10,7 +10,6 @@ const loggedUserReducer = (state = initialState, action) => {
         });
     }
     if (action.type === 'SET_LOGGED_USER') {
-        console.log('success+1')
         return Object.assign({}, state, {
             pending: false,
             logged: action.logged
