@@ -5,7 +5,8 @@ import styles from './index.css';
 import App from '../routeCompoent/linkTracking/overview';
 import logo from 'src/logo.svg';
 import { Layout, Icon, Breadcrumb } from 'antd';
-
+import store from 'rRedux/store';
+import { connect } from 'react-redux';
 import routes from '../../../../route';  // 后面由服务端下发
 import SiderMenu from "../../component/siderMenu";
 import HeaderMenu from "../../component/headerMenu";
@@ -25,8 +26,31 @@ class BaseLayout extends Component {
             collapsed: !this.state.collapsed,
         });
     }
+    changeSite = (currentSite) => {
+        store.dispatch({
+            type: 'SET_SITE',
+            currentSite
+        });
+    }
+    handleLocation = ({ pathname }) => {
+        let headerMenuSelectedKey;
+        if (pathname === '/') {
+            headerMenuSelectedKey = ['0'];
+        }
+        const selectedIndex = routes.findIndex((item, index) => {
+            return pathname.search(new RegExp(`^${item.path}`, 'ig')) > -1;
+        });
+        headerMenuSelectedKey = selectedIndex > -1 ? [String(selectedIndex)] : ['0'];
+        if (selectedIndex > -1) {
+            this.changeSite(routes[selectedIndex].site);
+        }
+        return {
+            headerMenuSelectedKey
+        };
+    }
     render() {
-        const { location } = this.props;
+        const {headerMenuSelectedKey} = this.handleLocation(this.props.location);
+        const { location, currentSite } = this.props;
         return (
             <BrowserRouter>
                 <Layout>
@@ -41,7 +65,7 @@ class BaseLayout extends Component {
                             <h1>Service governance</h1>
                         </div>
 
-                        <SiderMenu location={location} navData={routes} />
+                        <SiderMenu location={location} navData={routes} currentSite={currentSite} />
                         
                     </Sider>
                     <Layout>
@@ -52,7 +76,7 @@ class BaseLayout extends Component {
                                 onClick={this.toggle}
                             />
 
-                            <HeaderMenu location={location} navData={routes} />
+                            <HeaderMenu navData={routes} defaultSelectedKeys={headerMenuSelectedKey} />
 
                             <div className={styles.aidNav}>
                                 <Icon type="message" />
@@ -80,4 +104,8 @@ class BaseLayout extends Component {
     }
 }
 
-export default BaseLayout;
+const stateToProps = ({ routeState }) => ({
+    currentSite: routeState.currentSite,
+});
+
+export default connect(stateToProps)(BaseLayout);

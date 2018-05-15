@@ -9,9 +9,21 @@ export default class SiderMenu extends Component {
         super(props);
     }
     render() {
-        // const { location, navData } = this.props;
-        // console.log(location);
-        // console.log(navData);
+        const { location, navData, currentSite } = this.props;
+        console.log(location);
+        console.log(navData);
+        console.log(currentSite);
+
+        const menuSet = navData.filter((item, i) => {
+            return item.site === currentSite;
+        })
+        menuSet.length === 1 &&
+        menuSet[0].children &&
+        menuSet[0].children.length > 1 &&
+        menuSet[0].children.map((item, i) => {
+            let pathObj = JSON.parse(JSON.stringify(item));
+        });
+
         return (
             <Menu mode="inline" defaultSelectedKeys={['2']} defaultOpenKeys={['sub1']} style={{ height: '100%', fontSize: '12px' }}>
                 <Menu.Item key="1">

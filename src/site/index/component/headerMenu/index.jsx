@@ -13,20 +13,10 @@ export default class SiderMenu extends Component {
         }
         return backPath.length > 0 ? `/${backPath.join('/')}` : '';
     }
-    defaultSelectedKeys(data) {
-        const { pathname } = this.props.location;
-        if (pathname === '/') {
-            return ['0'];
-        }
-        const selectedIndex = String(data.findIndex((item, index) => {
-            return pathname.search(new RegExp(`^${item.path}`, 'ig')) > -1;
-        }));
-        return [selectedIndex];
-    }
     render() {
-        const { navData } = this.props;
+        const { navData, defaultSelectedKeys } = this.props;
         return (
-            <Menu mode="horizontal" defaultSelectedKeys={this.defaultSelectedKeys(navData)} className={styles.nav}>
+            <Menu mode="horizontal" defaultSelectedKeys={defaultSelectedKeys} className={styles.nav}>
                 {
                     navData.map((item, i) => {
                         return(
