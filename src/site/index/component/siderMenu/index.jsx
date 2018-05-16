@@ -10,7 +10,9 @@ class SiderMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            menuItems: {}
+            menuItems: {},
+            selectedKeys: ['0'],
+            openKeys: ['0-0']
         }
     }
     componentWillMount() {
@@ -21,6 +23,35 @@ class SiderMenu extends Component {
         this.setState({
             menuItems
         });
+        this.handleLocation(this.props.location);
+    }
+    handleLocation = ({ pathname }) => {
+        // console.log(pathname)
+        //http://localhost:3000/service-gateway/test/test1/test3
+        let siderMenuSelectedKey = '0';
+        let siderMenuOpendedKey = [];
+        if (pathname === '/') {
+            let pathObj = JSON.parse(JSON.stringify(this.props.navData[0])); 
+            while (pathObj.children && pathObj.children.length > 0) {
+                pathObj.key && siderMenuOpendedKey.push(pathObj.key);
+                siderMenuSelectedKey =  pathObj.children[0].key;
+                pathObj = pathObj.children[0];
+            }
+            this.setState({
+                selectedKeys: [siderMenuSelectedKey],
+                openKeys: siderMenuOpendedKey
+            });
+        } else {
+            const pathnameArr = pathname.split('/');
+            pathnameArr.shift();
+            const currentRoutes = this.props.navData.filter((item) => {
+                return item.path === `/${pathnameArr[0]}`;
+            });
+            pathnameArr.shift();
+            // while (currentRoutes.children && currentRoutes.children.length > 0) {
+
+            // }
+        }
     }
     walkMenu = (menuSet, path, index) => {
         return menuSet.map((item, i) => {
@@ -62,10 +93,10 @@ class SiderMenu extends Component {
         }
     }
     render() {
-        const { menuItems } = this.state;
+        const { menuItems, selectedKeys, openKeys } = this.state;
         const { location, currentSite } = this.props;
         return (
-            <Menu mode="inline" defaultSelectedKeys={['2']} defaultOpenKeys={['sub1']} className={styles.sider} onClick={this.handleClick}>
+            <Menu mode="inline" defaultSelectedKeys={selectedKeys} defaultOpenKeys={openKeys} className={styles.sider} onClick={this.handleClick}>
                 { menuItems[currentSite] }
             </Menu>
         );

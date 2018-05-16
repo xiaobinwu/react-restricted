@@ -9,17 +9,20 @@ const routes = [
                 name: '应用概览',
                 path: 'overview',
                 icon: 'book',
+                key: '0',
                 component: 'Overview',
                 children: [
                     {
                         name: '实时性能监控',
                         path: 'performance',
-                        component: 'Performance'
+                        component: 'Performance',
+                        key: '0-0'
                     },
                     {
                         name: '实时业务监控',
                         path: 'business',
-                        component: 'Business'
+                        component: 'Business',
+                        key: '0-1'
                     }
                 ]
 
@@ -28,16 +31,19 @@ const routes = [
                 name: '仪表盘',
                 path: 'board',
                 icon: 'pie-chart',
+                key: '1',
                 children: [
                     {
                         name: '实时性能监控',
                         path: 'performance',
-                        component: 'Performance'
+                        component: 'Performance',
+                        key: '1-0'
                     },
                     {
                         name: '实时业务监控',
                         path: 'business',
-                        component: 'Business'
+                        component: 'Business',
+                        key: '1-1'
                     }
                 ]
             }
@@ -53,36 +59,42 @@ const routes = [
                 name: '应用概览',
                 path: 'overview',
                 icon: 'calendar',
-                component: 'Overview'
+                component: 'Overview',
+                key: '0'
             },
             {
                 name: '测试父菜单',
                 path: 'test',
                 icon: 'cloud',
+                key: '1',
                 children: [
                     {
                         name: '测试子菜单1',
                         path: 'test1',
                         component: 'Test1',
+                        key: '1-0',
                         children: [
                             {
                                 name: '测试子菜单1-1',
                                 path: 'test3',
                                 icon: 'book',
-                                component: 'Test3'
+                                component: 'Test3',
+                                key: '1-0-0'
                             },
                             {
                                 name: '测试子菜单1-2',
                                 path: 'test4',
                                 icon: 'book',
-                                component: 'Test4'
+                                component: 'Test4',
+                                key: '1-0-1'
                             }
                         ]
                     },
                     {
                         name: '测试子菜单2',
                         path: 'test2',
-                        component: 'Test2'
+                        component: 'Test2',
+                        key: '1-1'
                     }
                 ]
             }
