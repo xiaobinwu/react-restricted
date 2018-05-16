@@ -5,20 +5,22 @@ import styles from './index.css';
 import App from '../routeCompoent/linkTracking/overview';
 import logo from 'src/logo.svg';
 import { Layout, Icon, Breadcrumb } from 'antd';
-import store from 'rRedux/store';
 import { connect } from 'react-redux';
+import store from 'rRedux/store';
 import routes from '../../../../route';  // 后面由服务端下发
 import SiderMenu from "../../component/siderMenu";
 import HeaderMenu from "../../component/headerMenu";
-
+import BreadGuide from "../../component/breadGuide";
 const { Header, Sider, Content, Footer } = Layout;
 
 
 class BaseLayout extends Component {
     constructor(props) {
         super(props);
+        const {headerMenuSelectedKey} = this.handleLocation(this.props.location);
         this.state = {
-            collapsed: false
+            collapsed: false,
+            headerMenuSelectedKey
         }
     }
     toggle = () => {
@@ -33,9 +35,25 @@ class BaseLayout extends Component {
         });
     }
     handleLocation = ({ pathname }) => {
+        // console.log(pathname)
+        //http://localhost:3000/service-gateway/test/test1/test3
         let headerMenuSelectedKey;
+        let siderMenuSelectedKey;
+        let siderMenuOpendedKey = [];
         if (pathname === '/') {
             headerMenuSelectedKey = ['0'];
+            let count = 0;
+            let pathObj = JSON.parse(JSON.stringify(routes[0])); 
+            while (pathObj.children && pathObj.children.length > 0) {
+                count++;
+                pathObj = pathObj.children[0];
+            }
+            siderMenuSelectedKey = [new Array(count).fill(0).join('-')];
+            while(count > 0) {
+                siderMenuOpendedKey.push(new Array(count).fill(0).join('-'));
+                count--;
+            }
+            console.log(siderMenuOpendedKey);
         }
         const selectedIndex = routes.findIndex((item, index) => {
             return pathname.search(new RegExp(`^${item.path}`, 'ig')) > -1;
@@ -46,18 +64,18 @@ class BaseLayout extends Component {
         }
         return {
             headerMenuSelectedKey
-        };
+        }
     }
     render() {
-        const {headerMenuSelectedKey} = this.handleLocation(this.props.location);
-        const { location, currentSite } = this.props;
+        const { headerMenuSelectedKey, collapsed } = this.state; 
+        const { location } = this.props;
         return (
             <BrowserRouter>
                 <Layout>
                     <Sider
                         trigger={null}
                         collapsible
-                        collapsed={this.state.collapsed}
+                        collapsed={collapsed}
                         width="256"
                     >
                         <div className={styles.logo}>
@@ -65,7 +83,7 @@ class BaseLayout extends Component {
                             <h1>Service governance</h1>
                         </div>
 
-                        <SiderMenu location={location} navData={routes} currentSite={currentSite} />
+                        <SiderMenu location={location} navData={routes} />
                         
                     </Sider>
                     <Layout>
@@ -76,7 +94,7 @@ class BaseLayout extends Component {
                                 onClick={this.toggle}
                             />
 
-                            <HeaderMenu navData={routes} defaultSelectedKeys={headerMenuSelectedKey} />
+                            <HeaderMenu navData={routes} defaultSelectedKeys={headerMenuSelectedKey} onLinkClick={this.changeSite} />
 
                             <div className={styles.aidNav}>
                                 <Icon type="message" />
@@ -85,11 +103,7 @@ class BaseLayout extends Component {
                             </div>
                         </Header>
                         <Content style={{ padding: '0 25px' }}>
-                            <Breadcrumb style={{ margin: '16px 0' }}>
-                                <Breadcrumb.Item>Home</Breadcrumb.Item>
-                                <Breadcrumb.Item>List</Breadcrumb.Item>
-                                <Breadcrumb.Item>App</Breadcrumb.Item>
-                            </Breadcrumb>
+                            <BreadGuide />
                             <div style={{ padding: 24, background: '#fff', minHeight: 280 }}>
                                 <App/>
                             </div>
@@ -105,7 +119,7 @@ class BaseLayout extends Component {
 }
 
 const stateToProps = ({ routeState }) => ({
-    currentSite: routeState.currentSite,
+    currentSite: routeState.currentSite
 });
 
 export default connect(stateToProps)(BaseLayout);

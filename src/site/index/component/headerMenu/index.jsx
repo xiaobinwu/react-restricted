@@ -4,7 +4,7 @@ import { Menu, Icon } from 'antd';
 import styles from './index.css';
 
 export default class SiderMenu extends Component {
-    reducePath (item) {
+    reducePath = (item) => {
         const backPath = [];
         let pathObj = JSON.parse(JSON.stringify(item)); 
         while (pathObj.children && pathObj.children.length > 0) {
@@ -14,7 +14,7 @@ export default class SiderMenu extends Component {
         return backPath.length > 0 ? `/${backPath.join('/')}` : '';
     }
     render() {
-        const { navData, defaultSelectedKeys } = this.props;
+        const { navData, defaultSelectedKeys, onLinkClick } = this.props;
         return (
             <Menu mode="horizontal" defaultSelectedKeys={defaultSelectedKeys} className={styles.nav}>
                 {
@@ -22,7 +22,7 @@ export default class SiderMenu extends Component {
                         return(
                             <Menu.Item key={i}>
                                 <Icon type={item.icon} />
-                                <Link to={`${item.path}${this.reducePath(item)}`}>{item.name}</Link>
+                                <Link to={`${item.path}${this.reducePath(item)}`} onClick={onLinkClick.bind(this, item.site)}>{item.name}</Link>
                             </Menu.Item>
                         )
                     })

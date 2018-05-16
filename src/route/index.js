@@ -9,7 +9,20 @@ const routes = [
                 name: '应用概览',
                 path: 'overview',
                 icon: 'book',
-                component: 'Overview'
+                component: 'Overview',
+                children: [
+                    {
+                        name: '实时性能监控',
+                        path: 'performance',
+                        component: 'Performance'
+                    },
+                    {
+                        name: '实时业务监控',
+                        path: 'business',
+                        component: 'Business'
+                    }
+                ]
+
             },
             {
                 name: '仪表盘',
@@ -50,7 +63,21 @@ const routes = [
                     {
                         name: '测试子菜单1',
                         path: 'test1',
-                        component: 'Test1'
+                        component: 'Test1',
+                        children: [
+                            {
+                                name: '测试子菜单1-1',
+                                path: 'test3',
+                                icon: 'book',
+                                component: 'Test3'
+                            },
+                            {
+                                name: '测试子菜单1-2',
+                                path: 'test4',
+                                icon: 'book',
+                                component: 'Test4'
+                            }
+                        ]
                     },
                     {
                         name: '测试子菜单2',
