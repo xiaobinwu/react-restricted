@@ -1,7 +1,8 @@
 @import 'common/css/variable.css';
+@import 'common/css/bootstrap.css';
 .sider {
     height: 100%;
-    font-size: 12px;
+    font-size: 16px;
     :global .ant-menu-item-selected,
     :global .ant-menu-item-active {
         a {
@@ -9,7 +10,6 @@
         }
     }
     :global a {
-        color: rgba(0, 0, 0, 0.65);
         text-decoration: none;
     } 
 }

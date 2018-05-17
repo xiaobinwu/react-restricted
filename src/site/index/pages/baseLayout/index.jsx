@@ -5,7 +5,7 @@ import styles from './index.css';
 import App from '../routeCompoent/linkTracking/overview';
 import logo from 'src/logo.svg';
 import { Layout, Icon } from 'antd';
-import routes from '../../../../route';  // 后面由服务端下发
+import routes from '../../../../route/route';  // 后面由服务端下发
 import SiderMenu from "../../component/siderMenu";
 import HeaderMenu from "../../component/headerMenu";
 import BreadGuide from "../../component/breadGuide";
@@ -41,7 +41,7 @@ class BaseLayout extends Component {
                             <h1>Service governance</h1>
                         </div>
 
-                        <SiderMenu location={location} navData={routes} />
+                        <SiderMenu location={location} collapsed={collapsed} navData={routes} />
                         
                     </Sider>
                     <Layout>
