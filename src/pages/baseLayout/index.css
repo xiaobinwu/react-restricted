@@ -63,3 +63,12 @@
     overflow: auto;
     padding: 0 25px;
 }
+.spin {
+    :global .ant-spin {
+        height: 100vh !important;
+        max-height: 100vh!important;
+    }
+    :global .ant-spin-blur {
+        opacity: 0.4!important;
+    }
+}

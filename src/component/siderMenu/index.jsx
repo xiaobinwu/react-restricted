@@ -42,7 +42,7 @@ class SiderMenu extends Component {
             while (pathObj.children && pathObj.children.length > 0) {
                 pathObj.key && siderMenuOpendedKey.push(pathObj.key);
                 siderMenuSelectedKey =  pathObj.children[0].key;
-                breadCrumb.push(pathObj.name);
+                breadCrumb.push(pathObj.children[0].name);
                 pathObj = pathObj.children[0];
             }
         } else {
@@ -145,7 +145,7 @@ class SiderMenu extends Component {
     }
     render() {
         const { menuItems, selectedKeys, openKeys } = this.state;
-        const { location, currentSite, collapsed } = this.props;
+        const { currentSite, collapsed } = this.props;
         return (
             <Menu mode="inline" inlineCollapsed={collapsed} onOpenChange={this.handleOpenChange} onSelect={this.handleSelectedChange} selectedKeys={selectedKeys} openKeys={openKeys}  className={styles.sider} onClick={this.changeBreadCrumb}>
                 { menuItems[currentSite] }

@@ -27,7 +27,7 @@ const data = [{
     age: 32,
     address: 'London No. 2 Lake Park',
 }];
-class App extends Component {
+class Overview extends Component {
   state = {
     filteredInfo: null,
     sortedInfo: null,
@@ -167,4 +167,4 @@ class App extends Component {
   }
 }
 
-export default CSSModules(App, styles);
+export default CSSModules(Overview, styles);

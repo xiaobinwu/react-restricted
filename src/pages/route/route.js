@@ -10,22 +10,7 @@ const routes = [
                 path: 'overview',
                 icon: 'book',
                 key: '0',
-                component: 'Overview',
-                children: [
-                    {
-                        name: '实时性能监控',
-                        path: 'performance',
-                        component: 'Performance',
-                        key: '0-0'
-                    },
-                    {
-                        name: '实时业务监控',
-                        path: 'business',
-                        component: 'Business',
-                        key: '0-1'
-                    }
-                ]
-
+                component: 'Overview'
             },
             {
                 name: '仪表盘',
@@ -59,7 +44,7 @@ const routes = [
                 name: '应用概览',
                 path: 'overview',
                 icon: 'calendar',
-                component: 'Overview',
+                component: 'Overview1',
                 key: '0'
             },
             {

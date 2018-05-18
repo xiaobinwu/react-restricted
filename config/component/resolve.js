@@ -23,9 +23,13 @@ module.exports = {
         css: paths.resolveApp('src/common/css'),
         img: paths.resolveApp('src/common/img'),
         js: paths.resolveApp('src/common/js'),
+
         component: paths.resolveApp('src/component'),
         service: paths.resolveApp('src/service'),
         rRedux: paths.resolveApp('src/redux'),
+        pages: paths.resolveApp('src/pages'),
+        route: paths.resolveApp('src/pages/route'),
+        view: paths.resolveApp('src/pages/view'),
         charts: paths.resolveApp('src/charts')
     },
     plugins: [
