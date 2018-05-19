@@ -8,6 +8,9 @@ import Auth from 'pages/auth';
 import BaseLayout from 'pages/baseLayout';
 import AuthorizedRoute from './authorizedRoute';
 
+if (module.hot) {
+    module.hot.accept();
+}
 
 class App extends Component {
     render() {
