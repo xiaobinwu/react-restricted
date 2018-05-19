@@ -6,7 +6,8 @@ class ViewSet extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            views: []
+            views: [],
+            defaultView: ''
         }
     }
     UNSAFE_componentWillMount() {
@@ -22,25 +23,23 @@ class ViewSet extends Component {
             if (item.children && item.children.length > 0) {
                 return this.walkRoutes(item.children, linkPath, key);
             } else {
-                if (key.split('-').reduce((accumulator, currentValue) => { return Number(accumulator) + Number(currentValue) }, 0) === 0) {
-                    return (
-                        <div>
-                            <Route exact path="/" component={routeSet[item.component]} />
-                            <Route key={key} path={linkPath} component={routeSet[item.component]} />
-                        </div>
-                    );
-                } else {
-                    return (
-                        <Route key={key} path={linkPath} component={routeSet[item.component]} />
-                    );
+                const isBasePath = key.split('-').reduce((accumulator, currentValue) => { return Number(accumulator) + Number(currentValue) }, 0) === 0;
+                if (isBasePath) {
+                    this.setState({
+                        defaultView: item.component
+                    });
                 }
+                return (
+                    <Route key={key} path={linkPath} component={routeSet[item.component]} />
+                );        
             }
         });
     }
     render() {
-        const { views } = this.state;  
+        const { views, defaultView} = this.state;  
         return (
             <Switch>
+                <Route exact path="/" component={routeSet[defaultView]} />
                 { views } 
             </Switch>
         )
