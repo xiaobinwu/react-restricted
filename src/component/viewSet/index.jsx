@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import routeSet from 'route/index';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 class ViewSet extends Component {
     constructor(props) {

@@ -1,9 +1,10 @@
 {
-  "name": "react-restricted",
+  "name": "brainkeeper-admin",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "antd": "^3.5.0",
+    "axios": "^0.18.0",
     "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
     "babel-loader": "7.1.2",
@@ -41,6 +42,7 @@
     "postcss-nested": "^3.0.0",
     "promise": "8.0.1",
     "prop-types": "^15.6.1",
+    "qs": "^6.5.2",
     "raf": "3.4.0",
     "react": "^16.3.2",
     "react-css-modules": "^4.7.2",
@@ -69,6 +71,15 @@
   "devDependencies": {
     "babel-plugin-import": "^1.7.0",
     "remote-redux-devtools": "^0.5.12"
+  },
+  "proxy": {
+    "/api-dev": {
+      "target": "http://10.40.2.59:8080",
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/api-dev": ""
+      }
+    }
   },
   "theme": "./themes/theme.js"
 }

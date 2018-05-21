@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 // import CSSModules from 'react-css-modules';
 import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
-import { login } from 'service/auth';
+import userService from 'service/userService'
+
 import particles from './particles';
 import styles from'./index.css';
 
@@ -18,9 +19,10 @@ class Auth extends Component {
                 if (values.userName !== 'admin' && values.password !== 'admin') {
                     return message.error('用户名：admin；密码：admin', 1.5);
                 }
-                login().then(() => {
-                    this.props.history.push('/site');
+                userService.login({ username: values.userName, password: values.password }).then((res) => {
+                    console.log(res)
                 });
+
                 console.log('Received values of form: ', values);
             }
         });
