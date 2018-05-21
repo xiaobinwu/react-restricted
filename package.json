@@ -43,6 +43,7 @@
     "promise": "8.0.1",
     "prop-types": "^15.6.1",
     "qs": "^6.5.2",
+    "query-string": "^6.1.0",
     "raf": "3.4.0",
     "react": "^16.3.2",
     "react-css-modules": "^4.7.2",
@@ -74,7 +75,7 @@
   },
   "proxy": {
     "/api-dev": {
-      "target": "http://10.40.2.59:8080",
+      "target": "http://localhost:3005/",
       "changeOrigin": true,
       "pathRewrite": {
         "^/api-dev": ""

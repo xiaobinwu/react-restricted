@@ -16,14 +16,14 @@ class Auth extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                if (values.userName !== 'admin' && values.password !== 'admin') {
+                if (values.userName !== 'admin' || values.password !== 'admin') {
                     return message.error('用户名：admin；密码：admin', 1.5);
                 }
+                
                 userService.login({ username: values.userName, password: values.password }).then((res) => {
                     console.log(res)
                 });
-
-                console.log('Received values of form: ', values);
+                // console.log('Received values of form: ', values);
             }
         });
     }

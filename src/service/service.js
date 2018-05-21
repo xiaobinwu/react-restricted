@@ -1,59 +1,82 @@
 import axios from 'axios';
+import qs from 'query-string';
 
 const CancelToken = axios.CancelToken;
 
 class Service {
     constructor () {
+        this.$http = axios.create({
+            responsetype: 'json',
+            timeout: 10 * 1000,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        });
         // 请求拦截器
-        axios.interceptors.request.use(config => {
-            console.log(111, config);
-            if (this.promiseArr[config.url]) {
-                this.promiseArr[config.url]('操作取消');
-                this.promiseArr[config.url] = this.cancel;
-            } else {
-                this.promiseArr[config.url] = this.cancel;
+        this.$http.interceptors.request.use(config => {
+            config.url = process.env.NODE_ENV === 'development' ? `/api-dev${config.url}` : config.url;
+            if (config.isCancel) {
+                if (this.__axiosPromiseArr[config.url]) {
+                    this.__axiosPromiseArr[config.url]('操作取消');
+                    this.__axiosPromiseArr[config.url] = this.cancel;
+                } else {
+                    this.__axiosPromiseArr[config.url] = this.cancel;
+                }
             }
             return config;
         }, (error) => {
             return Promise.reject(error);
         });
         // 响应拦截器
-        axios.interceptors.response.use(data => {
+        this.$http.interceptors.response.use(data => {
             return data;
         }, (error) => {
+            console.log(error);
             return Promise.reject(error);
         });
 
-        this.$http = axios.create({
-            timeout: 20 * 1000
-        });
-
         this.cancel = null;
-        this.promiseArr = {};
+        this.__axiosPromiseArr = {};
+        this.defaultConfig = {
+            isCancel: true
+        }
     }
 
+    isNotEmptyObject (obj) {
+        return obj && Object.keys(obj).length > 0;
+    }
 
-    get (url, params = {}) {
-        url = process.env.NODE_ENV === 'development' ? `/api-dev${url}` : url;
+    getConfig (config = {}) {
+        if (this.isNotEmptyObject(config.headers) && 
+            config.headers['Content-Type'] === 'application/x-www-form-urlencoded') {
+                config.transformRequest = [(data, headers) => {
+                    return qs.stringify(data);
+                }]
+        }
+        config = Object.assign({}, this.defaultConfig, config);
+        return {
+            cancelToken: new CancelToken(c => {
+                this.cancel = c
+            }),
+            ...config
+        }
+    }
+
+    get (url, params = {}, config = {}) {
         return this.$http.request({
             method: 'get',
             url,
             params,
-            cancelToken: new CancelToken(c => {
-                this.cancel = c
-            })
+            ...this.getConfig(config)
         });
     }
 
-    post(url, data = undefined, params = {}) {
-        url = process.env.NODE_ENV === 'development' ? `/api-dev${url}` : url;
+    post(url, params = {}, config = {}) {
         return this.$http.request({
             method: 'post',
             url,
-            data,
-            cancelToken: new CancelToken(c => {
-                this.cancel = c
-            })
+            data: params,
+            ...this.getConfig(config)
         });
     }
         
