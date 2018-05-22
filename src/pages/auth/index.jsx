@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 // import CSSModules from 'react-css-modules';
-import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
+import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import userService from 'service/userService'
 
 import particles from './particles';
 import styles from'./index.css';
-
+import store from 'rRedux/store';
 // console.log(styles);
 
 const FormItem = Form.Item;
@@ -14,19 +14,22 @@ class Auth extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.form.validateFields((err, values) => {
+        this.props.form.validateFields(async (err, values) => {
             if (!err) {
-                if (values.userName !== 'admin' || values.password !== 'admin') {
-                    return message.error('用户名：admin；密码：admin', 1.5);
+                const { username, password } = values;
+                const data = await userService.login({ username, password });
+                if (data.code === '0') {
+                    store.dispatch({
+                        type: 'SET_LOGGED_USER',
+                        logged: true,
+                        username
+                    });
+                    this.props.history.replace('/');
                 }
-                
-                userService.login({ username: values.userName, password: values.password }).then((res) => {
-                    console.log(res)
-                });
-                // console.log('Received values of form: ', values);
             }
         });
     }
+
     componentDidMount() {
         // 引入particles
         import('js/particles').then((particlesJS) => {
@@ -47,7 +50,7 @@ class Auth extends Component {
                     <div className={styles['dec']}>Ant Design 是西湖区最具影响力的 Web 设计规范1</div>
                     <Form onSubmit={this.handleSubmit}>
                         <FormItem>
-                            { getFieldDecorator('userName', {
+                            { getFieldDecorator('username', {
                                 rules: [{ required: true, message: 'Please input your username!' }]
                             })(
                                 <Input className={styles['input']} prefix={<Icon type="user" className={styles['icon']} />} size="large" placeholder="Username" />

@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 // import CSSModules from 'react-css-modules';
 import { BrowserRouter } from 'react-router-dom';
 import logo from 'src/logo.svg';
-import { Layout, Icon, Spin } from 'antd';
+import { Layout, Icon, Spin, Button } from 'antd';
 import routes from 'route/route';  // 后面由服务端下发
 import SiderMenu from "component/siderMenu";
 import HeaderMenu from "component/headerMenu";
 import BreadGuide from "component/breadGuide";
+import linkTrackingService from 'service/linkTrackingService';
+import userService from 'service/userService';
 import ViewSet from "component/viewSet";
 import styles from './index.css';
 
@@ -21,6 +23,19 @@ class BaseLayout extends Component {
             loading: false
         }
     }
+
+    componentWillMount() {
+        linkTrackingService.getTraceInfoList().then((res) => {
+            console.log(res);
+        })
+    }
+
+    logout() {
+        userService.logout().then((res) => {
+            console.log(res);
+        })
+    }
+
     toggle = () => {
         this.setState({
             collapsed: !this.state.collapsed,
@@ -38,7 +53,6 @@ class BaseLayout extends Component {
                             collapsible
                             collapsed={collapsed}
                             width="256"
-                            style={{backgroundColor: '#fff'}}
                         >
                             <div className={styles.logo}>
                                 <img src={logo} alt="logo" />
@@ -72,6 +86,7 @@ class BaseLayout extends Component {
                             </Content>
                             <Footer style={{ textAlign: 'center' }}>
                                 Ant Design ©2016 Created by Ant UED
+                                <Button onClick={this.logout} />
                             </Footer>
                         </Layout>
                     </Layout>

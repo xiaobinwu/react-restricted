@@ -1,14 +1,14 @@
 import Service from './service';
 
 class UserService extends Service {
-    constructor () {
-        super();
-    }
     login (params = {}) {
         return this.post('/login', params);
     }
     logout () {
-
+        return this.get('/logout');
+    }
+    getUserInfo () {
+        return this.post('/trace/traceInfoList');
     }
 }
 

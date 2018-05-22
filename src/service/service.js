@@ -1,10 +1,11 @@
 import axios from 'axios';
-import qs from 'query-string';
-
+import qs from 'qs';
+import { message } from 'antd';
+import store from 'rRedux/store';
 const CancelToken = axios.CancelToken;
 
 class Service {
-    constructor () {
+    constructor() {
         this.$http = axios.create({
             responsetype: 'json',
             timeout: 10 * 1000,
@@ -14,7 +15,9 @@ class Service {
         });
         // 请求拦截器
         this.$http.interceptors.request.use(config => {
+            // dev server代理proxy
             config.url = process.env.NODE_ENV === 'development' ? `/api-dev${config.url}` : config.url;
+            // 取消多个请求
             if (config.isCancel) {
                 if (this.__axiosPromiseArr[config.url]) {
                     this.__axiosPromiseArr[config.url]('操作取消');
@@ -28,33 +31,58 @@ class Service {
             return Promise.reject(error);
         });
         // 响应拦截器
-        this.$http.interceptors.response.use(data => {
+        this.$http.interceptors.response.use(({ data, config }) => {
+            if (data.code !== '0' && config.errorPop) {
+                message.error(data.message, 1.5);
+            }
             return data;
         }, (error) => {
-            console.log(error);
-            return Promise.reject(error);
+            if (error.response) {
+                const {
+                    status,
+                    data
+                } = error.response;
+    
+                switch (status) {
+                    case 401:
+                        // 修改状态，跳转至登陆页
+                        store.dispatch({
+                            type: 'SET_LOGGED_USER',
+                            logged: false,
+                            username: ''
+                        });
+                        break;
+                    default:
+                        message.error(data.message, 1.5);
+                }
+            }
+            return { code: -1001 };
         });
 
         this.cancel = null;
         this.__axiosPromiseArr = {};
+        // 默认参数
         this.defaultConfig = {
-            isCancel: true
+            isCancel: true,
+            errorPop: true
         }
     }
 
-    isNotEmptyObject (obj) {
+    isNotEmptyObject(obj) {
         return obj && Object.keys(obj).length > 0;
     }
 
-    getConfig (config = {}) {
-        if (this.isNotEmptyObject(config.headers) && 
+    getConfig(config = {}) {
+        // application/x-www-form-urlencoded需要使用qs
+        if (this.isNotEmptyObject(config.headers) &&
             config.headers['Content-Type'] === 'application/x-www-form-urlencoded') {
-                config.transformRequest = [(data, headers) => {
-                    return qs.stringify(data);
-                }]
+            config.transformRequest = [(data, headers) => {
+                return qs.stringify(data);
+            }]
         }
         config = Object.assign({}, this.defaultConfig, config);
         return {
+            // 取消令牌
             cancelToken: new CancelToken(c => {
                 this.cancel = c
             }),
@@ -62,7 +90,7 @@ class Service {
         }
     }
 
-    get (url, params = {}, config = {}) {
+    get(url, params = {}, config = {}) {
         return this.$http.request({
             method: 'get',
             url,
@@ -79,7 +107,7 @@ class Service {
             ...this.getConfig(config)
         });
     }
-        
+
 }
 
 export default Service;

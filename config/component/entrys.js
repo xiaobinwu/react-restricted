@@ -4,7 +4,7 @@ const entryJsList = {};
 const entryHtmlList = [];
 
 // 提取公用vendor
-entryJsList['vendor'] = ['react', 'react-router-dom', 'redux', 'react-dom', 'react-redux', 'echarts', 'axios', require.resolve('./polyfills')];
+entryJsList['vendor'] = ['react', 'react-router-dom', 'redux', 'react-dom', 'react-redux', 'echarts', 'axios', 'qs', require.resolve('./polyfills')];
 entryJsList['index'] = [
     // We ship a few polyfills by default:
     paths.resolveApp('src/index.js')

@@ -147,7 +147,7 @@ class SiderMenu extends Component {
         const { menuItems, selectedKeys, openKeys } = this.state;
         const { currentSite, collapsed } = this.props;
         return (
-            <Menu mode="inline" inlineCollapsed={collapsed} onOpenChange={this.handleOpenChange} onSelect={this.handleSelectedChange} selectedKeys={selectedKeys} openKeys={openKeys}  className={styles.sider} onClick={this.changeBreadCrumb}>
+            <Menu mode="inline" theme="dark" inlineCollapsed={collapsed} onOpenChange={this.handleOpenChange} onSelect={this.handleSelectedChange} selectedKeys={selectedKeys} openKeys={openKeys}  className={styles.sider} onClick={this.changeBreadCrumb}>
                 { menuItems[currentSite] }
             </Menu>
         );
