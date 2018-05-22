@@ -4,7 +4,19 @@ const entryJsList = {};
 const entryHtmlList = [];
 
 // 提取公用vendor
-entryJsList['vendor'] = ['react', 'react-router-dom', 'redux', 'react-dom', 'react-redux', 'echarts', 'axios', 'qs', require.resolve('./polyfills')];
+entryJsList['vendor'] = [
+    'react', 
+    'react-router-dom', 
+    'redux', 
+    'react-dom', 
+    'react-redux', 
+    'echarts', 
+    'axios'
+];
+entryJsList['utils'] = [
+    'qs',
+    require.resolve('./polyfills')
+];
 entryJsList['index'] = [
     // We ship a few polyfills by default:
     paths.resolveApp('src/index.js')
@@ -16,7 +28,7 @@ let htmlPrams = {
     inject: true,
     template: paths.appHtml ,
     filename: 'index.html',
-    chunks: ['index', 'vendor', 'runtime']
+    chunks: ['index', 'vendor', 'util', 'runtime']
 };
 if(process.env.NODE_ENV === 'development') {
     // Include an alternative client for WebpackDevServer. A client's job is to

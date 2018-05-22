@@ -146,7 +146,13 @@ module.exports = {
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 
         new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor'
+            name: 'vendor',
+            chunks: ['vendor']
+        }),
+
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'utils',
+            chunks: ['utils']
         }),
 
         new webpack.optimize.CommonsChunkPlugin({
