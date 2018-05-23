@@ -15,6 +15,7 @@ export default {
     'Overview': generateLoadable(() => import('view/linkTracking/overview')),
     'Performance': generateLoadable(() => import('view/linkTracking/performance')),
     'Business': generateLoadable(() => import('view/linkTracking/business')),
+    'TraceInfoList': generateLoadable(() => import('view/linkTracking/traceInfoList')),
 
     // 网关服务系统
     'Overview1': generateLoadable(() => import('view/serviceGateway/overview')),

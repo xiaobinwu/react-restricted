@@ -41,23 +41,6 @@
     }
 }
 
-
-.aidNav {
-    line-height: 64px;
-    display: inline-block;
-    float: right;
-    :global .anticon {
-        font-size: 18px;
-        margin: 0 16px;
-        color: #fff;
-        opacity: 1;
-        
-        &:hover {
-            opacity: .69;
-        }
-    }
-}
-
 .content {
     height: 100vh;
     overflow: auto;

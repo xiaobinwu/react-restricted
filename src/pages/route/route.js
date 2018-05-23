@@ -6,32 +6,52 @@ const routes = [
         name: '链路跟踪系统',
         children: [
             {
-                name: '应用概览',
-                path: 'overview',
-                icon: 'book',
-                key: '0',
-                component: 'Overview'
-            },
-            {
                 name: '仪表盘',
                 path: 'board',
+                icon: 'pie-chart',
+                key: '0',
+                children: [
+                    {
+                        name: '实时性能监控',
+                        path: 'performance',
+                        component: 'Performance',
+                        key: '0-0'
+                    },
+                    {
+                        name: '实时业务监控',
+                        path: 'business',
+                        component: 'Business',
+                        key: '0-1'
+                    }
+                ]
+            },
+            {
+                name: '链路跟踪',
+                path: 'trace',
                 icon: 'pie-chart',
                 key: '1',
                 children: [
                     {
-                        name: '实时性能监控-1',
-                        path: 'performance',
-                        component: 'Performance',
+                        name: '链路信息查询',
+                        path: 'traceInfoList',
+                        component: 'TraceInfoList',
                         key: '1-0'
                     },
                     {
-                        name: '实时业务监控-1',
-                        path: 'business',
-                        component: 'Business',
+                        name: 'traceId查询',
+                        path: 'traceInquire',
+                        component: 'TraceInquire',
+                        key: '1-1'
+                    },
+                    {
+                        name: '跟踪埋点查询',
+                        path: 'traceAnnotation',
+                        component: 'TraceAnnotation',
                         key: '1-1'
                     }
                 ]
             }
+
         ]
     },
     {

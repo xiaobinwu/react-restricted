@@ -7,6 +7,7 @@ import routes from 'route/route';  // 后面由服务端下发
 import SiderMenu from "component/siderMenu";
 import HeaderMenu from "component/headerMenu";
 import BreadGuide from "component/breadGuide";
+import AidNav from "component/aidNav";
 import linkTrackingService from 'service/linkTrackingService';
 import userService from 'service/userService';
 import ViewSet from "component/viewSet";
@@ -26,10 +27,10 @@ class BaseLayout extends Component {
 
     componentWillMount() {
         linkTrackingService.getTraceInfoList().then((res) => {
-            console.log(res);
+            // console.log(res);
         })
     }
-
+    
     logout() {
         userService.logout().then((res) => {
             console.log(res);
@@ -72,11 +73,7 @@ class BaseLayout extends Component {
 
                                 <HeaderMenu location={location} navData={routes} />
 
-                                <div className={styles.aidNav}>
-                                    <Icon type="message" />
-                                    <Icon type="usergroup-add" />
-                                    <Icon type="user" />
-                                </div>
+                                <AidNav />
                             </Header>
                             <Content style={{ padding: '0 25px' }}>
                                 <BreadGuide />
@@ -85,7 +82,7 @@ class BaseLayout extends Component {
                                 </div>
                             </Content>
                             <Footer style={{ textAlign: 'center' }}>
-                                Ant Design ©2016 Created by Ant UED
+                                Ant Design ©2016 Created by Ant UED1111
                                 <Button onClick={this.logout} />
                             </Footer>
                         </Layout>

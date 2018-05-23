@@ -1,29 +1,27 @@
 @import 'common/css/variable.css';
 .nav {
     display: inline-block;
-    background-color: transparent;
     line-height: 64px;
-    color: #fff;
+    color: #fff!important;
     font-size: 16px;
-    li {
+    background-color: transparent!important;
+    :global .ant-menu-item {
         opacity: .69;
         transition: opacity .3s;
         cursor: pointer;
-        margin-top: 0!important;
-        border-bottom-width: 0px!important;
+        margin-top: -4px;
+        border-bottom-width: 4px!important;
     }
-    :global .ant-menu-item-selected {
+    :global .ant-menu-item-selected,
+    :global .ant-menu-item-active {
         color: #fff;
         opacity: 1;
         position: relative;
-        &:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background-color: #4fe3c1;
+        margin-top: -4px;
+        border-bottom-width: 4px;
+        background-color: transparent!important;
+        .anticon {
+            color: #fff;
         }
     }
     :global .ant-menu-item-active {

@@ -1,0 +1,21 @@
+.aidNav {
+    line-height: 64px;
+    display: inline-block;
+    float: right;
+    :global .ant-menu-submenu-title,
+    :global .ant-menu-item {
+        padding: 0 10px!important;
+    }
+    :global .ant-menu-item-selected {
+        background-color: transparent!important;
+    }
+    :global .anticon {
+        font-size: 18px;
+        margin: 0 16px;
+        color: #fff;
+        opacity: 1;
+        &:hover {
+            opacity: .69;
+        }
+    }
+}

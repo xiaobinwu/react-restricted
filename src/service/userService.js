@@ -8,7 +8,7 @@ class UserService extends Service {
         return this.get('/logout');
     }
     getUserInfo () {
-        return this.post('/trace/traceInfoList');
+        return this.post('/trace/tracelist');
     }
 }
 

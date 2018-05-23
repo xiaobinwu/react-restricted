@@ -9,12 +9,14 @@ entryJsList['vendor'] = [
     'react-router-dom', 
     'redux', 
     'react-dom', 
-    'react-redux', 
-    'echarts', 
-    'axios'
+    'react-redux'
 ];
+entryJsList['lib'] = [
+    'echarts'
+]
 entryJsList['utils'] = [
     'qs',
+    'axios',
     require.resolve('./polyfills')
 ];
 entryJsList['index'] = [
@@ -28,7 +30,7 @@ let htmlPrams = {
     inject: true,
     template: paths.appHtml ,
     filename: 'index.html',
-    chunks: ['index', 'vendor', 'util', 'runtime']
+    chunks: ['index', 'vendor', 'lib', 'utils', 'runtime']
 };
 if(process.env.NODE_ENV === 'development') {
     // Include an alternative client for WebpackDevServer. A client's job is to

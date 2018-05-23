@@ -72,7 +72,7 @@ export default class SiderMenu extends Component {
         const { headerMenuSelectedKey } = this.state;
         const { navData } = this.props;
         return (
-            <Menu mode="horizontal" defaultSelectedKeys={headerMenuSelectedKey} className={styles.nav} onClick={this.changeBreadCrumb}>
+            <Menu mode="horizontal"  defaultSelectedKeys={headerMenuSelectedKey} className={styles.nav} onClick={this.changeBreadCrumb}>
                 {
                     navData.map((item, i) => {
                         return(
