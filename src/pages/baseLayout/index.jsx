@@ -24,12 +24,6 @@ class BaseLayout extends Component {
             loading: false
         }
     }
-
-    componentWillMount() {
-        linkTrackingService.getTraceInfoList().then((res) => {
-            // console.log(res);
-        })
-    }
     
     logout() {
         userService.logout().then((res) => {

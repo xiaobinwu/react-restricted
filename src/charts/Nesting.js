@@ -10,7 +10,6 @@ export default class Dynamic extends Component {
 
 
     getOption = () => ({
-        color: ['#2b83f9'],
         tooltip : {
             trigger: 'axis',
             axisPointer : {            // 坐标轴指示器，坐标轴触发有效

@@ -13,20 +13,11 @@ export default class Dynamic extends Component {
         tooltip : {
             trigger: 'axis',
             axisPointer: {
-                type: 'cross',
-                label: {
-                    backgroundColor: '#6a7985'
-                }
+                type: 'cross'
             }
         },
         legend: {
             data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
-        },
-        visualMap: {
-            show: false,
-            min: 0,
-            max: 1000,
-            color: ['#2945cb', '#2b83f9', '#3a9dff']
         },
         toolbox: {
             feature: {

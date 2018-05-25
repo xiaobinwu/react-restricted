@@ -70,12 +70,6 @@ export default class Dynamic extends Component {
             start: 0,
             end: 100
         },
-        visualMap: {
-            show: false,
-            min: 0,
-            max: 1000,
-            color: ['#2945cb', '#2b83f9', '#a1ecc7', '#3a9dff']
-        },
         xAxis: [
             {
                 type: 'category',

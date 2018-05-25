@@ -30,6 +30,7 @@ module.exports = {
         pages: paths.resolveApp('src/pages'),
         route: paths.resolveApp('src/pages/route'),
         view: paths.resolveApp('src/pages/view'),
+        themes: paths.resolveApp('themes'),
         charts: paths.resolveApp('src/charts')
     },
     plugins: [

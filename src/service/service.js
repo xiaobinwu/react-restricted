@@ -55,6 +55,8 @@ class Service {
                     default:
                         message.error(data.message, 1.5);
                 }
+
+                console.log(data.message);
             }
             return { code: -1001 };
         });
