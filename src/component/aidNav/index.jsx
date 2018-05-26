@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Icon, Menu } from 'antd';
+import userService from 'service/userService';
+import store from 'rRedux/store';
 import styles from './index.css';
 
 const SubMenu = Menu.SubMenu;
@@ -25,6 +27,16 @@ const ColorBlocks = (props) => {
 }
 
 class AidNav extends Component {
+    async logout() {
+        const { code } = await userService.logout();
+        if (code === '0') {
+            store.dispatch({
+                type: 'SET_LOGGED_USER',
+                logged: false,
+                username: ''
+            });
+        }
+    }
     handleClick = (e) => {
         if (e.key) {
             switch (e.key) {
@@ -36,7 +48,7 @@ class AidNav extends Component {
                 break;
 
                 case 'user': 
-
+                    this.logout();
                 break;
 
                 default:
@@ -71,9 +83,11 @@ class AidNav extends Component {
                 <Menu.Item key="usergroup-add">
                     <Icon type="usergroup-add" />
                 </Menu.Item>
-                <Menu.Item key="user">
-                    <Icon type="user" />
-                </Menu.Item>
+                <SubMenu title={<span><Icon type="user" /></span>}>
+                    <Menu.Item key="user">
+                        Sign Out
+                    </Menu.Item>
+                </SubMenu>
             </Menu>
         );
     }

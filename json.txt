@@ -1,0 +1,590 @@
+{
+    "code": "0", 
+    "entry": [
+        {
+            "id": 1, 
+            "name": "com.globalegrow.mgoods.spi.inter.IPackageFeePersonConfigService", 
+            "appId": 1, 
+            "methods": [
+                "deletePackageFeePersonConfig", 
+                "batchInsertPackageConfig", 
+                "getPackageFeeConfigList", 
+                "getPackageFeePersonConfigList", 
+                "updatePackageFeePersonConfig"
+            ]
+        }, 
+        {
+            "id": 228, 
+            "name": "com.globalegrow.spi.mgoods.common.inter.IGoodsPriceGrossProfitRateService", 
+            "appId": 1, 
+            "methods": [
+                "verifyGoodsPriceGrossProfitRate"
+            ]
+        }, 
+        {
+            "id": 37, 
+            "name": "com.globalegrow.mgoods.spi.inter.IRecycleService", 
+            "appId": 1, 
+            "methods": [
+                "checkRecycleIsExists", 
+                "deleteRecycle", 
+                "getRecycleList", 
+                "addRecycle"
+            ]
+        }, 
+        {
+            "id": 79, 
+            "name": "com.globalegrow.mgoods.spi.inter.ITrotService", 
+            "appId": 1, 
+            "methods": [
+                "removeTrot", 
+                "addTrot", 
+                "getTrotList", 
+                "checkTrotGoodSnInValid"
+            ]
+        }, 
+        {
+            "id": 6, 
+            "name": "com.globalegrow.spi.mgoods.common.inter.IGoodsPriceCalculateService", 
+            "appId": 1, 
+            "methods": [
+                "updateGoodsPrice", 
+                "goodsPriceBatchUpdate", 
+                "batchPromotionPriceSyncData", 
+                "tryCalcGoodsPrice", 
+                "batchShopPriceSyncData", 
+                "getPrice", 
+                "shopPriceSyncData", 
+                "promotionPriceSyncData"
+            ]
+        }, 
+        {
+            "id": 213, 
+            "name": "com.globalegrow.mgoods.spi.inter.IPipelineCategoryService", 
+            "appId": 1, 
+            "methods": [
+                "queryPipelineCategoryInfoList", 
+                "getPipelineCategoryInfo", 
+                "editPipelinePriceRateInfo", 
+                "getPipelineCategoryDetail", 
+                "delPipelineCategoryRates"
+            ]
+        }, 
+        {
+            "id": 235, 
+            "name": "com.globalegrow.mgoods.spi.inter.IGoodsPictureService", 
+            "appId": 1, 
+            "methods": [
+                "getMainPic", 
+                "queryGoodsCutPicResult", 
+                "queryIsSoaUsePictureList", 
+                "getAllPictureList", 
+                "getIsUsePictureList"
+            ]
+        }, 
+        {
+            "id": 17, 
+            "name": "com.globalegrow.mgoods.spi.inter.IGoodsPriceFactorService", 
+            "appId": 1, 
+            "methods": [
+                "queryPriceFactor"
+            ]
+        }, 
+        {
+            "id": 118, 
+            "name": "com.globalegrow.mgoods.spi.inter.IGoodsInfoService", 
+            "appId": 1, 
+            "methods": [
+                "queryIsCombinationGoodSnList", 
+                "queryGoodsForPromotion", 
+                "saveGoodsLangInfo", 
+                "queryPDMOperationResult", 
+                "queryGoodInfoByWareAndGoodSn", 
+                "queryActivityGoods", 
+                "queryGoodsShopInfoForPromotion", 
+                "batchQuerySameGoods", 
+                "queryVhCode", 
+                "getGoodsInfoforPrice", 
+                "querySomeStyle", 
+                "getShopCodeByGoodSnList", 
+                "queryGoodsInfoList", 
+                "queryGoodsSaleStatus", 
+                "queryGoodsStyle", 
+                "querySameGoodsSpu", 
+                "queryByPage", 
+                "getGoodsInfoRelation", 
+                "queryVwhCodesByGoodSn", 
+                "getGoodStatus", 
+                "removeCustomDelivery", 
+                "saveCustomDelivery", 
+                "queryGoodsCount", 
+                "batchSetStockType", 
+                "queryShowWindowGoodsList", 
+                "saveGoodsInfo", 
+                "siteExistGoodSn", 
+                "saveGoodsYoutube", 
+                "saveGoodsLabel", 
+                "queryGoodsInfoByGoodsAndVirWhCode", 
+                "saveNoticeStatus", 
+                "queryGoodsByLimitType", 
+                "queryGoodsShipFee", 
+                "queryGoodsInfoForActivity", 
+                "queryGoodsListByGoodsAndVirWhCode", 
+                "queryShopCodeByGoodSnList", 
+                "getSiteCustomGoodsInfo", 
+                "querySiteGoodsInfoList", 
+                "checkVirGoodsBindIsExist", 
+                "saveGoodsPostage", 
+                "saveSpyStatus", 
+                "queryAddShowWindowGoodsList", 
+                "queryGoodsInfoAndWebGoodSn", 
+                "checkVirGoodsBindIsExistForOut", 
+                "queryByGoodsAndVirWhCode", 
+                "getGoodsPipelineInfo", 
+                "batchSetMainPicture", 
+                "setMainPic"
+            ]
+        }, 
+        {
+            "id": 83, 
+            "name": "com.globalegrow.spi.mgoods.common.inter.IGoodsPriceCommonService", 
+            "appId": 1, 
+            "methods": [
+                "getShopPrice", 
+                "getClearPrice"
+            ]
+        }, 
+        {
+            "id": 85, 
+            "name": "com.globalegrow.mgoods.spi.inter.IPipelineCategoryRelationService", 
+            "appId": 1, 
+            "methods": [
+                "delCategoryPipelineRelation", 
+                "editCatPipelineShow", 
+                "addCategoryPipelineRelation", 
+                "getCategoryPipelineRelation"
+            ]
+        }, 
+        {
+            "id": 93, 
+            "name": "com.globalegrow.spi.mgoods.common.inter.IGoodsListAggregateService", 
+            "appId": 1, 
+            "methods": [
+                "batchSaveNotice", 
+                "queryLogisticsGoodList", 
+                "queryGoodsShopPriceList", 
+                "queryGoodVirStockLessThanZero", 
+                "batchSaveUp", 
+                "loadSubCategoryList", 
+                "getSiteGoodsInfo", 
+                "batchSaveDown", 
+                "forwardUpDownPage", 
+                "queryGoodsList", 
+                "queryGoodsSimpleInfo", 
+                "queryGoodsSaleStatus", 
+                "batchSetStockType", 
+                "queryGoodsBaseInfoList"
+            ]
+        }, 
+        {
+            "id": 18, 
+            "name": "com.globalegrow.spi.mgoods.common.inter.IPriceConfigService", 
+            "appId": 1, 
+            "methods": [
+                "compareAllCatAndVirhouseLowestRate"
+            ]
+        }, 
+        {
+            "id": 240, 
+            "name": "com.globalegrow.mgoods.spi.inter.IGoodsService", 
+            "appId": 1, 
+            "methods": [
+                "queryGoodsInfoByGoodSnAndVirWhCode", 
+                "queryExistsGoods", 
+                "queryGoodsByGoodSnList", 
+                "queryGoodsInfo", 
+                "queryActGoods"
+            ]
+        }, 
+        {
+            "id": 107, 
+            "name": "com.globalegrow.spi.mgoods.common.inter.IGoodsPriceFactorService", 
+            "appId": 1, 
+            "methods": [
+                "routePriceFactorData"
+            ]
+        }, 
+        {
+            "id": 108, 
+            "name": "com.globalegrow.mgoods.spi.inter.IGoodsGalleryService", 
+            "appId": 1, 
+            "methods": [
+                "handleCutFailedGallery", 
+                "queryGalleyInfoBySku", 
+                "queryGalleyInfoByType"
+            ]
+        }, 
+        {
+            "id": 166, 
+            "name": "com.globalegrow.mgoods.spi.inter.ICategoryService", 
+            "appId": 1, 
+            "methods": [
+                "checkIsBottomCategory", 
+                "getAllCategoryList", 
+                "getCategoryTree", 
+                "getCategoryInfoForPrice", 
+                "getDefaultCategorys", 
+                "getLowestCategorysNoPage", 
+                "removeCategoryRelation", 
+                "transferCategoryGoodRelation", 
+                "getCategoryPathList", 
+                "batchSetIsFreeShip", 
+                "updateFreeShipping", 
+                "addCategoryGoodRelation", 
+                "deleteCategory", 
+                "modifyDefaultCategory", 
+                "getCategory", 
+                "getCategoryList", 
+                "batchSetAddAndRate", 
+                "getCategoryById", 
+                "getCategoryListForLinkageSelect", 
+                "addCategory", 
+                "checkCateIsGoods", 
+                "updateCategoryLang", 
+                "migrateGoods", 
+                "getCategorys", 
+                "getCategorysByCategoryIdList", 
+                "getGoodsCategoryList", 
+                "updateCategory", 
+                "queryParentCatePath", 
+                "queryCatePath", 
+                "queryLowestCategoryGoods", 
+                "isLowest", 
+                "searchCategory", 
+                "getSiteCategoryList", 
+                "migrateCategory", 
+                "getDefaultCategory"
+            ]
+        }, 
+        {
+            "id": 55, 
+            "name": "com.globalegrow.mgoods.spi.inter.IPriceCheckRuleService", 
+            "appId": 1, 
+            "methods": [
+                "insertPriceCheckRule", 
+                "updateIsDisable", 
+                "selectPriceCheckRuleList", 
+                "selectPriceCheckRuleDetail", 
+                "updatePriceCheckRule"
+            ]
+        }, 
+        {
+            "id": 111, 
+            "name": "com.globalegrow.mgoods.spi.inter.IGoodsAttrValueService", 
+            "appId": 1, 
+            "methods": [
+                "getGoodsAttrValueList"
+            ]
+        }, 
+        {
+            "id": 245, 
+            "name": "com.globalegrow.mgoods.spi.inter.IEndPricePersonConfigService", 
+            "appId": 1, 
+            "methods": [
+                "batchInsert", 
+                "getEndPricePersonConfigList", 
+                "updateEndPricePersonConfig", 
+                "deleteEndPricePersonConfig", 
+                "getEndPriceConfigList"
+            ]
+        }, 
+        {
+            "id": 19, 
+            "name": "com.globalegrow.spi.mgoods.common.inter.IGoodsPriceChangeLogService", 
+            "appId": 1, 
+            "methods": [
+                "queryPriceChangeLog"
+            ]
+        }, 
+        {
+            "id": 222, 
+            "name": "com.globalegrow.mgoods.spi.inter.ICheckIsCutService", 
+            "appId": 1, 
+            "methods": [
+                "checkCutPic"
+            ]
+        }, 
+        {
+            "id": 89, 
+            "name": "com.globalegrow.mgoods.spi.inter.IGoodsAttrService", 
+            "appId": 1, 
+            "methods": [
+                "getGoodsAttrList"
+            ]
+        }, 
+        {
+            "id": 201, 
+            "name": "com.globalegrow.mgoods.spi.inter.IGoodsInfoInnerService", 
+            "appId": 1, 
+            "methods": [
+                "updateGoodsShopcode"
+            ]
+        }, 
+        {
+            "id": 60, 
+            "name": "com.globalegrow.mgoods.spi.inter.ICategoryAttrService", 
+            "appId": 1, 
+            "methods": [
+                "queryCategoryAttrValueList", 
+                "editCategoryAttr", 
+                "delCategoryAttr", 
+                "querySpecAttr", 
+                "addCategoryAttr", 
+                "categoryAttrValueRelationDetail", 
+                "queryPdmAttrList", 
+                "delBindCategoryAttrRelation", 
+                "queryPdmChildCate", 
+                "deleteCategoryAttrAndAttrValue", 
+                "categoryBindAttrValue", 
+                "copyCategoryAttr", 
+                "queryAttrValueList", 
+                "queryCategoryAttrByCatId", 
+                "categoryAttrDetail", 
+                "queryPdmTopCategory", 
+                "editAttrAndAttrValue"
+            ]
+        }, 
+        {
+            "id": 48, 
+            "name": "com.globalegrow.mgoods.spi.inter.IBaseGoodsService", 
+            "appId": 1, 
+            "methods": [
+                "existsGoods", 
+                "queryGoodsInfo", 
+                "queryBaseGoodsForPrice", 
+                "queryExistsGoods"
+            ]
+        }, 
+        {
+            "id": 202, 
+            "name": "com.globalegrow.mgoods.spi.inter.IArrivalNoticeSubService", 
+            "appId": 1, 
+            "methods": [
+                "getArrivalNoticeSubList", 
+                "updateArivalNoticeIsSend", 
+                "getArrivalNoticeSubByNoticeRange"
+            ]
+        }, 
+        {
+            "id": 229, 
+            "name": "com.globalegrow.mgoods.spi.inter.IPipelineInfoService", 
+            "appId": 1, 
+            "methods": [
+                "saveSiteGoodsSort", 
+                "deleteGoodsFreeDivision", 
+                "getAllGoodsPipelineInfoRoute", 
+                "batchSetFreeDivison", 
+                "queryGoodsPipelineInfoBySkuList"
+            ]
+        }, 
+        {
+            "id": 218, 
+            "name": "com.globalegrow.mgoods.spi.inter.IArrivalNoticeService", 
+            "appId": 1, 
+            "methods": [
+                "saveArrivalNotice", 
+                "getArrivalNoticeInfo", 
+                "updateStatusInvalid", 
+                "getArrivalNoticeList"
+            ]
+        }, 
+        {
+            "id": 36, 
+            "name": "com.globalegrow.spi.mgoods.common.inter.IArrivalNoticeRemoteSerivce", 
+            "appId": 1, 
+            "methods": [
+                "getArrivalNoticeList"
+            ]
+        }, 
+        {
+            "id": 112, 
+            "name": "com.globalegrow.spi.mgoods.common.inter.IVirWarehouseStockTypeService", 
+            "appId": 1, 
+            "methods": [
+                "queryGoodsVirtualWaresInfo", 
+                "binRealWhGoodSnCount", 
+                "getStockTypeListBySku", 
+                "queryGoodsVirWareStockType"
+            ]
+        }, 
+        {
+            "id": 234, 
+            "name": "com.globalegrow.spi.mgoods.common.inter.IGoodsPriceCalReSetService", 
+            "appId": 1, 
+            "methods": [
+                "shopPriceCalReSet"
+            ]
+        }, 
+        {
+            "id": 223, 
+            "name": "com.globalegrow.spi.mgoods.common.inter.IGoodsEditAggregateService", 
+            "appId": 1, 
+            "methods": [
+                "getGoodsPipelineInfo", 
+                "saveGoodPhotos", 
+                "saveGoodsInfo", 
+                "getBasicGoodsInfo", 
+                "getSiteGoodsInfo"
+            ]
+        }, 
+        {
+            "id": 116, 
+            "name": "com.globalegrow.mgoods.spi.inter.IPropertyService", 
+            "appId": 1, 
+            "methods": [
+                "queryAllProperty", 
+                "queryPropertyByCode"
+            ]
+        }, 
+        {
+            "id": 205, 
+            "name": "com.globalegrow.spi.mgoods.common.inter.IRecycleAggregateService", 
+            "appId": 1, 
+            "methods": [
+                "moveToRecycle", 
+                "batchAddRecycle"
+            ]
+        }, 
+        {
+            "id": 14, 
+            "name": "com.globalegrow.mgoods.spi.inter.IPriceRuleConfigService", 
+            "appId": 1, 
+            "methods": [
+                "getPriceRuleConfig", 
+                "getExchangeRate", 
+                "updateExchangeRate"
+            ]
+        }, 
+        {
+            "id": 90, 
+            "name": "com.globalegrow.mgoods.spi.inter.ISyncGoodsLogService", 
+            "appId": 1, 
+            "methods": [
+                "querySyncGoodsLog"
+            ]
+        }, 
+        {
+            "id": 52, 
+            "name": "com.globalegrow.mgoods.spi.inter.ISiteMultiLangGoodsService", 
+            "appId": 1, 
+            "methods": [
+                "getSiteMultiLangGoods", 
+                "querySiteMultiLangGoodList", 
+                "saveGoodsSEOInfo"
+            ]
+        }, 
+        {
+            "id": 28, 
+            "name": "com.globalegrow.mgoods.spi.inter.IBaseConfigService", 
+            "appId": 1, 
+            "methods": [
+                "compareInputIsLessThanLowestRate", 
+                "batchGetBaseConfigList", 
+                "insertBaseConfig"
+            ]
+        }, 
+        {
+            "id": 207, 
+            "name": "com.globalegrow.mgoods.spi.inter.IBrandService", 
+            "appId": 1, 
+            "methods": [
+                "updateBrandLang", 
+                "getBrand", 
+                "updateBrand", 
+                "getBrandList", 
+                "getBrandInfo", 
+                "getBrandInfoList"
+            ]
+        }, 
+        {
+            "id": 41, 
+            "name": "com.globalegrow.mgoods.spi.inter.IGoodsPipelineRelationService", 
+            "appId": 1, 
+            "methods": [
+                "addGoodsPipelineRelation", 
+                "delGoodsPipelineRelation"
+            ]
+        }, 
+        {
+            "id": 43, 
+            "name": "com.globalegrow.mgoods.spi.inter.IGoodsStockTypeService", 
+            "appId": 1, 
+            "methods": [
+                "queryGoodsStockTypeBySkuList", 
+                "getUniqueGoodsnList", 
+                "getUniqueGoodsnCount", 
+                "queryGoodsStockType", 
+                "updateGoodsStockType"
+            ]
+        }, 
+        {
+            "id": 91, 
+            "name": "com.globalegrow.spi.mgoods.common.inter.IGoodsPriceRelationService", 
+            "appId": 1, 
+            "methods": [
+                "routePriceData", 
+                "queryGoodsPriceRelation"
+            ]
+        }, 
+        {
+            "id": 20, 
+            "name": "com.globalegrow.mgoods.spi.inter.IGoodsPriceRelationService", 
+            "appId": 1, 
+            "methods": [
+                "queryGoodsPriceRelation", 
+                "batchQueryGoodsPrice", 
+                "queryGoodsPrice"
+            ]
+        }, 
+        {
+            "id": 23, 
+            "name": "com.globalegrow.mgoods.spi.inter.IGoodsInfoExtendService", 
+            "appId": 1, 
+            "methods": [
+                "getGoodsInfoExtendServiceList", 
+                "saveGoodsUpStatus", 
+                "queryGoodsStatus", 
+                "arrivalNoticeGoodsDown", 
+                "saveGoodsDownStatus"
+            ]
+        }, 
+        {
+            "id": 77, 
+            "name": "com.globalegrow.mgoods.spi.inter.IWebGoodSnRelationService", 
+            "appId": 1, 
+            "methods": [
+                "getGoodSnRelationByWebGoodSn", 
+                "getWebGoodSnRelationBySku"
+            ]
+        }, 
+        {
+            "id": 31, 
+            "name": "com.globalegrow.mgoods.spi.inter.ISiteService", 
+            "appId": 1, 
+            "methods": [
+                "getSiteList", 
+                "getAllSite"
+            ]
+        }, 
+        {
+            "id": 33, 
+            "name": "com.globalegrow.mgoods.spi.inter.IGoodsCategoryRelationService", 
+            "appId": 1, 
+            "methods": [
+                "queryDefCategoryInfo", 
+                "queryDefCategoryShippingStatus", 
+                "queryDefaultCategoryInfo"
+            ]
+        }
+    ]
+}

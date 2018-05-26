@@ -15,6 +15,8 @@ class Service {
         });
         // 请求拦截器
         this.$http.interceptors.request.use(config => {
+            // 配置过滤字段空字符串
+            config.data = this.dealConfigData(config.data);
             // dev server代理proxy
             config.url = process.env.NODE_ENV === 'development' ? `/api-dev${config.url}` : config.url;
             // 取消多个请求
@@ -68,6 +70,17 @@ class Service {
             isCancel: true,
             errorPop: true
         }
+    }
+
+    dealConfigData(obj) {
+        const param = {};
+        if ( obj === null || obj === undefined || obj === "" ) return param;
+        for (let key in obj){
+            if ( obj[key] !== null && obj[key] !== undefined && obj[key] !== "" ){
+                param[key] = obj[key];
+            }
+        }
+        return param;
     }
 
     isNotEmptyObject(obj) {

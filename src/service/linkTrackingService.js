@@ -12,8 +12,8 @@ class LinkTrackingService extends Service {
         return this.get('/app/all');
     }
     // 获取服务列表
-    getAllService() {
-        return this.get('/service/list');
+    getAllService(params = {}) {
+        return this.post('/service/list', params);
     }
 
     /***************链路跟踪 end******************/

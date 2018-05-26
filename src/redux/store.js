@@ -1,9 +1,9 @@
 import { createStore, combineReducers } from 'redux';
-import loggedUserReducer from './reducers/loggedUserReducer';
+import userReducer from './reducers/userReducer';
 import routeReducer from './reducers/routeReducer';
 import devToolsEnhancer from 'remote-redux-devtools';
 const reducers = combineReducers({
-    loggedUserState: loggedUserReducer,
+    userState: userReducer,
     routeState: routeReducer
 });
 
