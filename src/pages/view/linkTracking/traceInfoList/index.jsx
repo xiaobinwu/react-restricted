@@ -163,7 +163,7 @@ class TraceInfoList extends Component {
                                 {getFieldDecorator('serviceName', {
                                     initialValue: '',
                                 })(
-                                    <Select  style={{width: "100%"}} disabled={getFieldValue('appName') !== ''} onChange={this.handleServiceChange}>
+                                    <Select  style={{width: "100%"}} disabled={getFieldValue('appName') === ''} onChange={this.handleServiceChange}>
                                         <Option value="">全部</Option>
                                         {
                                             serviceSet.map((item, index) => {
@@ -181,7 +181,7 @@ class TraceInfoList extends Component {
                                 {getFieldDecorator('methodName', {
                                     initialValue: '',
                                 })(
-                                    <Select style={{width: "100%"}} disabled={getFieldValue('serviceName') !== ''}>
+                                    <Select style={{width: "100%"}} disabled={getFieldValue('serviceName') === ''}>
                                         <Option value="">全部</Option>
                                         {
                                             serviceName ? methodSet[serviceName].map((item, index) => {
