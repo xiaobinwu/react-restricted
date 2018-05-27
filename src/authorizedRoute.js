@@ -21,8 +21,8 @@ class AuthorizedRoute extends Component {
         const { component: Component, logged, ...rest } = this.props;
         return (
             <Route {...rest} render={(props) => {
-                // return logged ? (<Component {...props} />) : (<Redirect to="/auth" />);
-                return (<Component {...props} />);
+                return logged ? (<Component {...props} />) : (<Redirect to="/auth" />);
+                // return (<Component {...props} />);
             }} />
         );
     }
