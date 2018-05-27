@@ -43,7 +43,10 @@ class TraceInfoList extends Component {
                 pageNum: 1,
                 pageSize: 20,
                 totalCount: 0
-            }
+            },
+            serviceName: '',
+            serviceSet: [],
+            methodSet: {}
         }
     }
     async componentWillMount() {
@@ -62,9 +65,28 @@ class TraceInfoList extends Component {
         });
     }
     handleAppChange = async (value, option) => {
-        const { site } = option.props;
-        const res = await linkTrackingService.getAllService({ site, appId: value });
-        console.log(res);
+        if (value === '') { return; }
+        const { site, id } = option.props;
+        const { entry } = await linkTrackingService.getAllService({ site, appId: id });
+        const serviceSet = [];
+        const methodSet = {};
+        entry && entry.forEach((item) => {
+            serviceSet.push({
+                id: item.id,
+                name: item.name
+            });
+            methodSet[item.name] = item.methods;
+        });
+        this.setState({
+            serviceSet,
+            methodSet
+        });
+    }
+    handleServiceChange = (value, option) => {
+        if (value === '') { return; }
+        this.setState({
+            serviceName: value 
+        });
     }
     getListData = async (e) => {
         e && e.preventDefault();
@@ -102,8 +124,8 @@ class TraceInfoList extends Component {
     }
 
     render() {
-        const { loading, data, pagination } = this.state;
-        const { getFieldDecorator } = this.props.form;
+        const { loading, data, pagination, serviceSet, methodSet, serviceName } = this.state;
+        const { getFieldDecorator, getFieldValue } = this.props.form;
         const pageControl = {
             current: pagination.pageNum,
             pageSize: pagination.pageSize,
@@ -128,7 +150,7 @@ class TraceInfoList extends Component {
                                         {
                                             appList.map((item, index) => {
                                                 return (
-                                                    <Option key={item.id} title={item.name} site={item.site}>{item.name}</Option>
+                                                    <Option key={item.name} title={item.name} id={item.id} site={item.site}>{item.name}</Option>
                                                 )
                                             })
                                         }
@@ -141,11 +163,15 @@ class TraceInfoList extends Component {
                                 {getFieldDecorator('serviceName', {
                                     initialValue: '',
                                 })(
-                                    <Select  style={{width: "100%"}}>
+                                    <Select  style={{width: "100%"}} disabled={getFieldValue('appName') !== ''} onChange={this.handleServiceChange}>
                                         <Option value="">全部</Option>
-                                        <Option value="0" title="com.globalegrow.mgoods.spi.inter.IPackageFeePersonConfigService">com.globalegrow.mgoods.spi.inter.IPackageFeePersonConfigService</Option>
-                                        <Option value="1">com.globalegrow.spi.mgoods.common.inter.IGoodsPriceCalculateService</Option>
-                                        <Option value="2">com.globalegrow.mgoods.spi.inter.IPriceRuleConfigService</Option>
+                                        {
+                                            serviceSet.map((item, index) => {
+                                                return (
+                                                    <Option key={item.name} title={item.name}>{item.name}</Option>
+                                                )                                                
+                                            })
+                                        }
                                     </Select>
                                 )}
                             </FormItem>
@@ -155,13 +181,15 @@ class TraceInfoList extends Component {
                                 {getFieldDecorator('methodName', {
                                     initialValue: '',
                                 })(
-                                    <Select  style={{width: "100%"}}>
+                                    <Select style={{width: "100%"}} disabled={getFieldValue('serviceName') !== ''}>
                                         <Option value="">全部</Option>
-                                        <Option value="0">deletePackageFeePersonConfig</Option>
-                                        <Option value="1">batchInsertPackageConfig</Option>
-                                        <Option value="2">getPackageFeeConfigList</Option>
-                                        <Option value="3">getPackageFeePersonConfigList</Option>
-                                        <Option value="4">updatePackageFeePersonConfig</Option>
+                                        {
+                                            serviceName ? methodSet[serviceName].map((item, index) => {
+                                                return (
+                                                    <Option key={item} title={item}>{item}</Option>
+                                                )                                                
+                                            }) : null
+                                        }
                                     </Select>
                                 )}
                             </FormItem>
