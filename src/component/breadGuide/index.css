@@ -1,0 +1,7 @@
+.breadcrumb {
+    margin: 25px 0;
+    color: #d8d9da!important;
+    & > span:last-child {
+        color: #fff!important;
+    }
+}

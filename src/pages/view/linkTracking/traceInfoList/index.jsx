@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {Table, Form, Row, Col, Select, DatePicker, Button } from 'antd';
 import linkTrackingService from 'service/linkTrackingService';
+import styles from './index.css';
+
 const Option = Select.Option;
 const { RangePicker } = DatePicker;
 const FormItem = Form.Item;
@@ -61,6 +63,9 @@ class TraceInfoList extends Component {
         this.setState({
             pagination: { ...pagination, ...{pageNum: page, pageSize: pageSize} }
         }, () => {
+            this.setState({
+                loading: true
+            });
             this.getListData();
         });
     }
@@ -91,9 +96,6 @@ class TraceInfoList extends Component {
     getListData = async (e) => {
         e && e.preventDefault();
         const  { pagination } = this.state;
-        this.setState({
-            loading: true
-        });
         const params = {...this.props.form.getFieldsValue(), ...pagination};
         params.useProxy = !!params.useProxy;
         if (params.rangeTime && params.rangeTime.length > 0) {
@@ -226,6 +228,7 @@ class TraceInfoList extends Component {
                     </Row>
                 </Form>
                 <Table 
+                    className={styles.list}
                     loading={loading} 
                     columns={columns} 
                     dataSource={data}

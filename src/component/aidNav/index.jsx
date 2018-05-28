@@ -27,7 +27,7 @@ const ColorBlocks = (props) => {
 }
 
 class AidNav extends Component {
-    async logout() {
+    logout = async () => {
         const { code } = await userService.logout();
         if (code === '0') {
             store.dispatch({

@@ -1,7 +1,6 @@
 @import 'common/css/variable.css';
 .header {
-    background-color: var(--deepColor);
-    background-image: linear-gradient(143deg,#001529 20%,#09070a 81%,#090303);
+    background-color: #001529;
     padding-right: 25px;
     padding-left: 0;
 }
@@ -42,9 +41,18 @@
 }
 
 .content {
-    height: 100vh;
-    overflow: auto;
     padding: 0 25px;
+    background-color: #000c17;
+}
+.main {
+    padding: 24px;
+    background: #fff;
+    min-height: 280px;
+}
+.footer {
+    color: #fff;
+    background-color: #000c17;
+    text-align: center;
 }
 .spin {
     :global .ant-spin {

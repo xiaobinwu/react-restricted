@@ -81,5 +81,5 @@
       }
     }
   },
-  "theme": "./themes/antd/theme.js"
+  "theme": "./src/themes/antd/theme.js"
 }

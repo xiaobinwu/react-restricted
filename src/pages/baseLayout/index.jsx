@@ -13,7 +13,6 @@ import styles from './index.css';
 
 const { Header, Sider, Content, Footer } = Layout;
 
-
 class BaseLayout extends Component {
     constructor(props) {
         super(props);
@@ -60,14 +59,14 @@ class BaseLayout extends Component {
 
                                 <AidNav />
                             </Header>
-                            <Content style={{ padding: '0 25px' }}>
+                            <Content className={styles.content}>
                                 <BreadGuide />
-                                <div style={{ padding: 24, background: '#fff', minHeight: 280 }}>
+                                <div className={styles.main}>
                                     <ViewSet navData={routes} />
                                 </div>
                             </Content>
-                            <Footer style={{ textAlign: 'center' }}>
-                                Ant Design ©2016 Created by Ant UED1111
+                            <Footer className={styles.footer}>
+                                Ant Design ©2016 Created by Ant UED
                             </Footer>
                         </Layout>
                     </Layout>
