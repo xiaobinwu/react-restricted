@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import elementResizeEvent from 'element-resize-event';
-import themes from 'themes/echart/black';
 const isEqual = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 export default class EchartsReactCore extends Component {
     constructor(props) {
@@ -49,8 +48,6 @@ export default class EchartsReactCore extends Component {
 
     // return the echart object
     getEchartsInstance = () => {
-        // 默认酷炫黑
-        this.echartsLib.registerTheme('black', themes);
         return this.echartsLib.getInstanceByDom(this.echartsElement) || this.echartsLib.init(this.echartsElement, this.props.theme, this.props.opts);
 
     }
@@ -149,7 +146,6 @@ EchartsReactCore.propTypes = {
     lazyUpdate: PropTypes.bool,
     style: PropTypes.object, // eslint-disable-line react/forbid-prop-types
     className: PropTypes.string,
-    theme: PropTypes.string,
     onChartReady: PropTypes.func,
     showLoading: PropTypes.bool,
     loadingOption: PropTypes.object, // eslint-disable-line react/forbid-prop-types
@@ -174,7 +170,6 @@ EchartsReactCore.defaultProps = {
     lazyUpdate: false,
     style: {},
     className: '',
-    theme: 'black',
     onChartReady: () => {},
     showLoading: false,
     loadingOption: null,

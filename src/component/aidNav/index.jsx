@@ -57,6 +57,12 @@ class AidNav extends Component {
                             '@primary-color': e.item.props.theme
                         });
                     }
+                    if (e.key.search(/^echart-theme/) > -1) {
+                        store.dispatch({
+                            type: 'SET_THEME',
+                            theme: e.item.props.theme
+                        });
+                    }
             }
         } else {
             if (e.domEvent) {
@@ -70,11 +76,11 @@ class AidNav extends Component {
                 <SubMenu title={<span><Icon type="setting" /></span>}>
                     <MenuItemGroup title="Antd主题">
                         <Menu.Item key="antd-theme-1" theme="#eb2f96"><ColorBlocks name="purple" color="#eb2f96" /></Menu.Item>
-                        <Menu.Item key="antd-theme-3" theme="#1da57a"><ColorBlocks name="green" color="#1da57a" /></Menu.Item>
+                        <Menu.Item key="antd-theme-2" theme="#1da57a"><ColorBlocks name="green" color="#1da57a" /></Menu.Item>
                     </MenuItemGroup>
                     <MenuItemGroup title="Echart主题">
-                        <Menu.Item key="setting:3">Option 3</Menu.Item>
-                        <Menu.Item key="setting:4">Option 4</Menu.Item>
+                        <Menu.Item key="echart-theme-1" theme="black">主题1</Menu.Item>
+                        <Menu.Item key="echart-theme-2" theme="dark">主题2</Menu.Item>
                     </MenuItemGroup>
                 </SubMenu>
                 <Menu.Item key="message">
