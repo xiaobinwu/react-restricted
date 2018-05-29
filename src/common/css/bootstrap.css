@@ -48,8 +48,13 @@ canvas {
     color: #d8d9da;
     border-radius: 0 4px 4px 0;
 }
-:global.ant-layout-sider-zero-width-trigger:hover {
+:global .ant-layout-sider-zero-width-trigger:hover {
     background: #192c3e;
+}
+
+:global .ant-menu.ant-menu-dark .ant-menu-item-selected,
+:global .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
+  background-color: rgba(22, 23, 25, .35);
 }
 :global .ant-menu-dark,
 :global .ant-menu-dark .ant-menu-sub {
@@ -322,7 +327,7 @@ canvas {
 :global .ant-table-filter-dropdown-link {
     color: #d8d9da;
 }
-:global.ant-table-filter-dropdown-link:hover {
+:global .ant-table-filter-dropdown-link:hover {
     color: #d6d7d8;
   }
   :global .ant-table-filter-dropdown-link:active {

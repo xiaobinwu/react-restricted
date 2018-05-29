@@ -11,7 +11,7 @@ const theme =
         "#962d82",
         "#ba43a9"
     ],
-    "backgroundColor": "rgba(22,23,25,1)",
+    "backgroundColor": "#212225",
     "textStyle": {},
     "title": {
         "textStyle": {

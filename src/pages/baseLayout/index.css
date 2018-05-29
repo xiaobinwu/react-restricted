@@ -19,14 +19,14 @@
     background-color: rgba(0, 0, 0, .2);
 }
 .logo {
-    color: #fff;
+    color: #d8d9da;
     height: 64px;
     line-height: 64px;
     padding-left: 24px;
     background: #29292b;
     overflow: hidden;
     h1 {
-        color: #fff;
+        color: #d8d9da;
         font-size: 14px;
         font-weight: 600;
         display: inline-block;
@@ -42,16 +42,16 @@
 
 .content {
     padding: 0 25px;
-    background-color: #161719;
+    background-color: #212225;
 }
 .main {
     padding: 24px;
-    background-color: #161719;
+    background-color: #212225;
     min-height: 280px;
 }
 .footer {
-    color: #fff;
-    background-color: #161719;
+    color: #d8d9da;
+    background-color: #212225;
     text-align: center;
 }
 .spin {
