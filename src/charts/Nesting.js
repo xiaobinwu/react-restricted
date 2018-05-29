@@ -52,7 +52,7 @@ export default class Dynamic extends Component {
             <div className='parent'>
             <ReactEcharts ref='echarts_react'
                 option={this.state.option}
-                style={{height: 400, width: 780}} />
+                style={{height: 400, width: '100%'}} />
             </div>
         </div>
         );

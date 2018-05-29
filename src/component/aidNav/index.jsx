@@ -3,7 +3,7 @@ import { Icon, Menu } from 'antd';
 import userService from 'service/userService';
 import store from 'rRedux/store';
 import styles from './index.css';
-
+import { registerTheme } from 'echarts';
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
@@ -58,10 +58,22 @@ class AidNav extends Component {
                         });
                     }
                     if (e.key.search(/^echart-theme/) > -1) {
-                        store.dispatch({
-                            type: 'SET_THEME',
-                            theme: e.item.props.theme
-                        });
+                        const { themeState } = store.getState();
+                        if (themeState.themeSet.findIndex((value) => { return value === e.item.props.theme;  }) === -1) {
+                            // 修改主题
+                            import(`themes/echart/${e.item.props.theme}`).then((theme) => {
+                                registerTheme(e.item.props.theme, theme.default);
+                                store.dispatch({
+                                    type: 'SET_THEME',
+                                    theme: e.item.props.theme
+                                });
+                            });
+                        } else {
+                            store.dispatch({
+                                type: 'SET_THEME',
+                                theme: e.item.props.theme
+                            });
+                        }
                     }
             }
         } else {
@@ -79,8 +91,9 @@ class AidNav extends Component {
                         <Menu.Item key="antd-theme-2" theme="#1da57a"><ColorBlocks name="green" color="#1da57a" /></Menu.Item>
                     </MenuItemGroup>
                     <MenuItemGroup title="Echart主题">
-                        <Menu.Item key="echart-theme-1" theme="black">主题1</Menu.Item>
-                        <Menu.Item key="echart-theme-2" theme="dark">主题2</Menu.Item>
+                        <Menu.Item key="echart-theme-1" theme="halloween">halloween（默认）</Menu.Item>
+                        <Menu.Item key="echart-theme-2" theme="black">black</Menu.Item>
+                        <Menu.Item key="echart-theme-3" theme="chalk">chalk</Menu.Item>
                     </MenuItemGroup>
                 </SubMenu>
                 <Menu.Item key="message">

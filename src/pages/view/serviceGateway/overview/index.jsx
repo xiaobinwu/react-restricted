@@ -4,6 +4,9 @@ import { Icon, Row, Col, Button, Table  } from 'antd';
 import Dynamic from 'charts/Dynamic';
 import Nesting from 'charts/Nesting';
 import Radar from 'charts/Radar';
+import AreaSimple from 'charts/AreaSimple';
+import Scatter from 'charts/Scatter';
+import Map from 'charts/Map';
 import styles from './index.css';
 
 const data = [{
@@ -150,11 +153,17 @@ class App extends Component {
                 <h1 styleName="chart-title">访问来源分析</h1>
                 <Nesting/>
             </Col>
-            <Col span={6}>
+            <Col span={12}>
               <h1 styleName="chart-title">资源投入分析</h1>
                 <Radar/>
             </Col>
         </Row>
+        <h1 styleName="chart-title">进度监控</h1>
+        <AreaSimple />
+        <h1 styleName="chart-title">雷达监控</h1>
+        <Scatter />
+        <h1 styleName="chart-title">地图</h1>
+        <Map />
         <h1 styleName="chart-title">链路分析</h1>
         <div styleName="table">
           <Button onClick={this.setAgeSort}>Sort age</Button>

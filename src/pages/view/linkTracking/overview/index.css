@@ -1,4 +1,5 @@
-@import 'common/css/header.css';
+
+@import 'common/css/bootstrap.css';
 @import 'common/css/variable.css';
 :root {
     --bgColor: #222;
@@ -22,7 +23,7 @@
 }
 
 .App {
-    color: #657180;
+    color: #97a1af;
 }
 
 .App-img {
@@ -82,7 +83,7 @@
 
 .title {
     font-size: 18px;
-    color: #464c5b;
+    color: #d8d9da;
     line-height: 24px;
     padding-bottom: 15px;
     margin-bottom: 0;
@@ -90,7 +91,7 @@
 }
 .chart-title {
     font-size: 16px;
-    color: #464c5b;
+    color: #d8d9da;
     height: 40px;
     line-height: 40px;
     font-weight: 600;
@@ -113,14 +114,14 @@
                     display: inline-block;
                     margin-bottom: 0;
                     font-size: 32px;
-                    color: #464c5b;
+                    color: #d8d9da;
                     line-height: 48px;
                     padding-right: 12px;
                 }
                 .overview-equipment {
                     display: inline-block;
                     font-size: 12px;
-                    color: #495060;
+                    color: #727a8c;
                     .overview-equ {
                         font-size: 12px;
                         vertical-align: text-bottom;
@@ -138,7 +139,7 @@
             }
             .overview-box-title {
                 font-size: 12px;
-                color: #657180;
+                color: #97a1af;
                 line-height: 16px;
             }
         }

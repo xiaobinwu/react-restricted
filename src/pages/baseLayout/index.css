@@ -1,6 +1,6 @@
 @import 'common/css/variable.css';
 .header {
-    background-color: #001529;
+    background-color: #29292b;
     padding-right: 25px;
     padding-left: 0;
 }
@@ -23,7 +23,7 @@
     height: 64px;
     line-height: 64px;
     padding-left: 24px;
-    background-color: #001529;
+    background: #29292b;
     overflow: hidden;
     h1 {
         color: #fff;
@@ -42,16 +42,16 @@
 
 .content {
     padding: 0 25px;
-    background-color: #000c17;
+    background-color: #161719;
 }
 .main {
     padding: 24px;
-    background: #fff;
+    background-color: #161719;
     min-height: 280px;
 }
 .footer {
     color: #fff;
-    background-color: #000c17;
+    background-color: #161719;
     text-align: center;
 }
 .spin {
