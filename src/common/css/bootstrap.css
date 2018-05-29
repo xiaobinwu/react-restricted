@@ -43,6 +43,14 @@ canvas {
     color: #d8d9da;
     background: #2d2d2d;
 }
+:global .ant-layout-sider-zero-width-trigger {
+    background: #29292b;
+    color: #d8d9da;
+    border-radius: 0 4px 4px 0;
+}
+:global.ant-layout-sider-zero-width-trigger:hover {
+    background: #192c3e;
+}
 :global .ant-menu-dark,
 :global .ant-menu-dark .ant-menu-sub {
     color: #d8d9da;
@@ -74,7 +82,24 @@ canvas {
 :global .ant-menu-dark .ant-menu-item > a {
   color: rgba(255, 255, 255, 0.65);
 }
-
+:global .ant-menu-dark.ant-menu-inline,
+:global .ant-menu-dark.ant-menu-vertical,
+:global .ant-menu-dark.ant-menu-vertical-left,
+:global .ant-menu-dark.ant-menu-vertical-right {
+  border-right: 0;
+}
+:global .ant-menu-dark.ant-menu-inline .ant-menu-item,
+:global .ant-menu-dark.ant-menu-vertical .ant-menu-item,
+:global .ant-menu-dark.ant-menu-vertical-left .ant-menu-item,
+:global .ant-menu-dark.ant-menu-vertical-right .ant-menu-item {
+  border-right: 0;
+}
+:global .ant-menu-dark.ant-menu-inline .ant-menu-item:after,
+:global .ant-menu-dark.ant-menu-vertical .ant-menu-item:after,
+:global .ant-menu-dark.ant-menu-vertical-left .ant-menu-item:after,
+:global .ant-menu-dark.ant-menu-vertical-right .ant-menu-item:after {
+  border-right: 0;
+}
 :global .ant-menu-dark .ant-menu-item:hover,
 :global .ant-menu-dark .ant-menu-item-active,
 :global .ant-menu-dark .ant-menu-submenu-active,
@@ -149,8 +174,12 @@ canvas {
 /* antd table样式覆盖 */
 :global .ant-table {
     color: #d8d9da;
-    background-color: #fff;
 }
+:global .ant-table table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 4px 4px 0 0;
+  }
 :global .ant-table-thead > tr > th {
     background: #29292b;
     color: #33b5e5;
@@ -167,12 +196,31 @@ canvas {
 :global .ant-table-thead > tr > th .ant-table-filter-selected.anticon-filter {
     color: #d6d7d8;
 }
+:global .ant-table-thead > tr:first-child > th:first-child {
+    border-top-left-radius: 4px;
+  }
+  :global .ant-table-thead > tr:first-child > th:last-child {
+    border-top-right-radius: 4px;
+  }
+  :global .ant-table-thead > tr:not(:last-child) > th[colspan] {
+    border-bottom: 0;
+  }
 :global .ant-table-tbody > tr > td {
     background: #29292b;
     border-bottom: 1px solid #171819;
 }
+:global .ant-table-thead > tr.ant-table-row-hover > td,
+:global .ant-table-tbody > tr.ant-table-row-hover > td,
+:global .ant-table-thead > tr:hover > td,
+:global .ant-table-tbody > tr:hover > td {
+  background: #171819;
+}
+:global .ant-table-thead > tr:hover {
+  background: none;
+}
 :global .ant-table-footer {
     background: #29292b;
+    border-radius: 0 0 4px 4px;
     border-top: 1px solid #171819;
 }
 :global .ant-table-footer:before {
@@ -180,6 +228,21 @@ canvas {
 }
 :global .ant-table.ant-table-bordered .ant-table-footer {
     border: 1px solid #171819;
+}
+:global .ant-table-title {
+    border-radius: 4px 4px 0 0;
+}
+:global .ant-table-title + .ant-table-content {
+    border-radius: 4px 4px 0 0;
+}
+:global .ant-table-bordered .ant-table-title + .ant-table-content,
+:global .ant-table-bordered .ant-table-title + .ant-table-content table,
+:global .ant-table-bordered .ant-table-title + .ant-table-content .ant-table-thead > tr:first-child > th {
+  border-radius: 0;
+}
+:global .ant-table-without-column-header .ant-table-title + .ant-table-content,
+:global .ant-table-without-column-header table {
+  border-radius: 0;
 }
 :global .ant-table.ant-table-bordered .ant-table-title {
     border: 1px solid #171819;
@@ -206,6 +269,20 @@ canvas {
     border-left: 1px solid #171819;
     border-right: 1px solid #171819;
 }
+:global .ant-table-bordered.ant-table-fixed-header .ant-table-header > table {
+    border-bottom: 0;
+  }
+  :global .ant-table-bordered.ant-table-fixed-header .ant-table-body > table {
+    border-top: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  :global .ant-table-bordered.ant-table-fixed-header .ant-table-body-inner > table {
+    border-top: 0;
+  }
+  :global .ant-table-bordered.ant-table-fixed-header .ant-table-placeholder {
+    border: 0;
+  }
 :global .ant-table-bordered .ant-table-thead > tr:not(:last-child) > th {
     border-bottom: 1px solid #171819;
 }
@@ -223,11 +300,41 @@ canvas {
     border-radius: 4px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
+:global .ant-table-filter-dropdown .ant-dropdown-menu {
+    border: 0;
+    box-shadow: none;
+    border-radius: 4px 4px 0 0;
+  }
+  :global .ant-table-filter-dropdown .ant-dropdown-menu-sub {
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  :global .ant-table-filter-dropdown .ant-dropdown-menu .ant-dropdown-submenu-contain-selected .ant-dropdown-menu-submenu-title:after {
+    color: #171819;
+  }
+  :global .ant-table-filter-dropdown > .ant-dropdown-menu > .ant-dropdown-menu-item:last-child,
+  :global .ant-table-filter-dropdown > .ant-dropdown-menu > .ant-dropdown-menu-submenu:last-child .ant-dropdown-menu-submenu-title {
+    border-radius: 0;
+  }  
 :global .ant-table-filter-dropdown-btns {
     border-top: 1px solid #171819;
 }
+:global .ant-table-filter-dropdown-link {
+    color: #d8d9da;
+}
+:global.ant-table-filter-dropdown-link:hover {
+    color: #d6d7d8;
+  }
+  :global .ant-table-filter-dropdown-link:active {
+    color: #d6d7d8;
+  }
+  :global .ant-table-selection .anticon-down {
+    color: rgba(0, 0, 0, 0.45);
+  }
 :global .ant-table-selection-menu {
     background: #29292b;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);    
 }
 :global .ant-table-selection-menu .ant-action-down {
     color: #d8d9da;
@@ -262,6 +369,27 @@ canvas {
 :global  tr.ant-table-expanded-row:hover {
   background: #171819;
 }
+:global .ant-table-fixed-header .ant-table-fixed-left .ant-table-body-outer .ant-table-fixed,
+:global .ant-table-fixed-header .ant-table-fixed-right .ant-table-body-outer .ant-table-fixed {
+  border-radius: 0;
+}
+:global .ant-table-fixed-left {
+  box-shadow: 6px 0 6px -4px rgba(0, 0, 0, 0.15);
+}
+:global .ant-table-fixed-left,
+:global .ant-table-fixed-left table {
+  border-radius: 4px 0 0 0;
+}
+:global .ant-table-fixed-left .ant-table-thead > tr > th:last-child {
+  border-top-right-radius: 0;
+}
+:global .ant-table-fixed-right {
+  box-shadow: -6px 0 6px -4px rgba(0, 0, 0, 0.15);
+}
+:global .ant-table-fixed-right,
+:global .ant-table-fixed-right table {
+  border-radius: 0 4px 0 0;
+}
 :global .ant-table-fixed-header > .ant-table-content > .ant-table-scroll > .ant-table-body {
     background: #29292b;
 }
@@ -269,12 +397,38 @@ canvas {
 :global .ant-table-fixed-right table {
     background: #29292b;
 }
+:global .ant-table-fixed-left,
+:global .ant-table-fixed-right {
+  border-radius: 0;
+}
+:global .ant-table-fixed-right .ant-table-expanded-row {
+    color: transparent;
+  }
+  :global .ant-table-fixed-right .ant-table-thead > tr > th:first-child {
+    border-top-left-radius: 0;
+  }
+  :global .ant-table.ant-table-scroll-position-left .ant-table-fixed-left {
+    box-shadow: none;
+  }
+  :global .ant-table.ant-table-scroll-position-right .ant-table-fixed-right {
+    box-shadow: none;
+  }
 :global .ant-table-small {
     border: 1px solid #171819;
     border-radius: 4px;
 }
 :global .ant-table-small > .ant-table-title {
     border-bottom: 1px solid #171819;
+}
+:global .ant-table-small > .ant-table-content > .ant-table-header > table,
+:global .ant-table-small > .ant-table-content > .ant-table-body > table,
+:global .ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-header > table,
+:global .ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-body > table,
+:global .ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-header > table,
+:global .ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-header > table,
+:global .ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-body-outer > .ant-table-body-inner > table,
+:global .ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-body-outer > .ant-table-body-inner > table {
+  border: 0;
 }
 :global .ant-table-small > .ant-table-content > .ant-table-header > table > .ant-table-thead > tr > th,
 :global .ant-table-small > .ant-table-content > .ant-table-body > table > .ant-table-thead > tr > th,
@@ -302,4 +456,12 @@ canvas {
     border: 0;
     border-top: 1px solid #171819;
     border-right: 1px solid #171819;
+}
+:global .ant-table-small.ant-table-bordered .ant-table-placeholder {
+    border-left: 0;
+    border-bottom: 0;
+  }
+:global .ant-table-small.ant-table-bordered .ant-table-thead > tr > th:last-child,
+:global .ant-table-small.ant-table-bordered .ant-table-tbody > tr > td:last-child {
+    border-right: none;
 }

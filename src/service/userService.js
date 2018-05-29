@@ -11,7 +11,7 @@ class UserService extends Service {
     }
     // 获取用户信息
     getUserInfo () {
-        return this.get('/app/all');
+        return { entry: true }
     }
 }
 
