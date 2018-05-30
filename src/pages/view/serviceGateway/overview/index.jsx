@@ -166,9 +166,9 @@ class App extends Component {
         <Map />
         <h1 styleName="chart-title">链路分析</h1>
         <div styleName="table">
-          <Button onClick={this.setAgeSort}>Sort age</Button>
-          <Button onClick={this.clearFilters}>Clear filters</Button>
-          <Button onClick={this.clearAll}>Clear filters and sorters</Button>
+          <Button type="primary" onClick={this.setAgeSort}>Sort age</Button>
+          <Button type="primary" onClick={this.clearFilters}>Clear filters</Button>
+          <Button type="primary" onClick={this.clearAll}>Clear filters and sorters</Button>
         </div>
         <Table columns={columns} dataSource={data} onChange={this.handleChange} />
       </div>

@@ -80,6 +80,5 @@
         "^/api-dev": ""
       }
     }
-  },
-  "theme": "./src/themes/antd/theme.js"
+  }
 }

@@ -9,6 +9,6 @@ const reducers = combineReducers({
     themeState: themeReducer
 });
 
-const store = createStore(reducers, devToolsEnhancer());
+const store = createStore(reducers);
 
 export default store;

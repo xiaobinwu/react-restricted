@@ -20,7 +20,7 @@
 .input {
     input {
         background-color: transparent;
-        border: 1px var(--lightColor) solid;
+        border: 1px #353538 solid;
         padding-left: 40px!important;
     }
 }
@@ -38,7 +38,7 @@
     text-align: center;
 }
 .img {
-    height: 44px;
+    height: 200px;
     vertical-align: top;
     margin-right: 16px;
 }

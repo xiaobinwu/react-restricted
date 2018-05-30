@@ -3,7 +3,6 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const paths = require('./paths');
-const theme = require('./customTheme.antd');
 
 
 module.exports = (env) => {
@@ -80,8 +79,7 @@ module.exports = (env) => {
                                 {
                                     loader: require.resolve('less-loader'), // compiles Less to CSS
                                     options: {
-                                        javascriptEnabled: true,
-                                        modifyVars: theme
+                                        javascriptEnabled: true
                                     }
                                 }
                             ],
@@ -123,8 +121,7 @@ module.exports = (env) => {
                     {
                         loader: require.resolve('less-loader'),
                         options: {
-                            javascriptEnabled: true,
-                            modifyVars: theme
+                            javascriptEnabled: true
                         }
                     }
                 ],

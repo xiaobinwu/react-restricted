@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import CSSModules from 'react-css-modules';
 import { BrowserRouter } from 'react-router-dom';
-import logo from 'src/logo.svg';
+import logo from 'src/logo.png';
 import { Layout, Icon, Spin } from 'antd';
 import routes from 'route/route';  // 后面由服务端下发
 import SiderMenu from "component/siderMenu";
@@ -41,7 +41,7 @@ class BaseLayout extends Component {
                         >
                             <div className={styles.logo}>
                                 <img src={logo} alt="logo" />
-                                <h1>Service governance</h1>
+                                <h1>服务治理平台</h1>
                             </div>
 
                             <SiderMenu location={location} collapsed={collapsed} navData={routes} />
