@@ -54,12 +54,3 @@
     background-color: #212225;
     text-align: center;
 }
-.spin {
-    :global .ant-spin {
-        height: 100vh !important;
-        max-height: 100vh!important;
-    }
-    :global .ant-spin-blur {
-        opacity: 0.4!important;
-    }
-}

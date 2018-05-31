@@ -47,7 +47,6 @@ class Auth extends Component {
                     <div className={styles['logo']}>
                         <img alt="logo" className={styles['img']} src={logo} />
                     </div>
-                    <div className={styles['dec']}>Ant Design 是西湖区最具影响力的 Web 设计规范1</div>
                     <Form onSubmit={this.handleSubmit}>
                         <FormItem>
                             { getFieldDecorator('username', {
@@ -69,11 +68,11 @@ class Auth extends Component {
                                 valuePropName: 'checked',
                                 initialValue: true,
                             })(
-                                <Checkbox>Remember me</Checkbox>
+                                <Checkbox>记住我</Checkbox>
                             )}
-                            <a className={styles['forgot']} href="">Forgot password</a>
+                            <a className={styles['forgot']} href="">忘记密码？</a>
                             <Button type="primary" htmlType="submit" className={styles['button']} size="large">
-                                Log in
+                                登录
                             </Button>
                         </FormItem>
                     </Form>

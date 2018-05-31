@@ -16,6 +16,10 @@ class LinkTrackingService extends Service {
         return this.post('/service/list', params);
     }
 
+    // 通过traceid查询链路信息
+    getOneTrace(params = {}) {
+        return this.get('/trace/one', params);
+    }
     /***************链路跟踪 end******************/
 }
 

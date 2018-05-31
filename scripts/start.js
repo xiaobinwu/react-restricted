@@ -42,7 +42,7 @@ const isInteractive = process.stdout.isTTY;
 // }
 
 // Tools like Cloud9 rely on this.
-const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
+const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 4000;
 const HOST = process.env.HOST || '0.0.0.0';
 
 if (process.env.HOST) {

@@ -2,3 +2,6 @@
 .list {
     min-height: 320px;
 }
+.resetBtn {
+    margin-left: 4px;
+}

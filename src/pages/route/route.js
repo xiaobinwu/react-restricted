@@ -32,19 +32,19 @@ const routes = [
                 key: '1',
                 children: [
                     {
-                        name: '链路信息查询',
+                        name: '链路信息',
                         path: 'traceInfoList',
                         component: 'TraceInfoList',
                         key: '1-0'
                     },
                     {
-                        name: 'traceId查询',
+                        name: '链路详情',
                         path: 'traceInquire',
                         component: 'TraceInquire',
                         key: '1-1'
                     },
                     {
-                        name: '跟踪埋点查询',
+                        name: '跟踪埋点',
                         path: 'traceAnnotation',
                         component: 'TraceAnnotation',
                         key: '1-1'
