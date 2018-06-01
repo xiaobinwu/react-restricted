@@ -1,0 +1,39 @@
+@import 'common/css/variable.css';
+.serviceName {
+    max-width: 280px;
+    @extend %nowrap;
+}
+.methodName {
+    width: 180px;
+    @extend %nowrap;
+}
+.waterfall {
+    :global .ant-progress-inner {
+        background-color: transparent;
+        border-radius: 0;
+    }
+    :global .ant-progress-success-bg,
+    :global .ant-progress-bg {
+        border-radius: 0;
+    }
+}
+.toolTipContent{
+    & > div {
+        overflow: hidden;
+        margin-bottom: 10px;
+        span {
+            float: left;
+            display: inline-block;
+            &:last-child {
+                width: 150px;
+                @extend %nowrap;
+            }
+        }
+    }
+}
+.title {
+    padding: 0 16px;
+    span {
+        margin-right: 40px;
+    }
+}

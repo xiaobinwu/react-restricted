@@ -42,12 +42,6 @@ const routes = [
                         path: 'traceInquire',
                         component: 'TraceInquire',
                         key: '1-1'
-                    },
-                    {
-                        name: '跟踪埋点',
-                        path: 'traceAnnotation',
-                        component: 'TraceAnnotation',
-                        key: '1-1'
                     }
                 ]
             }

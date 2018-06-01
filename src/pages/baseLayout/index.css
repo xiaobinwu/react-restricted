@@ -1,4 +1,5 @@
 @import 'common/css/variable.css';
+@import 'common/css/bootstrap.css';
 .header {
     background-color: #29292b;
     padding-right: 25px;

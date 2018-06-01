@@ -26,8 +26,8 @@ const columns = [{
     key: 'appName'
 },{
     title: '时间',
-    dataIndex: 'timestamps',
-    key: 'timestamps'
+    dataIndex: 'startTime',
+    key: 'startTime'
 },{
     title: 'traceId',
     dataIndex: 'traceId',
@@ -136,7 +136,7 @@ class TraceInfoList extends Component {
                     serviceName: item.serviceName,
                     methodName: item.methodName,
                     appName: item.appName,
-                    timestamps: item.timestamps,
+                    startTime: item.startTime,
                     traceId: item.traceId
                 }
             });
