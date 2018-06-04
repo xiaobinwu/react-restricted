@@ -5,3 +5,9 @@
 .resetBtn {
     margin-left: 4px;
 }
+.switch {
+    text-align: center;
+    :global .ant-form-item-control-wrapper {
+        display: inline-block;
+    }
+}

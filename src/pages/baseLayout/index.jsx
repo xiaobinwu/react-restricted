@@ -39,7 +39,7 @@ class BaseLayout extends Component {
                             collapsed={collapsed}
                             width="256"
                         >
-                            <div className={styles.logo}>
+                            <div className="system-logo">
                                 <img src={logo} alt="logo" />
                                 <h1>服务治理平台</h1>
                             </div>
@@ -48,9 +48,9 @@ class BaseLayout extends Component {
                             
                         </Sider>
                         <Layout>
-                            <Header className={styles.header}>
+                            <Header className="system-header">
                                 <Icon 
-                                    className={styles.trigger}
+                                    className="stystem-trigger"
                                     type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
                                     onClick={this.toggle}
                                 />
@@ -59,13 +59,13 @@ class BaseLayout extends Component {
 
                                 <AidNav />
                             </Header>
-                            <Content className={styles.content}>
+                            <Content className="system-content">
                                 <BreadGuide />
-                                <div className={styles.main}>
+                                <div className="system-main">
                                     <ViewSet navData={routes} />
                                 </div>
                             </Content>
-                            <Footer className={styles.footer}>
+                            <Footer className="system-footer">
                                 Ant Design ©2016 Created by Ant UED
                             </Footer>
                         </Layout>

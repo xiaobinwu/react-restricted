@@ -1,13 +1,11 @@
 @import 'common/css/variable.css';
-.serviceName {
-    max-width: 280px;
-    @extend %nowrap;
-}
-.methodName {
+.methodName,
+.value {
     width: 180px;
     @extend %nowrap;
 }
 .waterfall {
+    overflow: hidden;
     :global .ant-progress-inner {
         background-color: transparent;
         border-radius: 0;
@@ -15,6 +13,12 @@
     :global .ant-progress-success-bg,
     :global .ant-progress-bg {
         border-radius: 0;
+        height: 10px!important;
+    }
+}
+.toolTip {
+    :global .ant-tooltip-inner {
+        max-width: 280px;
     }
 }
 .toolTipContent{
@@ -24,16 +28,27 @@
         span {
             float: left;
             display: inline-block;
-            &:last-child {
-                width: 150px;
+            &:last-child:not(.annotations) {
+                width: 188px;
                 @extend %nowrap;
             }
+        }
+        .annotations {
+            width: 188px;
         }
     }
 }
 .title {
-    padding: 0 16px;
+    padding: 16px;
     span {
         margin-right: 40px;
+    }
+}
+.paramColumn {
+    cursor: pointer;
+}
+.inquireTable {
+    :global .ant-table-title {
+        padding: 0;
     }
 }

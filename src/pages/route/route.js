@@ -1,24 +1,74 @@
 const routes = [
     {
+        site: 'businessMarket',
+        path: '/business-market',
+        icon: 'table',
+        name: '业务大盘',
+        children: [
+            {
+                name: '业务大盘',
+                path: 'businessMarket',
+                icon: 'layout',
+                component: 'BusinessMarket',
+                key: '0'
+            },
+            {
+                name: '业务报表',
+                path: 'businessReport',
+                icon: 'profile',
+                component: 'BusinessReport',
+                key: '1'
+            }
+        ]
+    },
+
+    {
+        site: 'qualityService',
+        path: '/quality-service',
+        icon: 'bar-chart',
+        name: '业务治理',
+        children: [
+            {
+                name: '应用管理',
+                path: 'businessManagement',
+                icon: 'inbox',
+                component: 'BusinessManagement',
+                key: '0'
+            },
+            {
+                name: '服务管理',
+                path: 'serviceManagement',
+                icon: 'laptop',
+                component: 'ServiceManagement',
+                key: '1'
+            }
+        ]
+    },
+
+    {
         site: 'linkTracking',
         path: '/link-tracking',
         icon: 'area-chart',
-        name: '链路跟踪系统',
+        name: '火眼',
+        parent: {
+            icon: 'book',
+            name: '常用系统'
+        },
         children: [
             {
-                name: '仪表盘',
-                path: 'board',
-                icon: 'pie-chart',
+                name: '实时分析',
+                path: 'analysis',
+                icon: 'dashboard',
                 key: '0',
                 children: [
                     {
-                        name: '实时性能监控',
-                        path: 'performance',
-                        component: 'Performance',
+                        name: '应用概览',
+                        path: 'overview',
+                        component: 'Overview',
                         key: '0-0'
                     },
                     {
-                        name: '实时业务监控',
+                        name: '核心业务',
                         path: 'business',
                         component: 'Business',
                         key: '0-1'
@@ -28,7 +78,7 @@ const routes = [
             {
                 name: '链路跟踪',
                 path: 'trace',
-                icon: 'pie-chart',
+                icon: 'credit-card',
                 key: '1',
                 children: [
                     {
@@ -44,15 +94,53 @@ const routes = [
                         key: '1-1'
                     }
                 ]
+            },
+            {
+                name: '应用拓扑',
+                path: 'topology',
+                icon: 'fork',
+                key: '2',
+                component: 'TopologyInfo'
+            },
+            {
+                name: '异常信息',
+                path: 'abnormal',
+                icon: 'frown-o',
+                key: '3',
+                children: [
+                    {
+                        name: '异常列表',
+                        path: 'abnormalList',
+                        component: 'AbnormalList',
+                        key: '3-0'
+                    }
+                ]
+            },
+            {
+                name: '配置管理',
+                path: 'setting',
+                icon: 'setting',
+                key: '4',
+                children: [
+                    {
+                        name: '核心业务配置',
+                        path: 'coreSetting',
+                        component: 'CoreSetting',
+                        key: '4-0'
+                    }
+                ]
             }
-
         ]
     },
     {
         site: 'serviceGateway',
         path: '/service-gateway',
         icon: 'bar-chart',
-        name: '网关服务系统',
+        name: '服务网关',
+        parent: {
+            icon: 'book',
+            name: '常用系统'
+        },
         children: [
             {
                 name: '应用概览',

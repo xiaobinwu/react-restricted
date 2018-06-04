@@ -68,6 +68,28 @@ export default class SiderMenu extends Component {
             backName: backName.join('/')
         }
     }
+    // 拼凑顶部菜单栏
+    reduceMenu = (navData) => {
+        // navData.map((item, i) => {
+        //     return(
+        //         <Menu.Item key={i} breadcrumb={`${item.name}/${this.reducePath(item).backName}`}>
+        //             <Icon type={item.icon} />
+        //             {/* changeSite需要bind绑定，不然会触发多次 */}
+        //             <Link to={`${item.path}${this.reducePath(item).backPath}`} onClick={this.changeSite.bind(this, item.site)}>{item.name}</Link>
+        //         </Menu.Item>
+        //     )
+        // })
+
+        return navData.map((item, i) => {
+            return(
+                <Menu.Item key={i} breadcrumb={`${item.name}/${this.reducePath(item).backName}`}>
+                    <Icon type={item.icon} />
+                    {/* changeSite需要bind绑定，不然会触发多次 */}
+                    <Link to={`${item.path}${this.reducePath(item).backPath}`} onClick={this.changeSite.bind(this, item.site)}>{item.name}</Link>
+                </Menu.Item>
+            )
+        })
+    }
     render() {
         const { headerMenuSelectedKey } = this.state;
         const { navData } = this.props;

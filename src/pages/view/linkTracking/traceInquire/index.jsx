@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Row, Col, Input, Form, Button, Table, Tooltip, Progress, Divider, Tag } from 'antd';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { Row, Col, Input, Form, Button, Table, Tooltip, Progress, Tag, message, Icon } from 'antd';
 import linkTrackingService from 'service/linkTrackingService';
+import { getQueryString } from 'js/util';
 import styles from './index.css';
 const FormItem = Form.Item;
 
@@ -13,20 +15,22 @@ class TraceInquire extends Component {
             timestamps: '',
             maxDuration: '',
             startTime: '',
-            traceId: ''
+            traceId: '',
+            loading: false
         };
         this.columns = [{
                 title: '应用名',
                 dataIndex: 'appName',
                 key: 'appName',
+                render: this.handleAnnotations
             }, {
                 title: '服务名',
                 dataIndex: 'serviceName',
                 key: 'serviceName',
-                render: (value) => {
+                render: (value, row) => {
                     return (
                         <div title={value} className={styles.serviceName}>
-                            {value}
+                            {this.handleAnnotations(value, row)}
                         </div>
                     )
                 }
@@ -35,34 +39,41 @@ class TraceInquire extends Component {
                 dataIndex: 'methodName',
                 key: 'methodName',
                 width: 180,
-                render: (value) => {
+                render: (value, row) => {
                     return (
                         <div title={value} className={styles.methodName}>
-                            {value}
+                            {this.handleAnnotations(value, row)}
                         </div>
                     )
                 }
         
             }, {
+                title: '参数',
+                dataIndex: 'value',
+                key: 'value',
+                width: 180,
+                className: styles.paramColumn,
+                render: (value, row) => {
+                    return (
+                        <CopyToClipboard text={value} onCopy={() => { message.success('参数复制成功！'); }}>
+                            <div title={value} className={styles.value}>
+                                {this.handleAnnotations(value, row, 'value')}
+                            </div>
+                        </CopyToClipboard>
+                    )
+                }
+            }, {
                 title: '地址',
                 dataIndex: 'ip',
                 key: 'ip',
-                width: 180
+                width: 180,
+                render: this.handleAnnotations
             }, {
                 title: '类型',
                 dataIndex: 'type',
                 key: 'type',
-                width: 100
-            }, {
-                title: '开始时间',
-                dataIndex: 'startTime',
-                key: 'startTime',
-                width: 180
-            }, {
-                title: '耗时(ms)',
-                dataIndex: 'duration',
-                key: 'duration',
-                width: 100
+                width: 100,
+                render: this.handleAnnotations
             }, {
                 title: '时间轴',
                 dataIndex: '',
@@ -75,28 +86,28 @@ class TraceInquire extends Component {
                         percent = 100;
                         marginLeft = 0;
                     } else {
-                        const currentTimestamps = new Date(row.timestamps);
-                        const timestamps = new Date(this.state.timestamps);
-                        marginLeft = (Math.abs(currentTimestamps.getTime() - timestamps.getTime()) / this.state.maxDuration) * (waterfallWidth - 32);
-                        percent = (row.duration / this.state.maxDuration) * 100;
+                        marginLeft = (Math.abs(row.timestamps - this.state.timestamps) / this.state.maxDuration) * (waterfallWidth - 32);
+                        const calculatePercent = (row.duration / this.state.maxDuration) * 100;
+                        percent = row.duration === 0 ? 1 : (calculatePercent < 1 ? 1 : calculatePercent);
                     }
+                    // 改变异常时的颜色，color.less
+                    let annotationsClassName = row.annotations ? "system-annotations-tag" : "system-default-trace-tag";
+                    let progressClassName = row.annotations ? "system-annotations-progress" : '';
+                    annotationsClassName = `${annotationsClassName} ant-tag-has-color`;
+
                     return(
                         <Tooltip placement="left" overlayClassName={styles.toolTip} title={() => {
                             return (
                                 <div className={styles.toolTipContent}>
-                                    <div><span>服务类型：</span><span>{row.type}</span></div>
-                                    <div><span>应用名：</span><span>{row.appName}</span></div>
-                                    <div><span>服务名：</span><span title={row.serviceName}>{row.serviceName}</span></div>
-                                    <div><span>方法名：</span><span>{row.methodName}</span></div>
-                                    <div><span>IP：</span><span>{row.ip}</span></div>
-                                    <Divider />
-                                    <div><span><Tag color="#e24d42">开始时间</Tag></span><span>{row.startTime}</span></div>
-                                    <div><span><Tag color="#e24d42">调用时长</Tag></span><span>{row.duration}</span></div>
+                                    <div><span><Tag className={annotationsClassName}>开始时间</Tag></span><span>{row.startTime}</span></div>
+                                    <div><span><Tag className={annotationsClassName}>结束时间</Tag></span><span>{row.endTime}</span></div>
+                                    <div><span><Tag className={annotationsClassName}>调用时长</Tag></span><span>{row.duration}ms</span></div>
+                                    {/* { row.annotations ? (<div><span><Tag className={annotationsClassName}>异常信息</Tag></span><span className={styles.annotations}>{row.annotations}</span></div>) : null } */}
                                 </div>
                             )
                         }}>
-                            <div className={styles.waterfall}>
-                                <Progress percent={percent} style={{marginLeft: marginLeft}} showInfo={false} />
+                            <div className={styles.waterfall} style={{ width: waterfallWidth }}>
+                                <Progress className={progressClassName} percent={percent} style={{marginLeft: marginLeft}} showInfo={false} />
                             </div>
                         </Tooltip>
                     )
@@ -105,8 +116,25 @@ class TraceInquire extends Component {
         ];
     }
     componentDidMount() {
-        this.getTraceData('5b0fc894e4b0da480de31339');
+        const { traceId } = getQueryString();
+        traceId && this.getTraceData(traceId);
+        traceId  && this.props.form.setFieldsValue({ 'traceId': traceId });
     }
+    // 处理异常
+    handleAnnotations = (value, row, dataIndex) => {
+        return row.annotations ? 
+            <span className="system-annotations-text">
+                { row.annotations && dataIndex === 'value' && value !== undefined ?
+                    <Tooltip title={row.annotations}>
+                        <Icon type="frown-o" style={{marginRight: "5px"}} /> 
+                    </Tooltip>
+                    : null 
+                }
+                {value}
+            </span> 
+            : value;
+    }
+    // 查询
     inquire = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
@@ -115,7 +143,11 @@ class TraceInquire extends Component {
           }
         });
     }
+    // 获取Trace数据
     getTraceData = async (traceId) => {
+        this.setState({
+            loading: true
+        });
         const { entry, code } = await linkTrackingService.getOneTrace({ traceId });
         if (code === '0' && entry.length > 0) {
             this.setState({
@@ -126,8 +158,11 @@ class TraceInquire extends Component {
                 startTime: entry[0].startTime
             });
         }
+        this.setState({
+            loading: false
+        });
     }
-
+    // 获取表格title
     getTitle = () => {
         const { traceId, startTime, maxDuration } = this.state;
         const title = traceId ?             
@@ -142,10 +177,10 @@ class TraceInquire extends Component {
 
     render() {
         const { getFieldDecorator } = this.props.form;
-        const { entry } = this.state;
+        const { entry, loading } = this.state;
         const columns = this.columns;
         return (
-            <div>
+            <div className={styles.inquireTable}>
                 <Form onSubmit={this.inquire}>
                     <Row gutter={16}>
                         <Col span={4}>
@@ -174,6 +209,7 @@ class TraceInquire extends Component {
                     dataSource={entry} 
                     pagination={false} 
                     title={this.getTitle}
+                    loading={loading} 
                 />
             </div>
         );

@@ -1,6 +1,7 @@
 const initialState = {
-    currentSite: 'linkTracking',
-    breadCrumb: []
+    currentSite: 'businessMarket',
+    breadCrumb: [],
+    paths: {}
 };
 
 const routeReducer = (state = initialState, action) => {
@@ -14,6 +15,13 @@ const routeReducer = (state = initialState, action) => {
             breadCrumb: action.breadCrumb
         });
     }
+
+    if (action.type === 'SET_PATHS') {
+        return Object.assign({}, state, {
+            paths: action.paths
+        });
+    }
+
     return state;
 }
 

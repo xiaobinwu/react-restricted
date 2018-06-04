@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import {Table, Form, Row, Col, Select, DatePicker, Button } from 'antd';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import {Table, Form, Row, Col, Select, DatePicker, Button, Switch } from 'antd';
 import linkTrackingService from 'service/linkTrackingService';
 import styles from './index.css';
 
@@ -8,33 +10,6 @@ const { RangePicker } = DatePicker;
 const FormItem = Form.Item;
 
 let appList = [];
-const columns = [{
-    title: '序号',
-    dataIndex: 'key',
-    key: 'key'
-},{
-    title: '接口',
-    dataIndex: 'serviceName',
-    key: 'serviceName'
-},{
-    title: '方法',
-    dataIndex: 'methodName',
-    key: 'methodName'
-},{
-    title: '应用名',
-    dataIndex: 'appName',
-    key: 'appName'
-},{
-    title: '时间',
-    dataIndex: 'startTime',
-    key: 'startTime'
-},{
-    title: 'traceId',
-    dataIndex: 'traceId',
-    key: 'traceId'
-}];
-
-
 class TraceInfoList extends Component {
     constructor(props) {
         super(props);
@@ -50,12 +25,47 @@ class TraceInfoList extends Component {
             serviceSet: [],
             methodSet: {}
         }
+
+        this.columns = [{
+            title: '序号',
+            dataIndex: 'key',
+            key: 'key'
+        },{
+            title: '接口',
+            dataIndex: 'serviceName',
+            key: 'serviceName'
+        },{
+            title: '方法',
+            dataIndex: 'methodName',
+            key: 'methodName'
+        },{
+            title: '应用名',
+            dataIndex: 'appName',
+            key: 'appName'
+        },{
+            title: '时间',
+            dataIndex: 'startTime',
+            key: 'startTime'
+        },{
+            title: 'traceId',
+            dataIndex: 'traceId',
+            key: 'traceId',
+            render: (text, row) => {
+                return(
+                    <Link to={{ pathname: this.props.paths['traceInquire'].linkPath,  search: `?traceId=${row.traceId}`}}>{text}</Link>
+                )
+            }
+        }];
+
     }
-    async componentWillMount() {
+    async UNSAFE_componentWillMount() {
         const { entry } = await linkTrackingService.getAllApp();
         appList = entry;
+        
     }
     componentDidMount() {
+        const { location } = this.props;
+        console.log(location);
         this.getListData();
     }
     // select搜索
@@ -151,6 +161,7 @@ class TraceInfoList extends Component {
     render() {
         const { loading, data, pagination, serviceSet, methodSet, serviceName } = this.state;
         const { getFieldDecorator, getFieldValue } = this.props.form;
+        const columns = this.columns;
         const pageControl = {
             current: pagination.pageNum,
             pageSize: pagination.pageSize,
@@ -232,6 +243,14 @@ class TraceInfoList extends Component {
                             </FormItem>
                         </Col>
                         <Col span={3}>
+                            <FormItem label="只查看异常" colon={false} className={styles.switch}>
+                                {getFieldDecorator('onlyException', { valuePropName: 'checked' })(
+                                    <Switch />
+                                )}
+                            </FormItem>
+                        </Col>
+
+                        <Col span={3}>
                             <FormItem>
                                 <Button type="primary" icon="search" htmlType="submit">查询</Button>
                                 <Button type="primary" className={styles.resetBtn} onClick={this.reset}>重置</Button>
@@ -251,4 +270,8 @@ class TraceInfoList extends Component {
     }
 }
 
-export default Form.create()(TraceInfoList);
+const stateToProps = ({ routeState }) => ({
+    paths: routeState.paths
+});
+
+export default connect(stateToProps)(Form.create()(TraceInfoList));

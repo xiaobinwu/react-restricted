@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
 import routeSet from 'route/index';
 import { Route, Switch } from 'react-router-dom';
-
+import store from 'rRedux/store';
+let paths = {};
 class ViewSet extends Component {
     constructor(props) {
         super(props);
         this.state = {
             views: [],
-            defaultView: ''
+            defaultView: '',
         }
     }
     UNSAFE_componentWillMount() {
         let views = this.walkRoutes(this.props.navData);
+        store.dispatch({
+            type: 'SET_PATHS',
+            paths: { ...paths }
+        });
+        paths = null; // 回收path
         this.setState({
             views
         });
@@ -28,6 +34,10 @@ class ViewSet extends Component {
                     this.setState({
                         defaultView: item.component
                     });
+                }
+                paths[item.path] = {
+                    key,
+                    linkPath
                 }
                 return (
                     <Route key={key} path={linkPath} component={routeSet[item.component]} />
