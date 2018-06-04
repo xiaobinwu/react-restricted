@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Menu, Icon } from 'antd';
 import store from 'rRedux/store';
 import styles from './index.css';
+const SubMenu = Menu.SubMenu;
 
 export default class SiderMenu extends Component {
     constructor(props) {
@@ -80,15 +81,43 @@ export default class SiderMenu extends Component {
         //     )
         // })
 
-        return navData.map((item, i) => {
+        const subNavData = {};
+        const subMenuData = [];
+        const menuData = navData.map((item, i) => {
+            if (item.parent) {
+                if (subNavData[item.parent.name] && subNavData[item.parent.name].length > 0) {
+                    subNavData[item.parent.name].push(item);
+                } else {
+                    subNavData[item.parent.name] = [item];
+                }
+                return null;
+            }
             return(
-                <Menu.Item key={i} breadcrumb={`${item.name}/${this.reducePath(item).backName}`}>
+                <Menu.Item key={item.site} breadcrumb={`${item.name}/${this.reducePath(item).backName}`}>
                     <Icon type={item.icon} />
                     {/* changeSite需要bind绑定，不然会触发多次 */}
                     <Link to={`${item.path}${this.reducePath(item).backPath}`} onClick={this.changeSite.bind(this, item.site)}>{item.name}</Link>
                 </Menu.Item>
             )
-        })
+        }).filter(item => item !== null);
+        console.log(Object.keys(subNavData))
+        Object.keys(subNavData).forEach(item => {
+            subMenuData.push(
+                <SubMenu key={subNavData[item].name} title={<span> {subNavData[item].name} </span>}>
+                    {
+                        subNavData[item].map((it, i) => {
+                            <Menu.Item key={it.site} breadcrumb={`${it.name}/${this.reducePath(it).backName}`}>
+                                <Icon type={it.icon} />
+                                {/* changeSite需要bind绑定，不然会触发多次 */}
+                                <Link to={`${it.path}${this.reducePath(it).backPath}`} onClick={this.changeSite.bind(this, it.site)}>{it.name}</Link>
+                            </Menu.Item>                       
+                        })
+                    }
+                </SubMenu>     
+            ) 
+        });
+        console.log([...menuData, ...subMenuData])
+        return [...menuData, ...subMenuData];
     }
     render() {
         const { headerMenuSelectedKey } = this.state;
@@ -96,15 +125,7 @@ export default class SiderMenu extends Component {
         return (
             <Menu mode="horizontal"  defaultSelectedKeys={headerMenuSelectedKey} className={styles.nav} onClick={this.changeBreadCrumb}>
                 {
-                    navData.map((item, i) => {
-                        return(
-                            <Menu.Item key={i} breadcrumb={`${item.name}/${this.reducePath(item).backName}`}>
-                                <Icon type={item.icon} />
-                                {/* changeSite需要bind绑定，不然会触发多次 */}
-                                <Link to={`${item.path}${this.reducePath(item).backPath}`} onClick={this.changeSite.bind(this, item.site)}>{item.name}</Link>
-                            </Menu.Item>
-                        )
-                    })
+                    this.reduceMenu(navData)
                 }
             </Menu>
         );
