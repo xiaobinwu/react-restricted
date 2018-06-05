@@ -52,7 +52,8 @@ const routes = [
         name: '火眼',
         parent: {
             icon: 'book',
-            name: '常用系统'
+            name: '常用系统',
+            site: 'commonSystem'
         },
         children: [
             {
@@ -139,49 +140,146 @@ const routes = [
         name: '服务网关',
         parent: {
             icon: 'book',
-            name: '常用系统'
+            name: '常用系统',
+            site: 'commonSystem'
         },
         children: [
             {
-                name: '应用概览',
+                name: '服务管理',
                 path: 'overview',
-                icon: 'calendar',
-                component: 'Overview1',
-                key: '0'
-            },
-            {
-                name: '测试父菜单',
-                path: 'test',
                 icon: 'cloud',
-                key: '1',
+                key: '0',
                 children: [
                     {
-                        name: '测试子菜单1',
-                        path: 'test1',
-                        component: 'Test1',
-                        key: '1-0',
+                        name: '服务',
+                        path: 'service',
+                        key: '0-0',
                         children: [
                             {
-                                name: '测试子菜单1-1',
-                                path: 'test3',
+                                name: 'Dubbo服务',
+                                path: 'dubbo',
                                 icon: 'book',
-                                component: 'Test1',
-                                key: '1-0-0'
+                                component: 'GetwayDubbo',
+                                key: '0-0-1'
                             },
                             {
-                                name: '测试子菜单1-2',
-                                path: 'test4',
+                                name: 'Gateway在线服务',
+                                path: 'online',
                                 icon: 'book',
-                                component: 'Test2',
-                                key: '1-0-1'
+                                component: 'GetwayOnline',
+                                key: '0-0-2'
                             }
                         ]
                     },
                     {
-                        name: '测试子菜单2',
-                        path: 'test2',
-                        component: 'Test2',
-                        key: '1-1'
+                        name: '连接',
+                        path: 'line',
+                        key: '0-1',
+                        children: [
+                            {
+                                name: '连接管理',
+                                path: 'connect',
+                                icon: 'book',
+                                component: 'GetwayConnect',
+                                key: '0-1-0'
+                            }
+                        ]
+                    }
+                ]
+            }, {
+                name: '监控管理',
+                path: 'overview',
+                icon: 'cloud',
+                key: '1',
+                children: [
+                    {
+                        name: '实时',
+                        path: 'live',
+                        key: '1-0',
+                        children: [
+                            {
+                                name: '在线监控',
+                                path: 'monitor',
+                                component: 'GetwayMonitor',
+                                key: '1-0-0',
+                            }
+                        ],
+                    },
+                    {
+                        name: '离线',
+                        path: 'offline',
+                        key: '1-1',
+                        children: [
+                            {
+                                name: '全局流量分析',
+                                path: 'flow',
+                                component: 'GetwayFlow',
+                                key: '1-1-0',
+                            },
+                            {
+                                name: '全局QPS分析',
+                                path: 'QPS',
+                                component: 'GetwayQPS',
+                                key: '1-1-1',
+                            },
+                            {
+                                name: '慢服务查询',
+                                path: 'monitor',
+                                component: 'GetwaySlowService',
+                                key: '1-1-2',
+                            },
+                        ],
+                    }
+                ]
+            }, {
+                name: '集群管理',
+                path: 'overview',
+                icon: 'cloud',
+                key: '2',
+                children: [
+                    {
+                        name: '管理',
+                        path: 'manager',
+                        key: '2-0',
+                        children: [
+                            {
+                                name: '集群概览',
+                                path: 'colony',
+                                component: 'GetwayColony',
+                                key: '2-0-0',
+                            },
+                            {
+                                name: 'IP 黑名单',
+                                path: 'blacklist',
+                                component: 'GetwayIpblacklist',
+                                key: '2-0-1',
+                            },
+                            {
+                                name: 'TOKEN管理',
+                                path: 'token',
+                                component: 'GetwayToken',
+                                key: '2-0-2',
+                            },
+                        ],
+                    },
+                    {
+                        name: '系统',
+                        path: 'system',
+                        key: '2-1',
+                        children: [
+                            {
+                                name: '参数配置',
+                                path: 'parameter',
+                                component: 'GetwayParameterConf',
+                                key: '2-1-0',
+                            },
+                            {
+                                name: '链路状态',
+                                path: 'link',
+                                component: 'GetwayLinkstate',
+                                key: '2-1-1',
+                            },
+                        ],
                     }
                 ]
             }

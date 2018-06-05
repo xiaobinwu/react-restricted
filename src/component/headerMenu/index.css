@@ -2,33 +2,34 @@
 .nav {
     display: inline-block;
     line-height: 64px;
-    color: #fff!important;
     font-size: 16px;
     background-color: transparent!important;
-    :global .ant-menu-item {
+    :global .ant-menu-item,
+    :global .ant-menu-submenu {
         opacity: .69;
         transition: opacity .3s;
         cursor: pointer;
-        margin-top: -4px;
         border-bottom-width: 4px!important;
     }
     :global .ant-menu-item-selected,
-    :global .ant-menu-item-active {
-        color: #fff;
+    :global .ant-menu-item-active,
+    :global .ant-menu-submenu-selected,
+    :global .ant-menu-submenu-active {
         opacity: 1;
         position: relative;
-        border-bottom-width: 4px;
+        border-bottom: 4px solid #e24d42!important;
         background-color: transparent!important;
-        .anticon {
-            color: #fff;
-        }
     }
-    :global .ant-menu-item-active {
-        color: #fff!important;
+    :global .ant-menu-item-active,
+    :global .ant-menu-submenu-active  {
         opacity: 1;
     }
     :global a {
-        color: #fff!important;
+        display: inline-block!important;
+    } 
+}
+.menuItem {
+    :global a {
         display: inline-block!important;
     } 
 }

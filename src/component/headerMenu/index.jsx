@@ -14,6 +14,7 @@ export default class SiderMenu extends Component {
         }
     }
     UNSAFE_componentWillMount() {
+        this.view = this.reduceMenu(this.props.navData);
         this.handleLocation(this.props.location);
     }
     // 更换当前站点，更新store
@@ -36,19 +37,20 @@ export default class SiderMenu extends Component {
             }
         }
     }
-    // 匹配当前{location}获取顶部菜单栏默认selectedKey
+    // 匹配当前{location}获取顶部菜单栏默认selectedKey（以路由配置表的site为key）
     handleLocation = ({ pathname }) => {
         const { navData } = this.props;
+        const { routeState } = store.getState();
         let headerMenuSelectedKey;
         if (pathname === '/') {
-            headerMenuSelectedKey = ['0'];
+            headerMenuSelectedKey = [routeState.currentSite];
         }
-        const selectedIndex = navData.findIndex((item, index) => {
+        const selectedItem = navData.find((item) => {
             return pathname.search(new RegExp(`^${item.path}`, 'ig')) > -1;
         });
-        headerMenuSelectedKey = selectedIndex > -1 ? [String(selectedIndex)] : ['0'];
-        if (selectedIndex > -1) {
-            this.changeSite(navData[selectedIndex].site);
+        headerMenuSelectedKey = selectedItem ? [selectedItem.site] : [routeState.currentSite];
+        if (selectedItem) {
+            this.changeSite(selectedItem.site);
         }
         this.setState({
             headerMenuSelectedKey
@@ -71,62 +73,56 @@ export default class SiderMenu extends Component {
     }
     // 拼凑顶部菜单栏
     reduceMenu = (navData) => {
-        // navData.map((item, i) => {
-        //     return(
-        //         <Menu.Item key={i} breadcrumb={`${item.name}/${this.reducePath(item).backName}`}>
-        //             <Icon type={item.icon} />
-        //             {/* changeSite需要bind绑定，不然会触发多次 */}
-        //             <Link to={`${item.path}${this.reducePath(item).backPath}`} onClick={this.changeSite.bind(this, item.site)}>{item.name}</Link>
-        //         </Menu.Item>
-        //     )
-        // })
-
         const subNavData = {};
         const subMenuData = [];
         const menuData = navData.map((item, i) => {
             if (item.parent) {
-                if (subNavData[item.parent.name] && subNavData[item.parent.name].length > 0) {
-                    subNavData[item.parent.name].push(item);
+                const parent = JSON.stringify(item.parent);
+                if (subNavData[parent] && subNavData[parent].length > 0) {
+                    subNavData[parent].push(item);
                 } else {
-                    subNavData[item.parent.name] = [item];
+                    subNavData[parent] = [item];
                 }
                 return null;
             }
-            return(
-                <Menu.Item key={item.site} breadcrumb={`${item.name}/${this.reducePath(item).backName}`}>
-                    <Icon type={item.icon} />
-                    {/* changeSite需要bind绑定，不然会触发多次 */}
-                    <Link to={`${item.path}${this.reducePath(item).backPath}`} onClick={this.changeSite.bind(this, item.site)}>{item.name}</Link>
-                </Menu.Item>
-            )
+            return this.getMenuItem(item);
         }).filter(item => item !== null);
-        console.log(Object.keys(subNavData))
+        
         Object.keys(subNavData).forEach(item => {
+            const parseItem = JSON.parse(item);
             subMenuData.push(
-                <SubMenu key={subNavData[item].name} title={<span> {subNavData[item].name} </span>}>
+                <SubMenu key={parseItem.site} title={
+                    <span>
+                        {parseItem.icon && <Icon type={parseItem.icon} />}
+                        <span>{parseItem.name}</span>
+                    </span>
+                }>
                     {
                         subNavData[item].map((it, i) => {
-                            <Menu.Item key={it.site} breadcrumb={`${it.name}/${this.reducePath(it).backName}`}>
-                                <Icon type={it.icon} />
-                                {/* changeSite需要bind绑定，不然会触发多次 */}
-                                <Link to={`${it.path}${this.reducePath(it).backPath}`} onClick={this.changeSite.bind(this, it.site)}>{it.name}</Link>
-                            </Menu.Item>                       
+                            return this.getMenuItem(it);            
                         })
                     }
                 </SubMenu>     
             ) 
         });
-        console.log([...menuData, ...subMenuData])
         return [...menuData, ...subMenuData];
+    }
+    // 返回顶部菜单submenu的menuItem
+    getMenuItem(it) {
+        return (
+            <Menu.Item key={it.site} className={styles.menuItem} breadcrumb={`${it.name}/${this.reducePath(it).backName}`}>
+                <Icon type={it.icon} />
+                {/* changeSite需要bind绑定，不然会触发多次 */}
+                <Link to={`${it.path}${this.reducePath(it).backPath}`} onClick={this.changeSite.bind(this, it.site)}>{it.name}</Link>
+            </Menu.Item>       
+        )
     }
     render() {
         const { headerMenuSelectedKey } = this.state;
-        const { navData } = this.props;
+        const view = this.view;
         return (
-            <Menu mode="horizontal"  defaultSelectedKeys={headerMenuSelectedKey} className={styles.nav} onClick={this.changeBreadCrumb}>
-                {
-                    this.reduceMenu(navData)
-                }
+            <Menu mode="horizontal" theme="dark" defaultSelectedKeys={headerMenuSelectedKey} className={styles.nav} onClick={this.changeBreadCrumb}>
+                { view }
             </Menu>
         );
     }

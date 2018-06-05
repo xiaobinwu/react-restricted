@@ -6,8 +6,10 @@ import store from 'rRedux/store';
 // import registerServiceWorker from 'src/registerServiceWorker';
 
 import 'antd/dist/antd.less';
-// 默认黑色主题
+// 默认黑色主题,后期去掉color.less
 import 'themes/antd/color.less';
+import 'themes/antd/dark.less';
+
 import Auth from 'pages/auth';
 import BaseLayout from 'pages/baseLayout';
 import AuthorizedRoute from './authorizedRoute';
