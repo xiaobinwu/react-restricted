@@ -11,8 +11,8 @@ const getQueryString = (href) => {
         return rs;
     });
     return obj;
-}
+};
 
 export {
     getQueryString
-}
+};

@@ -1,6 +1,17 @@
 @import 'common/css/variable.css';
-.methodName,
+.serviceName {
+    width: 250px;
+    @extend %nowrap;
+}
+.methodName {
+    width: 150px;
+    @extend %nowrap;
+}
 .value {
+    width: 180px;
+    @extend %nowrap;
+}
+.annotations{
     width: 180px;
     @extend %nowrap;
 }
@@ -28,13 +39,10 @@
         span {
             float: left;
             display: inline-block;
-            &:last-child:not(.annotations) {
+            &:last-child {
                 width: 188px;
                 @extend %nowrap;
             }
-        }
-        .annotations {
-            width: 188px;
         }
     }
 }
@@ -50,5 +58,6 @@
 .inquireTable {
     :global .ant-table-title {
         padding: 0;
+        top: 0;
     }
 }

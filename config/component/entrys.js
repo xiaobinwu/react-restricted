@@ -1,25 +1,26 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const paths = require('./paths');
+
 const entryJsList = {};
 const entryHtmlList = [];
 
 // 提取公用vendor
-entryJsList['vendor'] = [
-    'react', 
-    'react-router-dom', 
-    'redux', 
-    'react-dom', 
+entryJsList.vendor = [
+    'react',
+    'react-router-dom',
+    'redux',
+    'react-dom',
     'react-redux'
 ];
-entryJsList['lib'] = [
+entryJsList.lib = [
     'echarts'
-]
-entryJsList['utils'] = [
+];
+entryJsList.utils = [
     'qs',
     'axios',
     require.resolve('./polyfills')
 ];
-entryJsList['index'] = [
+entryJsList.index = [
     // We ship a few polyfills by default:
     paths.resolveApp('src/index.js')
     // We include the app code last so that if there is a runtime error during
@@ -28,11 +29,11 @@ entryJsList['index'] = [
 ];
 let htmlPrams = {
     inject: true,
-    template: paths.appHtml ,
+    template: paths.appHtml,
     filename: 'index.html',
     chunks: ['index', 'vendor', 'lib', 'utils', 'runtime']
 };
-if(process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
     // Include an alternative client for WebpackDevServer. A client's job is to
     // connect to WebpackDevServer by a socket and get notified about changes.
     // When you save a file, the client will either apply hot updates (in case
@@ -43,7 +44,7 @@ if(process.env.NODE_ENV === 'development') {
     // the line below with these two lines if you prefer the stock client:
     // require.resolve('webpack-dev-server/client') + '?/',
     // require.resolve('webpack/hot/dev-server'),
-    entryJsList['index'].push(require.resolve('react-dev-utils/webpackHotDevClient'));
+    entryJsList.index.push(require.resolve('react-dev-utils/webpackHotDevClient'));
 } else {
     htmlPrams = Object.assign({}, htmlPrams, {
         minify: {
@@ -65,4 +66,4 @@ entryHtmlList.push(new HtmlWebpackPlugin(htmlPrams));
 module.exports = {
     entryJsList,
     entryHtmlList,
-}
+};

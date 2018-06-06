@@ -3,15 +3,17 @@ import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import logo from 'src/logo.png';
 import { Layout, Icon, Spin } from 'antd';
-import routes from 'route/route';  // 后面由服务端下发
-import SiderMenu from "component/siderMenu";
-import HeaderMenu from "component/headerMenu";
-import BreadGuide from "component/breadGuide";
-import AidNav from "component/aidNav";
-import ViewSet from "component/viewSet";
+import routes from 'route/route'; // 后面由服务端下发
+import SiderMenu from 'component/siderMenu';
+import HeaderMenu from 'component/headerMenu';
+import BreadGuide from 'component/breadGuide';
+import AidNav from 'component/aidNav';
+import ViewSet from 'component/viewSet';
 import styles from './index.css';
 
-const { Header, Sider, Content, Footer } = Layout;
+const {
+    Header, Sider, Content, Footer
+} = Layout;
 
 class BaseLayout extends Component {
     constructor(props) {
@@ -19,7 +21,7 @@ class BaseLayout extends Component {
         this.state = {
             collapsed: false,
             loading: false
-        }
+        };
     }
     toggle = () => {
         this.setState({
@@ -27,7 +29,7 @@ class BaseLayout extends Component {
         });
     }
     render() {
-        const { collapsed, loading } = this.state; 
+        const { collapsed, loading } = this.state;
         const { location } = this.props;
         return (
             <Spin spinning={loading} size="large" wrapperClassName={styles.spin}>
@@ -45,11 +47,11 @@ class BaseLayout extends Component {
                             </div>
 
                             <SiderMenu location={location} collapsed={collapsed} navData={routes} />
-                            
+
                         </Sider>
                         <Layout>
                             <Header className="system-header">
-                                <Icon 
+                                <Icon
                                     className="stystem-trigger"
                                     type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
                                     onClick={this.toggle}
@@ -66,7 +68,7 @@ class BaseLayout extends Component {
                                 </div>
                             </Content>
                             <Footer className="system-footer">
-                                Ant Design ©2016 Created by Ant UED
+                                BrainKeeper ©2018 Created by the Platform Architecture Group of the Electronic Projects Division 
                             </Footer>
                         </Layout>
                     </Layout>

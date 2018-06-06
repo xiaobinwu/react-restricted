@@ -1,6 +1,13 @@
-import React from 'react';
-const Test2 = (prop) => {
-  return <h1>Hello, 我是网关服务系统-测试子菜单2</h1>;
+import React, { Component } from 'react';
+
+class GetwayOnline extends Component {
+    render() {
+        return (
+            <div>
+                我是Gateway在线服务
+            </div>
+        );
+    }
 }
 
-export default Test2;
+export default GetwayOnline;

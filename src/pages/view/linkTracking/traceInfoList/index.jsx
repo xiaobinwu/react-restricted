@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {Table, Form, Row, Col, Select, DatePicker, Button, Switch } from 'antd';
+import { Table, Form, Row, Col, Select, DatePicker, Button, Switch } from 'antd';
 import linkTrackingService from 'service/linkTrackingService';
 import styles from './index.css';
 
-const Option = Select.Option;
+const { Option } = Select;
 const { RangePicker } = DatePicker;
 const FormItem = Form.Item;
 
@@ -24,44 +24,42 @@ class TraceInfoList extends Component {
             serviceName: '',
             serviceSet: [],
             methodSet: {}
-        }
+        };
 
         this.columns = [{
             title: '序号',
             dataIndex: 'key',
             key: 'key'
-        },{
+        }, {
             title: '接口',
             dataIndex: 'serviceName',
             key: 'serviceName'
-        },{
+        }, {
             title: '方法',
             dataIndex: 'methodName',
             key: 'methodName'
-        },{
+        }, {
             title: '应用名',
             dataIndex: 'appName',
             key: 'appName'
-        },{
+        }, {
             title: '时间',
             dataIndex: 'startTime',
             key: 'startTime'
-        },{
+        }, {
             title: 'traceId',
             dataIndex: 'traceId',
             key: 'traceId',
-            render: (text, row) => {
-                return(
-                    <Link to={{ pathname: this.props.paths['traceInquire'].linkPath,  search: `?traceId=${row.traceId}`}}>{text}</Link>
-                )
-            }
+            render: (text, row) => (
+                <Link to={{ pathname: this.props.paths.traceInquire.linkPath, search: `?traceId=${row.traceId}` }} target="_blank">{text}</Link>
+            )
         }];
 
     }
-    async UNSAFE_componentWillMount() {
+    async UNSAFE_componentWillMount() { // eslint-disable-line
         const { entry } = await linkTrackingService.getAllApp();
         appList = entry;
-        
+
     }
     componentDidMount() {
         const { location } = this.props;
@@ -69,9 +67,7 @@ class TraceInfoList extends Component {
         this.getListData();
     }
     // select搜索
-    filterOption = (input, option) => {
-        return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-    }
+    filterOption = (input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
     // 重置搜索条件
     reset = () => {
         this.props.form.resetFields();
@@ -80,7 +76,7 @@ class TraceInfoList extends Component {
     changePage = (page, pageSize) => {
         const { pagination } = this.state;
         this.setState({
-            pagination: { ...pagination, ...{pageNum: page, pageSize: pageSize} }
+            pagination: { ...pagination, ...{ pageNum: page, pageSize } }
         }, () => {
             this.getListData();
         });
@@ -98,7 +94,7 @@ class TraceInfoList extends Component {
         const { entry } = await linkTrackingService.getAllService({ site, appId: id });
         const serviceSet = [];
         const methodSet = {};
-        entry && entry.forEach((item) => {
+        entry && entry.forEach((item) => { // eslint-disable-line
             serviceSet.push({
                 id: item.id,
                 name: item.name
@@ -115,21 +111,19 @@ class TraceInfoList extends Component {
         this.props.form.resetFields([
             'methodName'
         ]);
-        if (value === '') { 
-            return;
-        } else {
+        if (value === '') {} else { // eslint-disable-line
             this.setState({
-                serviceName: value 
+                serviceName: value
             });
         }
     }
     // 获取列表数据
     getListData = async (e) => {
-        e && e.preventDefault();
-        const  { pagination } = this.state;
-        const params = {...this.props.form.getFieldsValue(), ...pagination};
+        e && e.preventDefault(); // eslint-disable-line
+        const { pagination } = this.state;
+        const params = { ...this.props.form.getFieldsValue(), ...pagination };
         if (params.rangeTime && params.rangeTime.length > 0) {
-            const rangeTime = params.rangeTime;
+            const { rangeTime } = params;
             params.startDate = rangeTime[0].format('YYYY-MM-DD HH:mm:ss');
             params.endDate = rangeTime[1].format('YYYY-MM-DD HH:mm:ss');
         }
@@ -140,28 +134,28 @@ class TraceInfoList extends Component {
         });
         const { entry, code } = await linkTrackingService.getTraceInfoList(params);
         if (code === '0') {
-            const data = entry.list.map((item, index) => {
-                return {
-                    key: index + 1,
-                    serviceName: item.serviceName,
-                    methodName: item.methodName,
-                    appName: item.appName,
-                    startTime: item.startTime,
-                    traceId: item.traceId
-                }
-            });
+            const data = entry.list.map((item, index) => ({
+                key: index + 1,
+                serviceName: item.serviceName,
+                methodName: item.methodName,
+                appName: item.appName,
+                startTime: item.startTime,
+                traceId: item.traceId
+            }));
             this.setState({
                 loading: false,
-                pagination: { ...pagination, ...{totalCount: entry.total} },
+                pagination: { ...pagination, ...{ totalCount: entry.total } },
                 data
             });
         }
     }
 
     render() {
-        const { loading, data, pagination, serviceSet, methodSet, serviceName } = this.state;
+        const {
+            loading, data, pagination, serviceSet, methodSet, serviceName
+        } = this.state;
         const { getFieldDecorator, getFieldValue } = this.props.form;
-        const columns = this.columns;
+        const { columns } = this;
         const pageControl = {
             current: pagination.pageNum,
             pageSize: pagination.pageSize,
@@ -180,73 +174,57 @@ class TraceInfoList extends Component {
                             <FormItem>
                                 {getFieldDecorator('appName', {
                                     initialValue: '',
-                                })(
-                                    <Select  style={{width: "100%"}} showSearch optionFilterProp="children" onChange={this.handleAppChange} filterOption={this.filterOption}>
-                                        <Option value="">全部</Option>
-                                        {
-                                            appList.map((item, index) => {
-                                                return (
-                                                    <Option key={item.name} title={item.name} id={item.id} site={item.site}>{item.name}</Option>
-                                                )
-                                            })
-                                        }
-                                    </Select>
-                                )}
+                                })(<Select style={{ width: '100%' }} showSearch optionFilterProp="children" onChange={this.handleAppChange} filterOption={this.filterOption}>
+                                    <Option value="">全部</Option>
+                                    {
+                                        appList.map((item, index) => (
+                                            <Option key={item.name} title={item.name} id={item.id} site={item.site}>{item.name}</Option>
+                                        ))
+                                    }
+                                </Select>)}
                             </FormItem>
                         </Col>
                         <Col span={5}>
-                            <FormItem>                            
+                            <FormItem>
                                 {getFieldDecorator('serviceName', {
                                     initialValue: '',
-                                })(
-                                    <Select  style={{width: "100%"}} disabled={getFieldValue('appName') === '' && serviceSet.length === 0} showSearch optionFilterProp="children" onChange={this.handleServiceChange} filterOption={this.filterOption}>
-                                        <Option value="">全部</Option>
-                                        {
-                                            serviceSet.map((item, index) => {
-                                                return (
-                                                    <Option key={item.name} title={item.name}>{item.name}</Option>
-                                                )                                                
-                                            })
-                                        }
-                                    </Select>
-                                )}
+                                })(<Select style={{ width: '100%' }} disabled={getFieldValue('appName') === '' && serviceSet.length === 0} showSearch optionFilterProp="children" onChange={this.handleServiceChange} filterOption={this.filterOption}>
+                                    <Option value="">全部</Option>
+                                    {
+                                        serviceSet.map((item, index) => (
+                                            <Option key={item.name} title={item.name}>{item.name}</Option>
+                                        ))
+                                    }
+                                </Select>)}
                             </FormItem>
                         </Col>
                         <Col span={4}>
                             <FormItem>
                                 {getFieldDecorator('methodName', {
                                     initialValue: '',
-                                })(
-                                    <Select style={{width: "100%"}} disabled={getFieldValue('serviceName') === ''} showSearch optionFilterProp="children" filterOption={this.filterOption}>
-                                        <Option value="">全部</Option>
-                                        {
-                                            (serviceName && methodSet[serviceName]) ? methodSet[serviceName].map((item, index) => {
-                                                return (
-                                                    <Option key={item} title={item}>{item}</Option>
-                                                )                                                
-                                            }) : null
-                                        }
-                                    </Select>
-                                )}
+                                })(<Select style={{ width: '100%' }} disabled={getFieldValue('serviceName') === ''} showSearch optionFilterProp="children" filterOption={this.filterOption}>
+                                    <Option value="">全部</Option>
+                                    {
+                                        (serviceName && methodSet[serviceName]) ? methodSet[serviceName].map((item, index) => (
+                                            <Option key={item} title={item}>{item}</Option>
+                                        )) : null
+                                    }
+                                </Select>)}
                             </FormItem>
                         </Col>
                         <Col span={6}>
                             <FormItem>
-                                {getFieldDecorator('rangeTime')(
-                                    <RangePicker
-                                        showTime
-                                        format="YYYY-MM-DD HH:mm"
-                                        placeholder={['开始时间', '结束时间']}
-                                        style={{width: "100%"}}
-                                    />
-                                )}
+                                {getFieldDecorator('rangeTime')(<RangePicker
+                                    showTime
+                                    format="YYYY-MM-DD HH:mm"
+                                    placeholder={['开始时间', '结束时间']}
+                                    style={{ width: '100%' }}
+                                />)}
                             </FormItem>
                         </Col>
                         <Col span={3}>
                             <FormItem label="只查看异常" colon={false} className={styles.switch}>
-                                {getFieldDecorator('onlyException', { valuePropName: 'checked' })(
-                                    <Switch />
-                                )}
+                                {getFieldDecorator('onlyException', { valuePropName: 'checked' })(<Switch />)}
                             </FormItem>
                         </Col>
 
@@ -255,13 +233,13 @@ class TraceInfoList extends Component {
                                 <Button type="primary" icon="search" htmlType="submit">查询</Button>
                                 <Button type="primary" className={styles.resetBtn} onClick={this.reset}>重置</Button>
                             </FormItem>
-                        </Col>            
+                        </Col>
                     </Row>
                 </Form>
-                <Table 
+                <Table
                     className={styles.list}
-                    loading={loading} 
-                    columns={columns} 
+                    loading={loading}
+                    columns={columns}
                     dataSource={data}
                     pagination={pageControl}
                 />

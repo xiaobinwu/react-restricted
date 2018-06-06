@@ -11,21 +11,21 @@ export default class Dynamic extends Component {
     getInitialState = () => ({ option: this.getOption() });
 
     fetchNewDate = () => {
-        let axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, '');
-        let option = this.state.option;
-        option.title.text = 'Hello Echarts-for-react.' + new Date().getSeconds();
-        let data0 = option.series[0].data;
-        let data1 = option.series[1].data;
+        const axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, '');
+        const { option } = this.state;
+        option.title.text = `Hello Echarts-for-react.${new Date().getSeconds()}`;
+        const data0 = option.series[0].data;
+        const data1 = option.series[1].data;
         data0.shift();
         data0.push(Math.round(Math.random() * 1000));
         data1.shift();
-        data1.push((Math.random() * 10 + 5).toFixed(1) - 0);
+        data1.push(((Math.random() * 10) + 5).toFixed(1) - 0);
 
         option.xAxis[0].data.shift();
         option.xAxis[0].data.push(axisData);
         option.xAxis[1].data.shift();
-        option.xAxis[1].data.push(this.count++);
-        this.setState({ option: option });
+        option.xAxis[1].data.push(this.count += 1);
+        this.setState({ option });
     };
 
     componentDidMount() {
@@ -33,13 +33,13 @@ export default class Dynamic extends Component {
             clearInterval(this.timeTicket);
         }
         this.timeTicket = setInterval(this.fetchNewDate, 1000);
-    };
+    }
 
     componentWillUnmount() {
         if (this.timeTicket) {
             clearInterval(this.timeTicket);
         }
-    };
+    }
 
     getOption = () => ({
         title: {
@@ -74,11 +74,11 @@ export default class Dynamic extends Component {
             {
                 type: 'category',
                 boundaryGap: true,
-                data: (function () {
+                data: (() => {
                     let now = new Date();
-                    let res = [];
+                    const res = [];
                     let len = 50;
-                    while (len--) {
+                    while (len--) { // eslint-disable-line
                         res.unshift(now.toLocaleTimeString().replace(/^\D*/, ''));
                         now = new Date(now - 2000);
                     }
@@ -88,11 +88,11 @@ export default class Dynamic extends Component {
             {
                 type: 'category',
                 boundaryGap: true,
-                data: (function () {
-                    let res = [];
+                data: (() => {
+                    const res = [];
                     let len = 50;
-                    while (len--) {
-                        res.push(50 - len + 1);
+                    while (len--) { // eslint-disable-line
+                        res.push(50 - len + 1); // eslint-disable-line
                     }
                     return res;
                 })()
@@ -128,16 +128,16 @@ export default class Dynamic extends Component {
                     }
                 },
                 animationEasing: 'elasticOut',
-                animationDelay: function (idx) {
+                animationDelay(idx) {
                     return idx * 10;
                 },
-                animationDelayUpdate: function (idx) {
+                animationDelayUpdate(idx) {
                     return idx * 10;
                 },
-                data: (function () {
-                    let res = [];
+                data: (() => {
+                    const res = [];
                     let len = 50;
-                    while (len--) {
+                    while (len--) { // eslint-disable-line
                         res.push(Math.round(Math.random() * 1000));
                     }
                     return res;
@@ -146,12 +146,12 @@ export default class Dynamic extends Component {
             {
                 name: '最新成交价',
                 type: 'line',
-                data: (function () {
-                    let res = [];
+                data: (() => {
+                    const res = [];
                     let len = 0;
                     while (len < 50) {
-                        res.push((Math.random() * 10 + 5).toFixed(1) - 0);
-                        len++;
+                        res.push((Math.random() * 10 + 5).toFixed(1) - 0); // eslint-disable-line
+                        len += 1;
                     }
                     return res;
                 })()
@@ -161,13 +161,13 @@ export default class Dynamic extends Component {
 
     render() {
         return (
-        <div className='examples' style={{marginTop: 40}}>
-            <div className='parent'>
-            <ReactEcharts ref='echarts_react'
-                option={this.state.option}
-                style={{height: 400, width: '100%'}} />
+            <div className='examples' style={{ marginTop: 40 }}>
+                <div className='parent'>
+                    <ReactEcharts ref='echarts_react'
+                        option={this.state.option}
+                        style={{ height: 400, width: '100%' }} />
+                </div>
             </div>
-        </div>
         );
     }
 }

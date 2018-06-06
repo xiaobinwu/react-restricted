@@ -15,6 +15,6 @@ if (pkg.theme && typeof (pkg.theme) === 'string') {
     const getThemeConfig = require(cfgPath);
     theme = getThemeConfig();
 } else if (pkg.theme && typeof (pkg.theme) === 'object') {
-    theme = pkg.theme;
+    theme = pkg.theme; // eslint-disable-line
 }
 module.exports = theme;

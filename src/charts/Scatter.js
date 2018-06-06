@@ -11,7 +11,7 @@ export default class Dynamic extends Component {
 
     getOption = () => ({
         legend: {
-            data: ['图一','图二', '张三', '李四']
+            data: ['图一', '图二', '张三', '李四']
         },
         radar: [
             {
@@ -28,7 +28,7 @@ export default class Dynamic extends Component {
                 splitNumber: 4,
                 shape: 'circle',
                 name: {
-                    formatter:'【{value}】',
+                    formatter: '【{value}】',
                 }
             },
             {
@@ -85,7 +85,7 @@ export default class Dynamic extends Component {
                         label: {
                             normal: {
                                 show: true,
-                                formatter:function(params) {
+                                formatter(params) {
                                     return params.value;
                                 }
                             }
@@ -107,13 +107,13 @@ export default class Dynamic extends Component {
 
     render() {
         return (
-        <div className='examples' style={{marginTop: 40}}>
-            <div className='parent'>
-            <ReactEcharts ref='echarts_react'
-                option={this.state.option}
-                style={{height: 400, width: '100%'}} />
+            <div className='examples' style={{ marginTop: 40 }}>
+                <div className='parent'>
+                    <ReactEcharts ref='echarts_react'
+                        option={this.state.option}
+                        style={{ height: 400, width: '100%' }} />
+                </div>
             </div>
-        </div>
         );
     }
 }

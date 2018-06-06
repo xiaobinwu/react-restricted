@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Spin } from 'antd';
 import userService from 'service/userService';
 import store from 'rRedux/store';
+
 // 登录状态认证组件
 class AuthorizedRoute extends Component {
     componentWillMount() {
@@ -17,21 +18,25 @@ class AuthorizedRoute extends Component {
                     username: 'admin'
                 });
             }
-        })()
+        })();
     }
     render() {
-        const { component: Component, pending, logged, ...rest } = this.props;
+        const {
+            component: Component, pending, logged, ...rest // eslint-disable-line
+        } = this.props;
         return (
             <Route {...rest} render={(props) => {
-                if (pending) return (
-                    <Spin size="large" tip="Loading..." style={{ minHeight: "100%" }}>
-                        <div style={{
-                            minHeight: "800px",
-                            height: "100vh"
-                        }}>
-                        </div>
-                    </Spin>
-                );
+                if (pending) {
+                    return (
+                        <Spin size="large" tip="Loading..." style={{ minHeight: '100%' }}>
+                            <div style={{
+                                minHeight: '800px',
+                                height: '100vh'
+                            }}>
+                            </div>
+                        </Spin>
+                    );
+                }
                 return logged ? (<Component {...props} />) : (<Redirect to="/auth" />);
             }} />
         );

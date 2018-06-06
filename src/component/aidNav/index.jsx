@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Icon, Menu } from 'antd';
+import { registerTheme } from 'echarts';
 import userService from 'service/userService';
 import store from 'rRedux/store';
 import styles from './index.css';
-import { registerTheme } from 'echarts';
-const SubMenu = Menu.SubMenu;
+
+const { SubMenu } = Menu;
 const MenuItemGroup = Menu.ItemGroup;
 
 const ColorBlocks = (props) => {
@@ -12,19 +13,20 @@ const ColorBlocks = (props) => {
     return (
         <div>
             <span>{name}</span>
-            <span style={{ 
-                display: 'inline-block', 
-                width: '30%', 
-                height: '20px', 
-                marginTop: '10px', 
-                float: 'right', 
+            <span style={{
+                display: 'inline-block',
+                width: '30%',
+                height: '20px',
+                marginTop: '10px',
+                float: 'right',
                 border: '2px solid #eee',
                 borderRadius: '2px',
-                backgroundColor: color }}>
+                backgroundColor: color
+            }}>
             </span>
         </div>
-    )
-}
+    );
+};
 
 class AidNav extends Component {
     logout = async () => {
@@ -40,26 +42,26 @@ class AidNav extends Component {
     handleClick = (e) => {
         if (e.key) {
             switch (e.key) {
-                case 'message':
+            case 'message':
 
                 break;
-                case 'usergroup-add':
+            case 'usergroup-add':
 
                 break;
 
-                case 'user': 
-                    this.logout();
+            case 'user':
+                this.logout();
                 break;
 
-                default:
-                    if (e.key.search(/^antd-theme/) > -1) {
-                        window.less && window.less.modifyVars({
-                            '@primary-color': e.item.props.theme
-                        });
-                    }
-                    if (e.key.search(/^echart-theme/) > -1) {
-                        const { themeState } = store.getState();
-                        if (themeState.themeSet.findIndex((value) => { return value === e.item.props.theme;  }) === -1) {
+            default:
+                if (e.key.search(/^antd-theme/) > -1) {
+                    window.less && window.less.modifyVars({ //eslint-disable-line
+                        '@primary-color': e.item.props.theme
+                    });
+                }
+                if (e.key.search(/^echart-theme/) > -1) {
+                    const { themeState } = store.getState();
+                    if (themeState.themeSet.findIndex(value => value === e.item.props.theme) === -1) {
                             // 修改主题
                             import(`themes/echart/${e.item.props.theme}`).then((theme) => {
                                 registerTheme(e.item.props.theme, theme.default);
@@ -68,18 +70,16 @@ class AidNav extends Component {
                                     theme: e.item.props.theme
                                 });
                             });
-                        } else {
-                            store.dispatch({
-                                type: 'SET_THEME',
-                                theme: e.item.props.theme
-                            });
-                        }
+                    } else {
+                        store.dispatch({
+                            type: 'SET_THEME',
+                            theme: e.item.props.theme
+                        });
                     }
+                }
             }
-        } else {
-            if (e.domEvent) {
-                e.domEvent.stopPropagation();
-            }
+        } else if (e.domEvent) {
+            e.domEvent.stopPropagation();
         }
     }
     render() {

@@ -2,9 +2,9 @@ import Service from './service';
 
 class LinkTrackingService extends Service {
 
-    /***************链路跟踪 start******************/
+    /** *************链路跟踪 start***************** */
     // 获取链路信息列表
-    getTraceInfoList (params = {}) {
+    getTraceInfoList(params = {}) {
         return this.post('/trace/tracelist', params);
     }
     // 获取应用列表
@@ -20,7 +20,7 @@ class LinkTrackingService extends Service {
     getOneTrace(params = {}) {
         return this.get('/trace/one', params);
     }
-    /***************链路跟踪 end******************/
+    /** *************链路跟踪 end***************** */
 }
 
 export default new LinkTrackingService();

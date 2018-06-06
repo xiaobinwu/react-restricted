@@ -1,12 +1,10 @@
-const path = require('path');
-const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+// const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const paths = require('./paths');
 
-
 module.exports = (env) => {
-    const isProduction = env.stringified['process.env'].NODE_ENV === '"production"' ? true : false;
+    const isProduction = env.stringified['process.env'].NODE_ENV === '"production"';
     let cssLoaderAarry = [];
     if (isProduction) {
         // Source maps are resource heavy and can cause out of memory issue for large source files.
@@ -26,79 +24,25 @@ module.exports = (env) => {
         // However, our output is structured with css, js and media folders.
         // To have this structure working with relative paths, we have to use custom options.
         const extractTextPluginOptions = shouldUseRelativeAssetPaths
-        ? // Making sure that the publicPath goes back to to build folder.
-          { publicPath: Array(cssFilename.split('/').length).join('../') }
-        : {};
+            ? // Making sure that the publicPath goes back to to build folder.
+            { publicPath: Array(cssFilename.split('/').length).join('../') }
+            : {};
         cssLoaderAarry = [{
-                test: /\.css$/,
-                loader: ExtractTextPlugin.extract(
-                    Object.assign({
-                            fallback: {
-                                loader: require.resolve('style-loader'),
-                                options: {
-                                    hmr: false,
-                                },
-                            },
-                            use: [{
-                                    loader: require.resolve('css-loader'),
-                                    options: {
-                                        importLoaders: 1,
-                                        minimize: true,
-                                        sourceMap: shouldUseSourceMap,
-                                        modules: true,
-                                        localIdentName: '[name]__[local]___[hash:base64:5]'                                   
-                                    },
-                                },
-                                {
-                                    loader: require.resolve('postcss-loader')
-                                }
-                            ],
+            test: /\.css$/,
+            loader: ExtractTextPlugin.extract(Object.assign(
+                {
+                    fallback: {
+                        loader: require.resolve('style-loader'),
+                        options: {
+                            hmr: false,
                         },
-                        extractTextPluginOptions
-                    )
-                ),
-            },
-            {
-                test: /\.less$/,
-                loader: ExtractTextPlugin.extract(
-                    Object.assign({
-                            fallback: {
-                                loader: require.resolve('style-loader'),
-                                options: {
-                                    hmr: false,
-                                },
-                            },
-                            use: [{
-                                    loader: require.resolve('css-loader'),
-                                    options: {
-                                        importLoaders: 1,
-                                        minimize: true,
-                                        sourceMap: shouldUseSourceMap,
-                                    },
-                                },
-                                {
-                                    loader: require.resolve('less-loader'), // compiles Less to CSS
-                                    options: {
-                                        javascriptEnabled: true
-                                    }
-                                }
-                            ],
-                        },
-                        extractTextPluginOptions
-                    )
-                ),
-                // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
-            }
-        ]
-    } else {
-        cssLoaderAarry = [{
-                test: /\.css$/,
-                use: [
-                    require.resolve('style-loader'),
-                    {
+                    },
+                    use: [{
                         loader: require.resolve('css-loader'),
                         options: {
                             importLoaders: 1,
+                            minimize: true,
+                            sourceMap: shouldUseSourceMap,
                             modules: true,
                             localIdentName: '[name]__[local]___[hash:base64:5]'
                         },
@@ -106,27 +50,79 @@ module.exports = (env) => {
                     {
                         loader: require.resolve('postcss-loader')
                     }
-                ],
-            },
-            {
-                test: /\.less$/,
-                use: [
-                    require.resolve('style-loader'),
-                    {
+                    ],
+                },
+                extractTextPluginOptions
+            )),
+        },
+        {
+            test: /\.less$/,
+            loader: ExtractTextPlugin.extract(Object.assign(
+                {
+                    fallback: {
+                        loader: require.resolve('style-loader'),
+                        options: {
+                            hmr: false,
+                        },
+                    },
+                    use: [{
                         loader: require.resolve('css-loader'),
                         options: {
                             importLoaders: 1,
+                            minimize: true,
+                            sourceMap: shouldUseSourceMap,
                         },
                     },
                     {
-                        loader: require.resolve('less-loader'),
+                        loader: require.resolve('less-loader'), // compiles Less to CSS
                         options: {
                             javascriptEnabled: true
                         }
                     }
-                ],
-            }
-        ]
+                    ],
+                },
+                extractTextPluginOptions
+            )),
+            // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+        }
+        ];
+    } else {
+        cssLoaderAarry = [{
+            test: /\.css$/,
+            use: [
+                require.resolve('style-loader'),
+                {
+                    loader: require.resolve('css-loader'),
+                    options: {
+                        importLoaders: 1,
+                        modules: true,
+                        localIdentName: '[name]__[local]___[hash:base64:5]'
+                    },
+                },
+                {
+                    loader: require.resolve('postcss-loader')
+                }
+            ],
+        },
+        {
+            test: /\.less$/,
+            use: [
+                require.resolve('style-loader'),
+                {
+                    loader: require.resolve('css-loader'),
+                    options: {
+                        importLoaders: 1,
+                    },
+                },
+                {
+                    loader: require.resolve('less-loader'),
+                    options: {
+                        javascriptEnabled: true
+                    }
+                }
+            ],
+        }
+        ];
     }
     return {
         strictExportPresence: true,
@@ -146,37 +142,37 @@ module.exports = (env) => {
                         eslintPath: require.resolve('eslint'),
                     },
                     loader: require.resolve('eslint-loader'),
-                }, ],
+                }],
                 include: paths.appSrc,
             },
             {
                 oneOf: [{
-                        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-                        loader: require.resolve('url-loader'),
-                        options: {
-                            limit: 10000,
-                            name: 'static/media/[name].[hash:8].[ext]',
-                        },
+                    test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+                    loader: require.resolve('url-loader'),
+                    options: {
+                        limit: 10000,
+                        name: 'static/media/[name].[hash:8].[ext]',
                     },
-                    {
-                        test: /\.(js|jsx|mjs)$/,
-                        include: paths.appSrc,
-                        loader: require.resolve('babel-loader'),
-                        options: {
-                            compact: isProduction,
-                            cacheDirectory: !isProduction,
-                        },
+                },
+                {
+                    test: /\.(js|jsx|mjs)$/,
+                    include: paths.appSrc,
+                    loader: require.resolve('babel-loader'),
+                    options: {
+                        compact: isProduction,
+                        cacheDirectory: !isProduction,
                     },
-                    ...cssLoaderAarry,
-                    {
-                        exclude: [/\.html$/, /\.(js|jsx|mjs)$/, /\.(css|less)$/, /\.json$/, /\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-                        loader: require.resolve('file-loader'),
-                        options: {
-                            name: 'static/media/[name].[hash:8].[ext]',
-                        },
+                },
+                ...cssLoaderAarry,
+                {
+                    exclude: [/\.html$/, /\.(js|jsx|mjs)$/, /\.(css|less)$/, /\.json$/, /\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+                    loader: require.resolve('file-loader'),
+                    options: {
+                        name: 'static/media/[name].[hash:8].[ext]',
                     },
+                },
                 ],
             },
         ],
-    }
-}
+    };
+};

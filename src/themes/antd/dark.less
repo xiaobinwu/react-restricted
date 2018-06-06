@@ -134,6 +134,12 @@
   background: rgba(255, 255, 255, 0.35) !important;
 }
 
+// toolTip
+.ant-tooltip-inner {
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
 // form
 .ant-form-item-label label {
     color: @text-color;
@@ -535,6 +541,7 @@ tr.ant-table-expanded-row:hover {
 /*************************基本布局start********************************/
   @layout-bg-color: #212225;
   @layout-header-color: #29292b;
+  @layout-footer-color: #736d6c;
   a {
     color: @link-color;
   }
@@ -552,7 +559,7 @@ tr.ant-table-expanded-row:hover {
     min-height: 280px;
   }
   .system-footer {
-    color: @text-color;
+    color: @layout-footer-color;
     background-color: @layout-bg-color;
     text-align: center;
   }

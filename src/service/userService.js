@@ -2,15 +2,15 @@ import Service from './service';
 
 class UserService extends Service {
     // 登录
-    login (params = {}) {
+    login(params = {}) {
         return this.post('/login', params);
     }
     // 登出
-    logout () {
+    logout() {
         return this.get('/logout');
     }
     // 获取用户信息
-    getUserInfo () {
+    getUserInfo() {
         return this.get('/app/all');
     }
 }

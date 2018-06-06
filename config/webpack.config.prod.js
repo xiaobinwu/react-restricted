@@ -1,8 +1,5 @@
-'use strict';
-
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
@@ -53,12 +50,12 @@ module.exports = {
         filename: 'static/js/[name].[chunkhash:8].js',
         chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
         // We inferred the "public path" (such as / or /my-project) from homepage.
-        publicPath: publicPath,
+        publicPath,
         // Point sourcemap entries to original disk location (format as URL on Windows)
         devtoolModuleFilenameTemplate: info =>
             path
-            .relative(paths.appSrc, info.absoluteResourcePath)
-            .replace(/\\/g, '/'),
+                .relative(paths.appSrc, info.absoluteResourcePath)
+                .replace(/\\/g, '/'),
     },
     resolve,
     module: modules(env),
@@ -131,7 +128,7 @@ module.exports = {
             },
             minify: true,
             // For unknown URLs, fallback to the index page
-            navigateFallback: publicUrl + '/index.html',
+            navigateFallback: `${publicUrl}/index.html`,
             // Ignores URLs starting from /__ (useful for Firebase):
             // https://github.com/facebookincubator/create-react-app/issues/2237#issuecomment-302693219
             navigateFallbackWhitelist: [/^(?!\/__).*/],
@@ -153,9 +150,9 @@ module.exports = {
         new webpack.optimize.CommonsChunkPlugin({
             name: 'runtime'
         }),
-    
+
         new webpack.HashedModuleIdsPlugin()
-        
+
     ],
     // Some libraries import Node modules but don't use them in the browser.
     // Tell Webpack to provide empty mocks for them so importing them works.

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import elementResizeEvent from 'element-resize-event';
+
 const isEqual = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 export default class EchartsReactCore extends Component {
     constructor(props) {
@@ -37,7 +38,7 @@ export default class EchartsReactCore extends Component {
         if (!isEqual(prevProps.style, this.props.style) || !isEqual(prevProps.className, this.props.className)) {
             try {
                 echartObj.resize();
-            } catch (_) {}
+            } catch (_) {}  // eslint-disable-line
         }
     }
 
@@ -47,10 +48,7 @@ export default class EchartsReactCore extends Component {
     }
 
     // return the echart object
-    getEchartsInstance = () => {
-        return this.echartsLib.getInstanceByDom(this.echartsElement) || this.echartsLib.init(this.echartsElement, this.props.theme, this.props.opts);
-
-    }
+    getEchartsInstance = () => this.echartsLib.getInstanceByDom(this.echartsElement) || this.echartsLib.init(this.echartsElement, this.props.theme, this.props.opts)
 
     // dispose echarts and element-resize-event
     dispose = () => {
@@ -58,7 +56,7 @@ export default class EchartsReactCore extends Component {
             // if elementResizeEvent.unbind exist, just do it.
             try {
                 elementResizeEvent.unbind(this.echartsElement);
-            } catch (_) {}
+            } catch (_) {}  // eslint-disable-line
             // dispose echarts instance
             this.echartsLib.dispose(this.echartsElement);
         }
@@ -76,7 +74,7 @@ export default class EchartsReactCore extends Component {
         // fix bug of 100px width * height.
         try {
             echartObj.resize();
-        } catch (_) {}
+        } catch (_) {}  // eslint-disable-line
 
         // on chart ready
         if (typeof onChartReady === 'function') this.props.onChartReady(echartObj);
@@ -90,7 +88,7 @@ export default class EchartsReactCore extends Component {
 
     // bind the events
     bindEvents = (instance, events) => {
-        const _bindEvent = (eventName, func) => {
+        const _bindEvent = (eventName, func) => { // eslint-disable-line
             // ignore the event config which not satisfy
             if (typeof eventName === 'string' && typeof func === 'function') {
                 // binding event
@@ -131,9 +129,9 @@ export default class EchartsReactCore extends Component {
         // for render
         return (
             <div
-            ref={(e) => { this.echartsElement = e; }}
-            style={newStyle}
-            className={`echarts-for-react ${className}`}
+                ref={(e) => { this.echartsElement = e; }}
+                style={newStyle}
+                className={`echarts-for-react ${className}`}
             />
         );
     }

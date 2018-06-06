@@ -8,10 +8,10 @@ const date = [];
 
 const data = [Math.random() * 300];
 
-for (let i = 1; i < 20000; i++) {
+for (let i = 1; i < 20000; i++) { //eslint-disable-line
     const now = new Date(base += oneDay);
     date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
-    data.push(Math.round((Math.random() - 0.5) * 20 + data[i - 1]));
+    data.push(Math.round((Math.random() - 0.5) * 20 + data[i - 1])); //eslint-disable-line
 }
 
 export default class AreaSimple extends Component {
@@ -25,7 +25,7 @@ export default class AreaSimple extends Component {
     getOption = () => ({
         tooltip: {
             trigger: 'axis',
-            position: function (pt) {
+            position(pt) {
                 return [pt[0], '10%'];
             }
         },
@@ -66,9 +66,9 @@ export default class AreaSimple extends Component {
         }],
         series: [
             {
-                name:'模拟数据',
-                type:'line',
-                smooth:true,
+                name: '模拟数据',
+                type: 'line',
+                smooth: true,
                 symbol: 'none',
                 sampling: 'average',
                 itemStyle: {
@@ -87,20 +87,20 @@ export default class AreaSimple extends Component {
                         }])
                     }
                 },
-                data: data
+                data
             }
         ]
     });
 
     render() {
         return (
-        <div className='examples' style={{marginTop: 40}}>
-            <div className='parent'>
-            <ReactEcharts ref='echarts_react'
-                option={this.state.option}
-                style={{height: 400, width: '100%'}} />
+            <div className='examples' style={{ marginTop: 40 }}>
+                <div className='parent'>
+                    <ReactEcharts ref='echarts_react'
+                        option={this.state.option}
+                        style={{ height: 400, width: '100%' }} />
+                </div>
             </div>
-        </div>
         );
     }
 }

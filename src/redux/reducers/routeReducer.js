@@ -23,6 +23,6 @@ const routeReducer = (state = initialState, action) => {
     }
 
     return state;
-}
+};
 
 export default routeReducer;

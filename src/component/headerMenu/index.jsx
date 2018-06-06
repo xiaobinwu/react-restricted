@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { Menu, Icon } from 'antd';
 import store from 'rRedux/store';
 import styles from './index.css';
-const SubMenu = Menu.SubMenu;
+
+const { SubMenu } = Menu;
 
 export default class SiderMenu extends Component {
     constructor(props) {
@@ -11,9 +12,9 @@ export default class SiderMenu extends Component {
         this.state = {
             collapsed: false,
             headerMenuSelectedKey: ['0']
-        }
+        };
     }
-    UNSAFE_componentWillMount() {
+    UNSAFE_componentWillMount() { // eslint-disable-line
         this.view = this.reduceMenu(this.props.navData);
         this.handleLocation(this.props.location);
     }
@@ -31,10 +32,8 @@ export default class SiderMenu extends Component {
                 type: 'SET_BREADCRUMB',
                 breadCrumb: e.item.props.breadcrumb.split('/')
             });
-        } else {
-            if (e.domEvent) {
-                e.domEvent.stopPropagation();
-            }
+        } else if (e.domEvent) {
+            e.domEvent.stopPropagation();
         }
     }
     // 匹配当前{location}获取顶部菜单栏默认selectedKey（以路由配置表的site为key）
@@ -45,9 +44,7 @@ export default class SiderMenu extends Component {
         if (pathname === '/') {
             headerMenuSelectedKey = [routeState.currentSite];
         }
-        const selectedItem = navData.find((item) => {
-            return pathname.search(new RegExp(`^${item.path}`, 'ig')) > -1;
-        });
+        const selectedItem = navData.find(item => pathname.search(new RegExp(`^${item.path}`, 'ig')) > -1);
         headerMenuSelectedKey = selectedItem ? [selectedItem.site] : [routeState.currentSite];
         if (selectedItem) {
             this.changeSite(selectedItem.site);
@@ -60,16 +57,16 @@ export default class SiderMenu extends Component {
     reducePath = (item) => {
         const backPath = [];
         const backName = [];
-        let pathObj = JSON.parse(JSON.stringify(item)); 
+        let pathObj = JSON.parse(JSON.stringify(item));
         while (pathObj.children && pathObj.children.length > 0) {
             backPath.push(pathObj.children[0].path);
             backName.push(pathObj.children[0].name);
-            pathObj = pathObj.children[0];
+            pathObj = pathObj.children[0]; // eslint-disable-line
         }
         return {
             backPath: backPath.length > 0 ? `/${backPath.join('/')}` : '',
             backName: backName.join('/')
-        }
+        };
     }
     // 拼凑顶部菜单栏
     reduceMenu = (navData) => {
@@ -87,23 +84,19 @@ export default class SiderMenu extends Component {
             }
             return this.getMenuItem(item);
         }).filter(item => item !== null);
-        
-        Object.keys(subNavData).forEach(item => {
+
+        Object.keys(subNavData).forEach((item) => {
             const parseItem = JSON.parse(item);
-            subMenuData.push(
-                <SubMenu key={parseItem.site} title={
-                    <span>
-                        {parseItem.icon && <Icon type={parseItem.icon} />}
-                        <span>{parseItem.name}</span>
-                    </span>
-                }>
-                    {
-                        subNavData[item].map((it, i) => {
-                            return this.getMenuItem(it);            
-                        })
-                    }
-                </SubMenu>     
-            ) 
+            subMenuData.push(<SubMenu key={parseItem.site} title={
+                <span>
+                    {parseItem.icon && <Icon type={parseItem.icon} />}
+                    <span>{parseItem.name}</span>
+                </span>
+            }>
+                {
+                    subNavData[item].map((it, i) => this.getMenuItem(it))
+                }
+            </SubMenu>);
         });
         return [...menuData, ...subMenuData];
     }
@@ -114,12 +107,12 @@ export default class SiderMenu extends Component {
                 <Icon type={it.icon} />
                 {/* changeSite需要bind绑定，不然会触发多次 */}
                 <Link to={`${it.path}${this.reducePath(it).backPath}`} onClick={this.changeSite.bind(this, it.site)}>{it.name}</Link>
-            </Menu.Item>       
-        )
+            </Menu.Item>
+        );
     }
     render() {
         const { headerMenuSelectedKey } = this.state;
-        const view = this.view;
+        const { view } = this;
         return (
             <Menu mode="horizontal" theme="dark" defaultSelectedKeys={headerMenuSelectedKey} className={styles.nav} onClick={this.changeBreadCrumb}>
                 { view }
