@@ -3,6 +3,23 @@
 @text-hover-color: #d6d7d8;
 @link-color: #33b5e5;
 
+// spin
+@spin-color: #e24d42;
+.ant-spin {
+  color: rgba(0, 0, 0, 0.65);
+  color: @spin-color;
+}
+.ant-spin-blur:after {
+  background: #fff;
+}
+.ant-spin-tip {
+  color: rgba(0, 0, 0, 0.45);
+}
+.ant-spin-dot i {
+  border-radius: 100%;
+  background-color: @spin-color;
+}
+
 // menu-dark
 @menu-dark-bg: #29292b;
 @menu-dark-sub-bg: #2d2d2d;
@@ -222,9 +239,6 @@
 .ant-breadcrumb a {
     color: @text-color;
 }
-.ant-breadcrumb a:hover {
-    color: color(~`colorPalette("@{primary-color}", 5)`);
-}
 .ant-breadcrumb > span:last-child {
     color: @breadcrumb-last-child-color;
 }
@@ -329,10 +343,6 @@
 .ant-pagination-prev a,
 .ant-pagination-next a {
   color: @text-color;
-}
-.ant-pagination-prev:hover a,
-.ant-pagination-next:hover a {
-  border-color: color(~`colorPalette("@{primary-color}", 5)`);
 }
 .ant-pagination-prev .ant-pagination-item-link,
 .ant-pagination-next .ant-pagination-item-link {

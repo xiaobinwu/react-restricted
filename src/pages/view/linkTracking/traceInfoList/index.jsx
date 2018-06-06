@@ -62,8 +62,6 @@ class TraceInfoList extends Component {
 
     }
     componentDidMount() {
-        const { location } = this.props;
-        console.log(location);
         this.getListData();
     }
     // select搜索

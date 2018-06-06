@@ -7,7 +7,7 @@ import store from 'rRedux/store';
 
 import 'antd/dist/antd.less';
 // 默认黑色主题,后期去掉color.less
-import 'themes/antd/color.less';
+// import 'themes/antd/color.less';
 import 'themes/antd/dark.less';
 
 import Auth from 'pages/auth';

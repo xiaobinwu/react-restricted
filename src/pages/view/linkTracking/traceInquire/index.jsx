@@ -168,11 +168,13 @@ class TraceInquire extends Component {
     }
     // 获取表格title
     getTitle = () => {
-        const { traceId, 
-                startTime, 
-                maxDuration, 
-                step, 
-                annotationNum } = this.state;
+        const {
+            traceId,
+            startTime,
+            maxDuration,
+            step,
+            annotationNum
+        } = this.state;
         const title = traceId ?
             <div className={styles.title}>
                 <span>TraceId:  { traceId }</span>

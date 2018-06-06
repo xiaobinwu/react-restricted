@@ -146,7 +146,7 @@ const routes = [
         children: [
             {
                 name: '服务管理',
-                path: 'overview',
+                path: 'serviceManagement',
                 icon: 'cloud',
                 key: '0',
                 children: [
@@ -160,14 +160,14 @@ const routes = [
                                 path: 'dubbo',
                                 icon: 'book',
                                 component: 'GetwayDubbo',
-                                key: '0-0-1'
+                                key: '0-0-0'
                             },
                             {
                                 name: 'Gateway在线服务',
                                 path: 'online',
                                 icon: 'book',
                                 component: 'GetwayOnline',
-                                key: '0-0-2'
+                                key: '0-0-1'
                             }
                         ]
                     },
@@ -188,7 +188,7 @@ const routes = [
                 ]
             }, {
                 name: '监控管理',
-                path: 'overview',
+                path: 'monitoringManagement',
                 icon: 'cloud',
                 key: '1',
                 children: [
@@ -224,7 +224,7 @@ const routes = [
                             },
                             {
                                 name: '慢服务查询',
-                                path: 'monitor',
+                                path: 'slowService',
                                 component: 'GetwaySlowService',
                                 key: '1-1-2',
                             },
@@ -233,7 +233,7 @@ const routes = [
                 ]
             }, {
                 name: '集群管理',
-                path: 'overview',
+                path: 'clusterManagement',
                 icon: 'cloud',
                 key: '2',
                 children: [

@@ -77,6 +77,7 @@ class SiderMenu extends Component {
             type: 'SET_BREADCRUMB',
             breadCrumb
         });
+        console.log(siderMenuSelectedKey);
         this.setState({
             selectedKeys: [siderMenuSelectedKey],
             openKeys: siderMenuOpendedKey

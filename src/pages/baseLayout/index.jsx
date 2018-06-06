@@ -68,7 +68,7 @@ class BaseLayout extends Component {
                                 </div>
                             </Content>
                             <Footer className="system-footer">
-                                BrainKeeper ©2018 Created by the Platform Architecture Group of the Electronic Projects Division 
+                                BrainKeeper ©2018 Created by the Platform Architecture Group of the Electronic Projects Division
                             </Footer>
                         </Layout>
                     </Layout>
