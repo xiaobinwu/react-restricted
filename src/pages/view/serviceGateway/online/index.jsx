@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Input, Select, Button, Row, Col, Table, Modal } from 'antd';
+import { Input, Select, Button, Row, Col, Table, Modal, Form } from 'antd';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import gatewayService from 'service/gatewayService';
 
 const { Option } = Select;
+const FormItem = Form.Item; // eslint-disable-line
 
 class GetwayOnline extends Component {
     constructor(props) {
@@ -89,7 +90,7 @@ class GetwayOnline extends Component {
     }
     // 设置线程参数
     handleThreadsOk = () => {
-        console.log(1111);
+        console.log(this.props.form.getFieldsValue());
     }
     // 设置Dubbo参数
     handleDubboOk = () => {
@@ -151,6 +152,7 @@ class GetwayOnline extends Component {
             selectedRowKeys,
             onChange: this.onSelectChange
         };
+        const { getFieldDecorator } = this.props.form;
         return (
             <div>
                 <Row gutter={16} style={{ marginBottom: 16 }}>
@@ -176,7 +178,42 @@ class GetwayOnline extends Component {
                     onOk={this.handleThreadsOk}
                     onCancel={this.handleCancel.bind(this, 'threadsVisible')}
                 >
-                    <p>设置线程参数(只有使用线程池隔离限流才有效)</p>
+                    <Form>
+                        <Row gutter={16}>
+                            <Row>
+                                <Col span={11}>
+                                    <FormItem>
+                                        {getFieldDecorator('appName1', {
+                                            initialValue: '',
+                                        })(<Input />)}
+                                    </FormItem>
+                                </Col>
+                                <Col span={11} offset={2}>
+                                    <FormItem>
+                                        {getFieldDecorator('appName2', {
+                                            initialValue: '',
+                                        })(<Input />)}
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col span={11}>
+                                    <FormItem>
+                                        {getFieldDecorator('appName3', {
+                                            initialValue: '',
+                                        })(<Input />)}
+                                    </FormItem>
+                                </Col>
+                                <Col span={11} offset={2}>
+                                    <FormItem>
+                                        {getFieldDecorator('appName4', {
+                                            initialValue: '',
+                                        })(<Input />)}
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                        </Row>
+                    </Form>
                 </Modal>
                 <Modal
                     title="设置Dubbo参数"
@@ -196,4 +233,4 @@ const stateToProps = ({ routeState }) => ({
     paths: routeState.paths
 });
 
-export default connect(stateToProps)(GetwayOnline);
+export default connect(stateToProps)(Form.create()(GetwayOnline));
