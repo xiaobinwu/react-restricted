@@ -19,6 +19,7 @@ export default {
     // 网关服务系统
     GetwayDubbo: generateLoadable(() => import('view/serviceGateway/dubbo')), // Dubbo服务
     GetwayOnline: generateLoadable(() => import('view/serviceGateway/online')), // Gateway在线服务
+    GetwayOnlineDetail: generateLoadable(() => import('view/serviceGateway/onlineDetail')), // Gateway在线服务-服务详情
     GetwayConnect: generateLoadable(() => import('view/serviceGateway/connect')), // 连接管理
     GetwayMonitor: generateLoadable(() => import('view/serviceGateway/monitor')), // 在线监控
     GetwayFlow: generateLoadable(() => import('view/serviceGateway/flow')), // 全局流量分析

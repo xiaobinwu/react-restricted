@@ -1,3 +1,75 @@
+/*
+    url组装结果：
+        站点url片段/一级菜单url片段/二级菜单url片段/三级菜单url片段 => /service-gateway/serviceManagement/service/dubbo
+
+        // 带有hasChildrenNotInMenuBar配置情况：
+        /service-gateway/serviceManagement/service/online/onlineDetail?id=1
+
+    结构说明：
+        {
+            site: 'serviceGateway', // 站点英文标识, 用于切换站点，更改currentSite状态
+            path: '/service-gateway', // 站点url片段
+            icon: 'bar-chart', // 站点Icon
+            name: '服务网关', // 站点中文名字
+
+            // 如果需要将若干站点进行集合展示，需要对需要集合展示的站点配置相同的parent属性
+            parent: {
+                icon: 'book',
+                name: '常用系统',
+                site: 'commonSystem'
+            },
+
+            children: [
+                {
+                    name: '服务管理',  // 一级菜单名称
+                    path: 'serviceManagement', // 一级菜单url片段
+                    icon: 'cloud', // 一级菜单Icon
+                    key: '0', // 一级菜单的key值
+                    children: [
+                        {
+                            name: '服务', // 二级菜单名称
+                            path: 'service', // 二级菜单url片段
+                            key: '0-0', // 二级菜单的key值
+                            children: [
+                                {
+                                    name: 'Dubbo服务', // 三级菜单名称
+                                    path: 'dubbo', // 三级菜单url片段
+                                    icon: 'book', // 三级菜单的Icon
+                                    component: 'GetwayDubbo', // 绑定了这个菜单项对应的组件名称
+                                    key: '0-0-0' // 三级菜单的key值
+                                },
+                                {
+                                    name: 'Gateway在线服务',
+                                    path: 'online',
+                                    icon: 'book',
+                                    component: 'GetwayOnline',
+                                    key: '0-0-1',
+
+                                    // 当菜单项绑定了组件，表示它是菜单栏底层menuItem了，不是subMenu级别了，理论上它应该不会children了，但是有例外的情况，就是
+                                    // GetwayOnline组件中是个列表，但是它还有个对应数据行的详情页，且这个详情页又不会显示在左侧菜单栏,
+                                    // 那么就需要设置hasChildrenNotInMenuBar:true,然后再为其扩展children
+
+                                    hasChildrenNotInMenuBar: true,
+
+                                    // 不展示在左侧菜单栏的children
+                                    children: [
+                                        // 此处不能再有children属性了，这个路由组件为最底层的组件了
+                                        {
+                                            name: '服务详情',
+                                            path: 'onlineDetail',
+                                            component: 'GetwayOnlineDetail',
+                                            key: '0-0-1-0'
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+*/
+
 const routes = [
     {
         site: 'businessMarket',
@@ -167,7 +239,16 @@ const routes = [
                                 path: 'online',
                                 icon: 'book',
                                 component: 'GetwayOnline',
-                                key: '0-0-1'
+                                key: '0-0-1',
+                                hasChildrenNotInMenuBar: true,
+                                children: [
+                                    {
+                                        name: '服务详情',
+                                        path: 'onlineDetail',
+                                        component: 'GetwayOnlineDetail',
+                                        key: '0-0-1-0'
+                                    }
+                                ]
                             }
                         ]
                     },

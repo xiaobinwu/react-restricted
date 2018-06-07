@@ -3,6 +3,13 @@
 @text-hover-color: #d6d7d8;
 @link-color: #33b5e5;
 
+// button
+.ant-btn-primary {
+  color: @text-color;
+  background-color: @primary-color;
+  border-color: @primary-color;
+}
+
 // spin
 @spin-color: #e24d42;
 .ant-spin {
@@ -163,12 +170,20 @@
 }
 
 /****input****/
+@input-border-color: #29292b;
 .ant-input {
   color: @text-color;
   background-color: @primary-color;
-  background-image: none;
-  border: 1px solid #29292b;
-  border-radius: 4px;
+  border: 1px solid @input-border-color;
+}
+.ant-input-group-addon {
+  color:  @text-color;
+  background-color: @primary-color;
+  border: 1px solid @input-border-color;
+}
+.ant-input-group-addon .ant-select-open .ant-select-selection,
+.ant-input-group-addon .ant-select-focused .ant-select-selection {
+  color: @text-color;
 }
 
 /****calendar****/
@@ -548,7 +563,7 @@ tr.ant-table-expanded-row:hover {
   说明：其他css文件不包含颜色控制，antd框架的颜色修改都在这个文件修改，方便后面的主题切换。自定义的颜色根据系统模块划分，以system-开头
 */
 
-/*************************基本布局start********************************/
+/****************************基本布局************************************/
   @layout-bg-color: #212225;
   @layout-header-color: #29292b;
   @layout-footer-color: #736d6c;
@@ -619,7 +634,9 @@ tr.ant-table-expanded-row:hover {
     }
   }
   
-  /*************************链路跟踪start********************************/
+  /************************************火眼**************************************/
+
+  /*************************链路跟踪********************************/
   
   /********* 链接详情 start ********/
   
@@ -641,4 +658,12 @@ tr.ant-table-expanded-row:hover {
   }
   /********* 链接详情 end ********/
   
-  /*************************链路跟踪end********************************/
+  /************************************网关服务**************************************/
+
+  /********* 服务管理 start ********/
+  @online-color: #33b5e5;
+  .system-online-column-num {
+    color: @online-color;
+  }
+
+  /********* 服务管理 start ********/

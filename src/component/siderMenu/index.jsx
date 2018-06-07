@@ -40,7 +40,7 @@ class SiderMenu extends Component {
         if (pathname === '/') {
             let pathObj = JSON.parse(JSON.stringify(this.props.navData[0]));
             breadCrumb.push(this.props.navData[0].name);
-            while (pathObj.children && pathObj.children.length > 0) {
+            while (!pathObj.hasChildrenNotInMenuBar && pathObj.children && pathObj.children.length > 0) {
                 pathObj.key && siderMenuOpendedKey.push(pathObj.key); //eslint-disable-line
                 siderMenuSelectedKey = pathObj.children[0].key;
                 breadCrumb.push(pathObj.children[0].name);
@@ -53,6 +53,7 @@ class SiderMenu extends Component {
             pathnameArr.shift();
             const keyPaths = [];
             let level = 0;
+            let childrenRouteNotInMenuBarNum = 0;
             const walkRoute = (routes) => {
                 if (routes.children && routes.children.length > 0) {
                     const matchItem = routes.children.find(item => item.path === pathnameArr[level]);
@@ -60,13 +61,14 @@ class SiderMenu extends Component {
                         keyPaths.push(matchItem.key);
                         breadCrumb.push(matchItem.name);
                         level++; //eslint-disable-line
+                        routes.hasChildrenNotInMenuBar && childrenRouteNotInMenuBarNum++; //eslint-disable-line
                         walkRoute(matchItem);
                     }
                 }
             };
             breadCrumb.push(currentRoutes[0].name);
             walkRoute(currentRoutes[0]);
-            keyPaths.length > 0 && (siderMenuSelectedKey = keyPaths[keyPaths.length - 1]); //eslint-disable-line
+            keyPaths.length > 0 && (siderMenuSelectedKey = keyPaths[keyPaths.length - 1 - childrenRouteNotInMenuBarNum]); //eslint-disable-line
             if (keyPaths.length > 0) {
                 keyPaths.pop();
                 siderMenuOpendedKey = keyPaths;
@@ -77,7 +79,6 @@ class SiderMenu extends Component {
             type: 'SET_BREADCRUMB',
             breadCrumb
         });
-        console.log(siderMenuSelectedKey);
         this.setState({
             selectedKeys: [siderMenuSelectedKey],
             openKeys: siderMenuOpendedKey
@@ -88,7 +89,7 @@ class SiderMenu extends Component {
         const key = typeof (index) !== 'undefined' ? `${index}-${i}` : `${i}`;
         const linkPath = `${path}/${item.path}`;
         const linkName = `${name}/${item.name}`;
-        if (item.children && item.children.length > 0) {
+        if (!item.hasChildrenNotInMenuBar && item.children && item.children.length > 0) {
             return (
                 <SubMenu key={key} title={
                     <span>

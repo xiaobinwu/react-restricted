@@ -33,7 +33,7 @@ class Service {
         }, error => Promise.reject(error));
         // 响应拦截器
         this.$http.interceptors.response.use(({ data, config }) => {
-            if (data.code !== '0' && config.errorPop) {
+            if (data.code && data.code !== '0' && config.errorPop) {
                 message.error(data.message, 1.5);
             }
             return data;
