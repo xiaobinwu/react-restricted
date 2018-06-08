@@ -11,6 +11,9 @@
 }
 // modal
 .ant-modal {
+  .ant-form-item-label label {
+    color: @primary-color;
+  }
   .ant-input {
     background-color: #fff;
     color: @primary-color;
@@ -668,8 +671,27 @@ tr.ant-table-expanded-row:hover {
 
   /********* 服务管理 start ********/
   @online-color: #33b5e5;
+  @text-color: #d8d9da;
+  @text-hover-color: #d6d7d8;
   .system-online-column-num {
     color: @online-color;
   }
-
+  @online-success-color: #508642;
+  @online-error-color: #e24d42;
+  .system-online-detail-tag {
+    background-color: @online-success-color;
+    border-color: @online-success-color;
+    color: @text-color;
+    &:hover {
+      color: @text-hover-color;
+    }
+  }
+  .system-online-detail-error-tag {
+    background-color: @online-error-color;
+    border-color: @online-error-color;
+    color: @text-color;
+    &:hover {
+      color: @text-hover-color;
+    }
+  }
   /********* 服务管理 start ********/

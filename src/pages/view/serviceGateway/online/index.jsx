@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Input, Select, Button, Row, Col, Table, Modal, Form } from 'antd';
+import { Input, Select, Button, Row, Col, Table, message } from 'antd';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import gatewayService from 'service/gatewayService';
+import DubboFormModal from './dubboFormModal';
+import ThreadsFormModal from './threadsFormModal';
 
 const { Option } = Select;
-const FormItem = Form.Item; // eslint-disable-line
 
 class GetwayOnline extends Component {
     constructor(props) {
@@ -24,7 +25,20 @@ class GetwayOnline extends Component {
             threadsVisible: false,
             dubboVisible: false,
             threadsConfirmLoading: false,
-            dubboConfirmLoading: false
+            dubboConfirmLoading: false,
+            threadsSelectedKey: '',
+            dubboSelectedKey: '',
+            threadsForm: {
+                coreSize: '',
+                maximumSize: '',
+                maxQueueSize: '',
+                queueSizeRejectionThreshold: ''
+            },
+            dubboForm: {
+                connection: '',
+                timeout: '',
+                retry: ''
+            }
         };
         this.columns = [{
             title: '服务KEY',
@@ -36,7 +50,7 @@ class GetwayOnline extends Component {
             key: 'serviceCount',
             render: (text, record) => { // eslint-disable-line
                 return (
-                    <Link to={{ pathname: this.props.paths.onlineDetail.linkPath }} target="_blank">{text}</Link>
+                    <Link to={{ pathname: this.props.paths.onlineDetail.linkPath, search: `?dubboServiceKey=${record.serviceKey}` }} target="_blank">{text}</Link>
                 );
             }
         }, {
@@ -45,8 +59,8 @@ class GetwayOnline extends Component {
             render: (text, record) => { // eslint-disable-line
                 return (
                     <div>
-                        <Button icon="setting" type="primary" size="small" style={{ marginRight: '10px' }} onClick={this.showModal.bind(this, 'threadsVisible')}>线程参数</Button>
-                        <Button icon="table" type="primary" size="small" onClick={this.showModal.bind(this, 'dubboVisible')}>Dubbo参数</Button>
+                        <Button icon="setting" type="primary" size="small" style={{ marginRight: '10px' }} onClick={this.showModal.bind(this, 'threadsVisible', record.serviceKey)}>线程参数</Button>
+                        <Button icon="table" type="primary" size="small" onClick={this.showModal.bind(this, 'dubboVisible', record.serviceKey)}>Dubbo参数</Button>
                     </div>
                 );
             }
@@ -56,10 +70,26 @@ class GetwayOnline extends Component {
         this.getData();
     }
     // 打开modal
-    showModal = (type) => {
-        this.setState({
-            [type]: true
-        });
+    showModal = async (type, key) => {
+        switch (type) {
+        case 'threadsVisible': {
+            const threadsRes = await gatewayService.getHystrixThreadPoolSetter({ serviceKey: key });
+            this.setState({
+                threadsForm: { ...this.state.threadsForm, ...threadsRes },
+                threadsSelectedKey: key,
+                [type]: true
+            });
+            break;
+        }
+        default: {
+            const dubboRes = await gatewayService.getDubboSetter({ serviceKey: key });
+            this.setState({
+                dubboForm: { ...this.state.dubboForm, ...dubboRes },
+                dubboSelectedKey: key,
+                [type]: true
+            });
+        }
+        }
     }
     // 关闭modal
     handleCancel = (type) => {
@@ -89,12 +119,34 @@ class GetwayOnline extends Component {
         });
     }
     // 设置线程参数
-    handleThreadsOk = () => {
-        console.log(this.props.form.getFieldsValue());
+    handleThreadsOk = async () => {
+        this.setState({
+            threadsConfirmLoading: true
+        });
+        const res = await gatewayService.setHystrixThreadPoolSetter({ selectKey: this.state.threadsSelectedKey, ...this.threadsFormRef.props.form.getFieldsValue() });
+        if (res.code === 0) {
+            this.setState({
+                threadsConfirmLoading: false,
+                threadsVisible: false
+            }, () => {
+                message.success(res.message);
+            });
+        }
     }
     // 设置Dubbo参数
-    handleDubboOk = () => {
-        console.log(2222);
+    handleDubboOk = async () => {
+        this.setState({
+            dubboConfirmLoading: true
+        });
+        const res = await gatewayService.setDubboSetter({ selectKey: this.state.dubboSelectedKey, ...this.dubboFormRef.props.form.getFieldsValue() });
+        if (res.code === 0) {
+            this.setState({
+                dubboConfirmLoading: false,
+                dubboVisible: false
+            }, () => {
+                message.success(res.message);
+            });
+        }
     }
     // 获取数据
     getData = async (e) => {
@@ -125,6 +177,15 @@ class GetwayOnline extends Component {
     onSelectChange = (selectedRowKeys) => {
         this.setState({ selectedRowKeys });
     }
+    // 获取线程表单的ref
+    getThreadsFormRef = (ref) => {
+        this.threadsFormRef = ref;
+    }
+    // 获取线程表单的ref
+    getDubboFormRef = (ref) => {
+        this.dubboFormRef = ref;
+    }
+
     render() {
         const {
             selectKey,
@@ -135,7 +196,9 @@ class GetwayOnline extends Component {
             threadsVisible,
             dubboVisible,
             threadsConfirmLoading,
-            dubboConfirmLoading
+            dubboConfirmLoading,
+            threadsForm,
+            dubboForm
         } = this.state;
         const columns = this.columns; // eslint-disable-line
         const pageControl = {
@@ -152,7 +215,6 @@ class GetwayOnline extends Component {
             selectedRowKeys,
             onChange: this.onSelectChange
         };
-        const { getFieldDecorator } = this.props.form;
         return (
             <div>
                 <Row gutter={16} style={{ marginBottom: 16 }}>
@@ -171,59 +233,22 @@ class GetwayOnline extends Component {
                     dataSource={data}
                     pagination={pageControl}
                 />
-                <Modal
-                    title="设置线程参数(只有使用线程池隔离限流才有效)"
+                <ThreadsFormModal
+                    wrappedComponentRef={this.getThreadsFormRef}
                     visible={threadsVisible}
-                    confirmLoading={threadsConfirmLoading}
                     onOk={this.handleThreadsOk}
                     onCancel={this.handleCancel.bind(this, 'threadsVisible')}
-                >
-                    <Form>
-                        <Row gutter={16}>
-                            <Row>
-                                <Col span={11}>
-                                    <FormItem>
-                                        {getFieldDecorator('appName1', {
-                                            initialValue: '',
-                                        })(<Input />)}
-                                    </FormItem>
-                                </Col>
-                                <Col span={11} offset={2}>
-                                    <FormItem>
-                                        {getFieldDecorator('appName2', {
-                                            initialValue: '',
-                                        })(<Input />)}
-                                    </FormItem>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col span={11}>
-                                    <FormItem>
-                                        {getFieldDecorator('appName3', {
-                                            initialValue: '',
-                                        })(<Input />)}
-                                    </FormItem>
-                                </Col>
-                                <Col span={11} offset={2}>
-                                    <FormItem>
-                                        {getFieldDecorator('appName4', {
-                                            initialValue: '',
-                                        })(<Input />)}
-                                    </FormItem>
-                                </Col>
-                            </Row>
-                        </Row>
-                    </Form>
-                </Modal>
-                <Modal
-                    title="设置Dubbo参数"
+                    threadsConfirmLoading = {threadsConfirmLoading}
+                    threadsForm = {threadsForm}
+                />
+                <DubboFormModal
+                    wrappedComponentRef={this.getDubboFormRef}
                     visible={dubboVisible}
-                    confirmLoading={dubboConfirmLoading}
                     onOk={this.handleDubboOk}
                     onCancel={this.handleCancel.bind(this, 'dubboVisible')}
-                >
-                    <p>设置Dubbo参数</p>
-                </Modal>
+                    dubboConfirmLoading = {dubboConfirmLoading}
+                    dubboForm = {dubboForm}
+                />
             </div>
         );
     }
@@ -233,4 +258,4 @@ const stateToProps = ({ routeState }) => ({
     paths: routeState.paths
 });
 
-export default connect(stateToProps)(Form.create()(GetwayOnline));
+export default connect(stateToProps)(GetwayOnline);
