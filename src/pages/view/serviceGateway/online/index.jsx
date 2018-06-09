@@ -3,9 +3,12 @@ import { Input, Select, Button, Row, Col, Table, message } from 'antd';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import gatewayService from 'service/gatewayService';
-import DubboFormModal from './dubboFormModal';
-import ThreadsFormModal from './threadsFormModal';
+import withFormModal from 'component/hoc/withFormModal';
+import DubboForm from './dubboForm';
+import ThreadsForm from './threadsForm';
 
+const DubboFormModal = withFormModal(DubboForm);
+const ThreadsFormModal = withFormModal(ThreadsForm);
 const { Option } = Select;
 
 class GetwayOnline extends Component {
@@ -234,20 +237,34 @@ class GetwayOnline extends Component {
                     pagination={pageControl}
                 />
                 <ThreadsFormModal
-                    wrappedComponentRef={this.getThreadsFormRef}
+                    title="设置线程参数(只有使用线程池隔离限流才有效)"
+                    getRef={this.getThreadsFormRef}
                     visible={threadsVisible}
                     onOk={this.handleThreadsOk}
                     onCancel={this.handleCancel.bind(this, 'threadsVisible')}
-                    threadsConfirmLoading = {threadsConfirmLoading}
-                    threadsForm = {threadsForm}
+                    confirmLoading = {threadsConfirmLoading}
+                    injectForm = {threadsForm}
+                    footer={[
+                        <span style={{ marginRight: '10px' }} key="tip">*表示gateway修改后需要重启</span>,
+                        <Button key="submit" type="primary" loading={threadsConfirmLoading} onClick={this.handleThreadsOk}>
+                            设置参数
+                        </Button>
+                    ]}
                 />
                 <DubboFormModal
-                    wrappedComponentRef={this.getDubboFormRef}
+                    maskClosable={false}
+                    title="设置Dubbo参数"
+                    getRef={this.getDubboFormRef}
                     visible={dubboVisible}
                     onOk={this.handleDubboOk}
                     onCancel={this.handleCancel.bind(this, 'dubboVisible')}
-                    dubboConfirmLoading = {dubboConfirmLoading}
-                    dubboForm = {dubboForm}
+                    confirmLoading = {dubboConfirmLoading}
+                    injectForm = {dubboForm}
+                    footer={[
+                        <Button key="submit" type="primary" loading={dubboConfirmLoading} onClick={this.handleDubboOk}>
+                            设置参数
+                        </Button>
+                    ]}
                 />
             </div>
         );

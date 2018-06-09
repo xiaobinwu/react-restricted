@@ -50,6 +50,26 @@ class GatewayService extends Service {
     getLineService(params = {}) {
         return this.post(`${servicePrefix}/onLineService`, params, defaultConfig);
     }
+    // 下线
+    offLine(params = {}) {
+        return this.post(`${servicePrefix}/offline`, params, defaultConfig);
+    }
+    // 上线
+    onLine(params = {}) {
+        return this.post(`${servicePrefix}/online`, params, defaultConfig);
+    }
+    // 降级与恢复
+    onFallback(params = {}) {
+        return this.post(`${servicePrefix}/fallback`, params, defaultConfig);
+    }
+    // 清除
+    removeService(params = {}) {
+        return this.post(`${servicePrefix}/removeService`, params, defaultConfig);
+    }
+    // 切换限流表单
+    switchLimiter(params = {}) {
+        return this.post(`${servicePrefix}/switchLimiter`, params, defaultConfig);
+    }
     /** *************Gateway在线服务 end***************** */
 }
 

@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
-import { Table, Tag, Button } from 'antd';
+import { Table, Tag, Button, Modal, message } from 'antd';
 import { getQueryString } from 'js/util';
 import gatewayService from 'service/gatewayService';
+import withFormModal from 'component/hoc/withFormModal';
+import LimiterModeForm from './limiterModeForm';
 
+// 切换限流表单modal
+const LimiterModeFormModal = withFormModal(LimiterModeForm);
+
+
+const { confirm } = Modal;
 class GetwayOnlineDetail extends Component {
     constructor(props) {
         super(props);
@@ -16,6 +23,13 @@ class GetwayOnlineDetail extends Component {
                 current: 1,
                 pageSize: 10,
                 totalCount: 0
+            },
+            // 切换限流
+            limiterVisible: false,
+            limiterSelectKey: '',
+            limiterConfirmLoading: false,
+            limiterModeForm: {
+                limiterModeValue: ''
             }
         };
         this.columns = [{
@@ -88,14 +102,14 @@ class GetwayOnlineDetail extends Component {
                     <div>
                         {
                             record.status === 3 ?
-                                <Button icon="bars" type="primary" size="small" style={layout}>清除</Button>
+                                <Button icon="bars" type="primary" size="small" onClick={this.removeService.bind(this, record.serviceKey, record.method)} style={layout}>清除</Button>
                                 : null
                         }
-                        <Button icon="bars" type="primary" size="small" style={layout}>切换限流</Button>
+                        <Button icon="bars" type="primary" size="small" style={layout} onClick={this.switchLimiter.bind(this, record.serviceKey, record.method, record.limitMode)} >切换限流</Button>
                         {
                             record.type === 1 ?
-                                <Button icon="arrow-down" type="primary" size="small" style={layout}>下线</Button>
-                                : <Button icon="arrow-up" type="primary" size="small" style={layout}>上线</Button>
+                                <Button icon="arrow-down" type="primary" size="small" onClick={this.onLine.bind(this, record.serviceKey, record.method, false)} style={layout}>下线</Button>
+                                : <Button icon="arrow-up" type="primary" size="small" onClick={this.onLine.bind(this, record.serviceKey, record.method, true)} style={layout}>上线</Button>
                         }
                         {
                             record.limitMode !== 1 ?
@@ -117,8 +131,8 @@ class GetwayOnlineDetail extends Component {
                         }
                         {
                             record.limitMode !== 1 && record.circuit === 1 ?
-                                <Button icon="tool" type="primary" size="small" style={layout}>降级</Button>
-                                : <Button icon="loading-3-quarters" type="primary" size="small" style={layout}>恢复</Button>
+                                <Button icon="tool" type="primary" size="small" onClick={this.onFallback.bind(this, record.serviceKey, record.method, record.limitMode, true)} style={layout}>降级</Button>
+                                : <Button icon="loading-3-quarters" type="primary" size="small" onClick={this.onFallback.bind(this, record.serviceKey, record.method, record.limitMode, false)} style={layout}>恢复</Button>
                         }
                     </div>
                 );
@@ -133,6 +147,122 @@ class GetwayOnlineDetail extends Component {
             this.getData();
         });
     }
+    // 上下线
+    onLine = (serviceKey, method, flag) => {
+        const content = <div style={{ marginTop: '20px' }}><p>接口：{serviceKey}</p><p>方法：{method}</p></div>;
+        const successTip = flag ? `上线${serviceKey}成功！` : `下线${serviceKey}成功！`;
+        const that = this;
+        confirm({
+            title: flag ? '确认是否上线' : '确认是否下线',
+            content,
+            onOk() {
+                (async () => {
+                    let res;
+                    if (flag) {
+                        res = await gatewayService.onLine({
+                            serviceKey,
+                            method
+                        });
+                    } else {
+                        res = await gatewayService.offLine({
+                            serviceKey,
+                            method
+                        });
+                    }
+                    if (res.code === 0) {
+                        that.getData();
+                        message.success(successTip);
+                    }
+                })();
+            }
+        });
+    }
+    // 降级与恢复
+    onFallback = (serviceKey, method, limitMode, flag) => {
+        const key = `${serviceKey}:${method}`;
+        const content = <div style={{ marginTop: '20px' }}><p>注意：{flag ? '会阻断对这个服务的所有请求' : '此操作会恢复到自动降级'}</p><p>接口：{serviceKey}</p><p>方法：{method}</p></div>;
+        const that = this;
+        confirm({
+            title: flag ? '确认是否降级' : '确认是否恢复',
+            content,
+            onOk() {
+                (async () => {
+                    const res = await gatewayService.onFallback({
+                        serviceKey: key,
+                        flag,
+                        limiterMode: limitMode
+                    });
+                    if (res.code === 0) {
+                        that.getData();
+                        message.success(res.message);
+                    }
+                })();
+            }
+        });
+    }
+    // 清除
+    removeService = (serviceKey, method) => {
+        const content = <div style={{ marginTop: '20px' }}><p>接口：{serviceKey}</p><p>方法：{method}</p></div>;
+        const that = this;
+        confirm({
+            title: '确认是否清除',
+            content,
+            onOk() {
+                (async () => {
+                    const res = await gatewayService.removeService({
+                        serviceKey,
+                        method
+                    });
+                    if (res.code === 0) {
+                        that.getData();
+                        message.success('清除成功');
+                    }
+                })();
+            }
+        });
+    }
+    // 切换限流
+    switchLimiter = (serviceKey, method, limitMode) => {
+        this.setState({
+            limiterVisible: true,
+            limiterSelectKey: `${serviceKey}:${method}`,
+            limiterModeForm: { ...this.state.limiterModeForm, limiterModeValue: String(limitMode) }
+        });
+    }
+    // 切换限流表单提交
+    switchLimiterSend = () => {
+        const content = <div style={{ marginTop: '20px' }}><p>确定需要更新当前服务的限流策略！有可能会更新失败，可多次操作。</p></div>;
+        const that = this;
+        const {
+            limiterSelectKey
+        } = this.state;
+        const {
+            limiterModeValue
+        } = this.limiterModeFormRef.props.form.getFieldsValue();
+        confirm({
+            title: '确认提示',
+            content,
+            onOk() {
+                that.setState({
+                    limiterConfirmLoading: true
+                });
+                (async () => {
+                    const res = await gatewayService.switchLimiter({
+                        serviceKey: limiterSelectKey,
+                        limiterMode: limiterModeValue
+                    });
+                    that.setState({
+                        limiterConfirmLoading: false,
+                        limiterVisible: false
+                    });
+                    if (res.code === 0) {
+                        that.getData();
+                        message.success(res.message);
+                    }
+                })();
+            }
+        });
+    }
     // 多选触发
     onSelectChange = (selectedRowKeys) => {
         this.setState({ selectedRowKeys });
@@ -140,13 +270,11 @@ class GetwayOnlineDetail extends Component {
     // 修改页数
     changePage = (page, pageSize) => {
         const { pagination } = this.state;
-        if (pagination.totalCount > pagination.current * pagination.pageSize) {
-            this.setState({
-                pagination: { ...pagination, ...{ current: page, pageSize } }
-            }, () => {
-                this.getData();
-            });
-        }
+        this.setState({
+            pagination: { ...pagination, ...{ current: page, pageSize } }
+        }, () => {
+            this.getData();
+        });
     }
     // 获取数据
     getData = async (e) => {
@@ -174,12 +302,25 @@ class GetwayOnlineDetail extends Component {
             data: res.data
         });
     }
+    // 关闭modal
+    handleCancel = (type) => {
+        this.setState({
+            [type]: false
+        });
+    }
+    // 获取切换限流的ref
+    getLimiterModeFormRef = (ref) => {
+        this.limiterModeFormRef = ref;
+    }
     render() {
         const {
             selectedRowKeys,
             data,
             pagination,
-            loading
+            loading,
+            limiterModeForm,
+            limiterVisible,
+            limiterConfirmLoading
         } = this.state;
         const rowSelection = {
             selectedRowKeys,
@@ -205,6 +346,17 @@ class GetwayOnlineDetail extends Component {
                     columns={columns}
                     dataSource={data}
                     pagination={pageControl}
+                />
+                <LimiterModeFormModal
+                    maskClosable={false}
+                    confirmLoading={limiterConfirmLoading}
+                    width={300}
+                    injectForm={limiterModeForm}
+                    getRef={this.getLimiterModeFormRef}
+                    title="切换限流策略"
+                    visible={limiterVisible}
+                    onOk={this.switchLimiterSend}
+                    onCancel={this.handleCancel.bind(this, 'limiterVisible')}
                 />
             </div>
         );
