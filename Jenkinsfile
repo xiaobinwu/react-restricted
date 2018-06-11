@@ -24,7 +24,9 @@ pipeline {
             steps {
                 sh '''
                     export PATH=$PATH:/usr/local/node/bin
-                    cnpm install
+                    yarn install
+                    npm run build
+                    zip -r brainkeeper-ui.zip build
                 '''
             }
         }

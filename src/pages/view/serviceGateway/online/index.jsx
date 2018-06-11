@@ -242,7 +242,6 @@ class GetwayOnline extends Component {
                     visible={threadsVisible}
                     onOk={this.handleThreadsOk}
                     onCancel={this.handleCancel.bind(this, 'threadsVisible')}
-                    confirmLoading = {threadsConfirmLoading}
                     injectForm = {threadsForm}
                     footer={[
                         <span style={{ marginRight: '10px' }} key="tip">*表示gateway修改后需要重启</span>,
@@ -258,7 +257,6 @@ class GetwayOnline extends Component {
                     visible={dubboVisible}
                     onOk={this.handleDubboOk}
                     onCancel={this.handleCancel.bind(this, 'dubboVisible')}
-                    confirmLoading = {dubboConfirmLoading}
                     injectForm = {dubboForm}
                     footer={[
                         <Button key="submit" type="primary" loading={dubboConfirmLoading} onClick={this.handleDubboOk}>
