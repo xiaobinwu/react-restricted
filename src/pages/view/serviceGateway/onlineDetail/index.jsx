@@ -412,7 +412,7 @@ class GetwayOnlineDetail extends Component {
         }
     }
     // 批量下线
-    batchOnline = () => {
+    batchOnline = (flag) => {
         const {
             data,
             selectedRowKeys
@@ -432,7 +432,10 @@ class GetwayOnlineDetail extends Component {
                     return selectedRowKeys.includes(item.key);
                 });
                 (async () => {
-                    const res = await gatewayService.batchOnline(filterData);
+                    const res = await gatewayService.batchOnline({
+                        flag,
+                        rows: filterData
+                    });
                     if (res.code === 0) {
                         that.getData();
                         that.setState({
@@ -578,7 +581,7 @@ class GetwayOnlineDetail extends Component {
                         <Button icon="search" type="primary" onClick={this.getData}>查询</Button>
                     </Col>
                 </Row>
-                {/* <Button type="primary" style={{ marginBottom: '10px' }} onClick={this.batchOnline}>批量下线</Button> */}
+                <Button type="primary" style={{ marginBottom: '10px' }} onClick={this.batchOnline.bind(this, false)}>批量下线</Button>
                 <Table
                     rowSelection={rowSelection}
                     loading={loading}

@@ -18,6 +18,8 @@ entryJsList.lib = [
 entryJsList.utils = [
     'qs',
     'axios',
+    'sockjs-client',
+    'moment',
     require.resolve('./polyfills')
 ];
 entryJsList.index = [

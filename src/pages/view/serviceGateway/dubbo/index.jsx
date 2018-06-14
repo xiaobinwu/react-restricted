@@ -33,74 +33,9 @@ class Dubbo extends Component {
                 pageSize: 20,
                 totalCount: 0
             },
-            filteredInfo: {},
+            filteredInfo: null,
             selectedRowKeys: []
         };
-        this.columns = [{
-            title: '服务组',
-            dataIndex: 'group',
-            key: 'group',
-            width: 100
-        }, {
-            title: '服务KEY',
-            dataIndex: 'serviceKey',
-            key: 'serviceKey'
-        }, {
-            title: '接口服务名称',
-            dataIndex: 'service',
-            key: 'service'
-        }, {
-            title: '方法',
-            dataIndex: 'method',
-            key: 'method',
-            width: 200
-        }, {
-            title: '参数',
-            dataIndex: 'parameter',
-            key: 'parameter'
-        }, {
-            title: '版本号',
-            dataIndex: 'version',
-            key: 'version',
-            width: 90
-        }, {
-            title: '是否已上线',
-            dataIndex: 'status',
-            key: 'status',
-            width: 140,
-            filters: statusList,
-            filteredValue: this.state.filteredInfo.status || null,
-            onFilter: (value, record) => { // eslint-disable-line
-                return record.status === value;
-            },
-            render: (text, record) => {
-                switch (text) {
-                case 1: {
-                    return (<Tag className='system-online-detail-tag'>已上线</Tag>);
-                }
-                case 2: {
-                    return (<Tag className='system-online-detail-error-tag'>未上线</Tag>);
-                }
-                default:
-                    return (<Tag className='system-online-detail-error-tag'>已删除</Tag>);
-                }
-            }
-        }, {
-            title: '操作',
-            key: 'action',
-            width: 150,
-            render: (text, record) => { // eslint-disable-line
-                return (
-                    <div>
-                        {
-                            record.status === 1 ?
-                                <Button icon="down" type="primary" size="small" onClick={this.onLine.bind(this, record.serviceKey, record.method, false)}>下线</Button>
-                                : <Button icon="up" type="primary" size="small" onClick={this.onLine.bind(this, record.serviceKey, record.method, true)}>上线</Button>
-                        }
-                    </div>
-                );
-            }
-        }];
     }
     componentDidMount() {
         this.getData();
@@ -199,18 +134,55 @@ class Dubbo extends Component {
             data: res.data
         });
     }
-    // 修改页数
-    changePage = (page, pageSize) => {
+    // 监听表格变化
+    handleTableChange = (page, filters, sorter) => {
         const { pagination } = this.state;
         this.setState({
-            pagination: { ...pagination, ...{ current: page, pageSize } }
-        }, () => {
-            this.getData();
-        });
-    }
-    handleTableChange = (pagination, filters, sorter) => {
-        this.setState({
             filteredInfo: filters
+        });
+        if (page.current !== pagination.current || page.pageSize !== pagination.pageSize) {
+            this.setState({
+                pagination: { ...pagination, ...{ current: page.current, pageSize: page.pageSize } },
+                filteredInfo: null
+            }, () => {
+                this.getData();
+            });
+        }
+    }
+    // 批量上下线
+    batchOnline = (flag) => {
+        const {
+            data,
+            selectedRowKeys
+        } = this.state;
+        const that = this;
+        if (selectedRowKeys.length > 10 || selectedRowKeys.length === 0) {
+            message.warning('批量操作一次只能选择大于0，小于10数据条数!');
+            return;
+        }
+        confirm({
+            title: '确认提示',
+            okText: '确定',
+            cancelText: '取消',
+            content: '此操作将批量下线选中的服务项',
+            onOk() {
+                const filterData = data.filter((item, index) => { // eslint-disable-line
+                    return selectedRowKeys.includes(item.key);
+                });
+                (async () => {
+                    const res = await gatewayService.batchOnline({
+                        flag,
+                        rows: filterData
+                    });
+                    if (res.code === 0) {
+                        that.getData();
+                        that.setState({
+                            selectedRowKeys: []
+                        });
+                        message.success(res.message);
+                    }
+                })();
+            }
         });
     }
     render() {
@@ -220,18 +192,82 @@ class Dubbo extends Component {
             loading,
             data,
             status,
-            selectedRowKeys
+            selectedRowKeys,
+            filteredInfo
         } = this.state;
-        const columns = this.columns; // eslint-disable-line
+        const columns = [{
+            title: '服务组',
+            dataIndex: 'group',
+            key: 'group',
+            width: 100
+        }, {
+            title: '服务KEY',
+            dataIndex: 'serviceKey',
+            key: 'serviceKey'
+        }, {
+            title: '接口服务名称',
+            dataIndex: 'service',
+            key: 'service'
+        }, {
+            title: '方法',
+            dataIndex: 'method',
+            key: 'method',
+            width: 200
+        }, {
+            title: '参数',
+            dataIndex: 'parameter',
+            key: 'parameter'
+        }, {
+            title: '版本号',
+            dataIndex: 'version',
+            key: 'version',
+            width: 90
+        }, {
+            title: '是否已上线',
+            dataIndex: 'status',
+            key: 'status',
+            width: 140,
+            filters: statusList,
+            filteredValue: filteredInfo ? (filteredInfo.status || null) : null,
+            filterMultiple: false,
+            onFilter: (value, record) => { // eslint-disable-line
+                return String(record.status) === value;
+            },
+            render: (text, record) => {
+                switch (text) {
+                case 1: {
+                    return (<Tag className='system-online-detail-tag'>已上线</Tag>);
+                }
+                case 2: {
+                    return (<Tag className='system-online-detail-error-tag'>未上线</Tag>);
+                }
+                default:
+                    return (<Tag className='system-online-detail-error-tag'>已删除</Tag>);
+                }
+            }
+        }, {
+            title: '操作',
+            key: 'action',
+            width: 150,
+            render: (text, record) => { // eslint-disable-line
+                return (
+                    <div>
+                        {
+                            record.status === 1 ?
+                                <Button icon="down" type="primary" size="small" onClick={this.onLine.bind(this, record.serviceKey, record.method, false)}>下线</Button>
+                                : <Button icon="up" type="primary" size="small" onClick={this.onLine.bind(this, record.serviceKey, record.method, true)}>上线</Button>
+                        }
+                    </div>
+                );
+            }
+        }];
         const pageControl = {
             current: pagination.current,
             pageSize: pagination.pageSize,
             pageSizeOptions: ['10', '20', '30', '50'],
             showQuickJumper: true,
             showSizeChanger: true,
-            total: pagination.totalCount,
-            onChange: this.changePage,
-            onShowSizeChange: this.changePage
+            total: pagination.totalCount
         };
         const rowSelection = {
             selectedRowKeys,
@@ -239,7 +275,7 @@ class Dubbo extends Component {
         };
         return (
             <div>
-                <Row gutter={16} style={{ marginBottom: 16 }}>
+                <Row gutter={16} style={{ marginBottom: 30 }}>
                     <Col span={4}>
                         <Select placeholder="请选择服务状态" value={status} onChange={this.changeStatusSelect} style={{ width: '100%' }}>
                             {
@@ -256,6 +292,8 @@ class Dubbo extends Component {
                         <Button icon="search" type="primary" onClick={this.getData}>查询</Button>
                     </Col>
                 </Row>
+                <Button type="primary" style={{ marginBottom: '30px', marginRight: '20px' }} onClick={this.batchOnline.bind(this, false)}>批量下线</Button>
+                <Button type="primary" style={{ marginBottom: '30px' }} onClick={this.batchOnline.bind(this, true)}>批量上线</Button>
                 <Table
                     rowSelection={rowSelection}
                     loading={loading}

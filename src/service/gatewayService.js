@@ -1,3 +1,4 @@
+import SockJS from 'sockjs-client';
 import Service from './service';
 
 const servicePrefix = '/gateway';
@@ -104,11 +105,14 @@ class GatewayService extends Service {
         delete params.selectKey;
         return this.post(`${servicePrefix}/setSemaphoreSend?serviceKey=${selectKey}`, params, deleteHeaders(defaultConfig));
     }
-    // 批量下线
+    // 批量上下线
     batchOnline(params = {}) {
-        return this.post(`${servicePrefix}/batchOnOrOffline?batchType=false`, params, deleteHeaders(defaultConfig));
+        const { flag } = params;
+        delete params.flag;
+        return this.post(`${servicePrefix}/batchOnOrOffline?batchType=${flag}`, params.rows, { ...deleteHeaders(defaultConfig), isFilterEmptyField: false });
     }
     /** *************Gateway在线服务 end***************** */
+
 
     /** *************连接管理 start***************** */
     // 获取连接管理列表
@@ -125,11 +129,36 @@ class GatewayService extends Service {
     }
     /** *************连接管理 end***************** */
 
+
     /** *************Dubbo服务 start***************** */
     getService(params = {}) {
         return this.post(`${servicePrefix}/service`, params, defaultConfig);
     }
-    /** *************Dubbo服务 start***************** */
+    /** *************Dubbo服务 end***************** */
+
+
+    /** *************监控管理 start***************** */
+    getServerList(params = {}) {
+        return this.post(`${servicePrefix}/server/queryServerList`, params, defaultConfig);
+    }
+    // 在线监控websokit获取图表数据
+    getWebSocket() {
+        return new SockJS('http://10.40.2.44:8082/sockjs/monitor?collector=monitor');
+    }
+    // 获取QPS实时情况
+    getQps(params = {}) {
+        return this.post(`${servicePrefix}/monitoring/queryLast100`, params, deleteHeaders(defaultConfig));
+    }
+    // 获取热点服务列表
+    getHotService(params = {}) {
+        return this.post(`${servicePrefix}/monitoring/queryHotService`, params, deleteHeaders(defaultConfig));
+    }
+    // 获取错误服务列表
+    getErrorService(params = {}) {
+        return this.post(`${servicePrefix}/monitoring/queryErrorService`, params, deleteHeaders(defaultConfig));
+    }
+    /** *************监控管理 end***************** */
+
 }
 
 export default new GatewayService();

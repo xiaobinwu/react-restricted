@@ -13,6 +13,16 @@ const getQueryString = (href) => {
     return obj;
 };
 
+const roundNumber = (num, dec = 1) => {
+    const result = Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec); // eslint-disable-line
+    let resultString = result.toString();
+    if (resultString.indexOf('.') === -1) {
+        resultString = `${resultString}.0`;
+    }
+    return resultString;
+};
+
 export {
-    getQueryString
+    getQueryString,
+    roundNumber
 };

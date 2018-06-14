@@ -3,6 +3,24 @@
 @text-hover-color: #d6d7d8;
 @link-color: #33b5e5;
 
+// card
+@card-dark-bg: #29292b;
+.ant-card {
+  color: @text-color;
+  background-color: @card-dark-bg;
+}
+.ant-card-head {
+  background-color: @card-dark-bg;
+  border-bottom: 1px solid #353535;
+}
+.ant-card-head-title {
+  color: @text-color;
+  font-size: 14px;
+}
+.ant-card-body {
+  padding: 0;
+}
+
 // button
 .ant-btn-primary {
   color: @text-color;
@@ -580,6 +598,27 @@ tr.ant-table-expanded-row:hover {
   @layout-bg-color: #212225;
   @layout-header-color: #29292b;
   @layout-footer-color: #736d6c;
+  /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar{
+    border-radius: 10px;
+    width: 10px;
+    height: 10px;
+    background-color: @layout-header-color;
+}
+ 
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: @layout-header-color;
+}
+ 
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: @layout-footer-color;
+}
   a {
     color: @link-color;
   }
@@ -699,3 +738,59 @@ tr.ant-table-expanded-row:hover {
     }
   }
   /********* 服务管理 start ********/
+
+  /********* 在线监控 start ********/
+  @monitor-border-color: #353535;
+  @monitor-title-0-color: #629E51;
+  @monitor-title-1-color: #B7DBAB;
+  @monitor-title-2-color: #f9ba8f;
+  @monitor-title-3-color: #8c6ac4;
+  @monitor-title-4-color: #ef843c;
+  @monitor-title-5-color: #e24d42;
+  @monitor-title-6-color: #5195ce;
+  @monitor-title-7-color: #EAB839;
+  @monitor-top-color: #33b5e5;
+  @monitor-bottom-color: #e24d42;
+  .system-monitor-border-right {
+    border-right: 1px solid @monitor-border-color;
+  }
+  .system-monitor-border-bottom {
+    border-bottom: 1px solid @monitor-border-color;
+  }
+  .system-monitor-divider {
+    background-color: @monitor-border-color;
+  }
+  .system-monitor-title-0{
+    color: @monitor-title-0-color;
+  }
+  .system-monitor-title-1{
+    color: @monitor-title-1-color;
+  }
+  .system-monitor-title-2{
+    color: @monitor-title-2-color;
+  }
+  .system-monitor-title-3 {
+    color: @monitor-title-3-color;
+  }
+  .system-monitor-title-4 {
+    color: @monitor-title-4-color;
+  }
+  .system-monitor-title-5 {
+    color: @monitor-title-5-color;
+  }
+  .system-monitor-title-6 {
+    color: @monitor-title-6-color;
+  }
+  .system-monitor-title-7 {
+    color: @monitor-title-7-color;
+  }
+  .system-monitor-top-kbnum {
+    font-size: 18px;
+    color: @monitor-top-color;
+  }
+  .system-monitor-bottom-kbnum {
+    font-size: 18px;
+    color: @monitor-bottom-color;
+  }
+
+  /********* 在线监控 end ********/

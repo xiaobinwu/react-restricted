@@ -17,7 +17,7 @@ class Service {
         // 请求拦截器
         this.$http.interceptors.request.use((config) => {
             // 配置过滤字段空字符串
-            config.data = this.dealConfigData(config.data);
+            config.data = this.dealConfigData(config);
             // dev server代理proxy
             config.url = process.env.NODE_ENV === 'development' ? `/api-dev${config.url}` : config.url;
             // 取消多个请求
@@ -66,16 +66,19 @@ class Service {
         // 默认参数
         this.defaultConfig = {
             isCancel: true,
-            errorPop: true
+            errorPop: true,
+            isFilterEmptyField: true
         };
     }
 
-    dealConfigData(obj) {
+    dealConfigData(config) {
+        const { data, isFilterEmptyField } = config;
+        if (!isFilterEmptyField) { return data; }
         const param = {};
-        if (obj === null || obj === undefined || obj === '') return param;
-        for (const key in obj) {
-            if (obj[key] !== null && obj[key] !== undefined && obj[key] !== '') {
-                param[key] = obj[key];
+        if (data === null || data === undefined || data === '') return param;
+        for (const key in data) {
+            if (data[key] !== null && data[key] !== undefined && data[key] !== '') {
+                param[key] = data[key];
             }
         }
         return param;

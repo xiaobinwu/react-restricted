@@ -1,0 +1,25 @@
+.title {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+.dec{
+    font-size: 12px;
+}
+.kb {
+    text-align: center;
+    :global .ant-divider-horizontal {
+        margin: 15px 0;
+    }
+}
+.table {
+    margin-top: 1px;
+    :global .ant-table-scroll {
+        :global .ant-table-header {
+            overflow: hidden;
+        }
+    }
+    :global .ant-table-placeholder {
+        min-height: 335px;
+        line-height: 335px;
+    }
+}

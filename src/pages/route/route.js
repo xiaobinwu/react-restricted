@@ -141,9 +141,9 @@ const routes = [
                         key: '0-0'
                     },
                     {
-                        name: '核心业务',
-                        path: 'business',
-                        component: 'Business',
+                        name: '接口调用分析',
+                        path: 'interfaceInfo',
+                        component: 'InterfaceInfo',
                         key: '0-1'
                     }
                 ]

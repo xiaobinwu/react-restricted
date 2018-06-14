@@ -12,9 +12,9 @@ export default {
     // 链路跟踪系统
     Overview: generateLoadable(() => import('view/linkTracking/overview')),
     Performance: generateLoadable(() => import('view/linkTracking/performance')),
-    Business: generateLoadable(() => import('view/linkTracking/business')),
-    TraceInfoList: generateLoadable(() => import('view/linkTracking/traceInfoList')),
-    TraceInquire: generateLoadable(() => import('view/linkTracking/traceInquire')),
+    InterfaceInfo: generateLoadable(() => import('view/linkTracking/interfaceInfo')), // 调用接口分析
+    TraceInfoList: generateLoadable(() => import('view/linkTracking/traceInfoList')), // 链路信息
+    TraceInquire: generateLoadable(() => import('view/linkTracking/traceInquire')), // 链路详情
 
     // 网关服务系统
     GetwayDubbo: generateLoadable(() => import('view/serviceGateway/dubbo')), // Dubbo服务
